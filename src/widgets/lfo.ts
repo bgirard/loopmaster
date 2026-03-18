@@ -1,7 +1,6 @@
 import { type Signal } from '@preact/signals'
 import type { Doc, Widget } from 'editor'
 import {
-  type AdHistory,
   createHistoryReader,
   type DspLatency,
   type LfosineHistory,
@@ -9,11 +8,11 @@ import {
   type UserCallHistory,
 } from 'engine'
 import { locToIndex } from '../lib/index-loc.ts'
-import { primaryColor, primaryDarkColor, theme } from '../state.ts'
+import { primaryColor, primaryDarkColor } from '../state.ts'
 import { makeWidgetCacheKey } from './cache-key.ts'
 import type { WidgetCacheEntry } from './cache.ts'
 import { LINE_WIDTH } from './constants.ts'
-import { applyCurve, clamp01, getFunctionCallLength } from './util.ts'
+import { clamp01, getFunctionCallLength } from './util.ts'
 
 function fract(n: number): number {
   return n - Math.floor(n)
@@ -61,14 +60,14 @@ export function createLfoWidget(
     lfo.size,
     lfo.mask,
     {
-      phase: 0,
+      angle: 0,
     },
     () => {},
     () => latency.value.state,
     () => historyRef.current.writeIndex,
     index => historyRef.current.sampleCounts[index],
     (state, index) => {
-      state.phase = historyRef.current.emit.phase.at(index)
+      state.angle = historyRef.current.emit.angle.at(index)
     },
   )
 
@@ -90,13 +89,13 @@ export function createLfoWidget(
 
     c.beginPath()
 
-    const { phase } = reader.state
+    const { angle } = reader.state
     const padding = LINE_WIDTH / 2
     const plotW = w - padding * 2
     const plotH = h // - padding * 2
     const plotX = padding
     const plotY = 0 // padding
-    let playX = phase * plotW
+    let playX = angle * plotW
     let playY = 0
 
     const yToPx = (y: number) => plotY + (1 - clamp01(y)) * plotH
