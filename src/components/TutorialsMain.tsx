@@ -547,7 +547,7 @@ export const TutorialsMain = () => {
                 {parsed.value.slice(1).map(compile)}
                 <div class="flex flex-row gap-4 items-center">
                   <Heading level={3} children={[{ type: 'text', value: 'Support this project' }]} />
-                  <RouterLink to="https://buymeacoffee.com/loopmaster" title="Buy me a coffee" target="_blank">
+                  <RouterLink to="https://buymeacoffee.com/stagas" title="Buy me a coffee" target="_blank">
                     <img src="/bmc-button.png" alt="Buy me a coffee" class="w-48 h-auto" />
                   </RouterLink>
                   <RouterLink to="https://whop.com/loopmaster" title="Support me on Whop" target="_blank"

@@ -98,7 +98,7 @@ export const Sidebar = () => (
         >
           <img src={whopLogo} alt="Support me on Whop" width={16} height={16} />
         </Link>
-        <Link to="https://www.buymeacoffee.com/loopmaster" title="Buy Me a Coffee" target="_blank"
+        <Link to="https://www.buymeacoffee.com/stagas" title="Buy Me a Coffee" target="_blank"
           class="p-4 flex items-center justify-center hover:bg-white/5 focus:bg-white/5 outline-none text-neutral-400 text-sm"
         >
           <img src={bmcLogo} alt="Buy Me a Coffee" width={16} height={16} />
