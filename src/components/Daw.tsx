@@ -1,6 +1,8 @@
 import {
   CopyIcon,
   FloppyDiskBackIcon,
+  MagnifyingGlassMinusIcon,
+  MagnifyingGlassPlusIcon,
   PlusIcon,
   SpeakerHighIcon,
   SpeakerSlashIcon,
@@ -46,7 +48,10 @@ import { BEATS_PER_BAR } from '../widgets/constants.ts'
 import { PlayGradientIcon, StopGradientIcon } from './Icons.tsx'
 import { Nav } from './Nav.tsx'
 
-const pxPerBar = 76
+const basePxPerBar = 76
+const minTimelineZoom = 0.75
+const maxTimelineZoom = 4
+const timelineZoomStep = 0.25
 const laneHeaderWidth = 180
 const laneHeight = 72
 const timelineCursor = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M2 12h20M7 6l-5 6 5 6M17 6l5 6-5 6\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E") 12 12, ew-resize'
@@ -70,6 +75,7 @@ export const Daw = () => {
   const selectedLibraryId = useSignal<string>('drums-four-on-floor')
   const seekPreviewSeconds = useSignal<number | null>(null)
   const dropPreview = useSignal<DropPreview | null>(null)
+  const timelineZoom = useSignal(1)
   const oneLiners = useSignal<OneLiner[]>([])
   const loadingOneLiners = useSignal(false)
 
@@ -100,6 +106,7 @@ export const Daw = () => {
   if (selectedBlock && selectedBlockId.value !== selectedBlock.id) selectedBlockId.value = selectedBlock.id
 
   const arrangementLength = getArrangementLengthBars(arrangement)
+  const pxPerBar = basePxPerBar * timelineZoom.value
   const timelineWidth = arrangementLength * pxPerBar
   const playheadSeconds = seekPreviewSeconds.value ?? currentProgramContext.value?.timeSeconds.value ?? 0
   const playheadBar = (playheadSeconds * arrangement.bpm) / (BEATS_PER_BAR * 60)
@@ -111,6 +118,11 @@ export const Daw = () => {
   }
 
   const barToSeconds = (bar: number) => bar * BEATS_PER_BAR * 60 / arrangement.bpm
+
+  const setTimelineZoom = (value: number) => {
+    const stepped = Math.round(value / timelineZoomStep) * timelineZoomStep
+    timelineZoom.value = clampNumber(stepped, minTimelineZoom, maxTimelineZoom)
+  }
 
   const beginTimelineSeek = (event: MouseEvent) => {
     if (!transportReady.value) return
@@ -378,9 +390,38 @@ export const Daw = () => {
                 style={{ width: laneHeaderWidth }}
               >
                 <span class="text-xs uppercase tracking-[0.12em] text-white/35">Lanes</span>
-                <button class="p-1 text-white/50 hover:text-white" onClick={addLane} title="Add lane">
-                  <PlusIcon size={16} />
-                </button>
+                <div class="flex items-center gap-1">
+                  <button
+                    class="p-1 text-white/45 hover:text-white disabled:opacity-30"
+                    disabled={timelineZoom.value <= minTimelineZoom}
+                    onClick={() => setTimelineZoom(timelineZoom.value - timelineZoomStep)}
+                    title="Zoom out"
+                  >
+                    <MagnifyingGlassMinusIcon size={15} />
+                  </button>
+                  <input
+                    class="w-14 accent-white"
+                    type="range"
+                    min={minTimelineZoom}
+                    max={maxTimelineZoom}
+                    step={timelineZoomStep}
+                    value={timelineZoom.value}
+                    aria-label="Timeline zoom"
+                    title={`${Math.round(timelineZoom.value * 100)}%`}
+                    onInput={event => setTimelineZoom(Number((event.target as HTMLInputElement).value))}
+                  />
+                  <button
+                    class="p-1 text-white/45 hover:text-white disabled:opacity-30"
+                    disabled={timelineZoom.value >= maxTimelineZoom}
+                    onClick={() => setTimelineZoom(timelineZoom.value + timelineZoomStep)}
+                    title="Zoom in"
+                  >
+                    <MagnifyingGlassPlusIcon size={15} />
+                  </button>
+                  <button class="p-1 text-white/50 hover:text-white" onClick={addLane} title="Add lane">
+                    <PlusIcon size={16} />
+                  </button>
+                </div>
               </div>
               <div
                 class="relative h-full shrink-0 select-none"
@@ -445,6 +486,7 @@ export const Daw = () => {
                   arrangement={arrangement}
                   selectedBlockId={selectedBlockId.value}
                   timelineWidth={timelineWidth}
+                  pxPerBar={pxPerBar}
                   onSelectBlock={id => selectedBlockId.value = id}
                   onCommit={commit}
                 />
@@ -488,11 +530,12 @@ export const Daw = () => {
 }
 
 const LaneRow = (
-  { track, arrangement, selectedBlockId, timelineWidth, onSelectBlock, onCommit }: {
+  { track, arrangement, selectedBlockId, timelineWidth, pxPerBar, onSelectBlock, onCommit }: {
     track: ArrangementTrack
     arrangement: Arrangement
     selectedBlockId: string | null
     timelineWidth: number
+    pxPerBar: number
     onSelectBlock: (id: string) => void
     onCommit: (updater: (next: Arrangement) => void) => void
   },
@@ -588,6 +631,7 @@ const LaneRow = (
             key={block.id}
             block={block}
             bpm={arrangement.bpm}
+            pxPerBar={pxPerBar}
             selected={selectedBlockId === block.id}
             onSelect={() => onSelectBlock(block.id)}
             onCommit={onCommit}
@@ -599,9 +643,10 @@ const LaneRow = (
 }
 
 const TimelineBlock = (
-  { block, bpm, selected, onSelect, onCommit }: {
+  { block, bpm, pxPerBar, selected, onSelect, onCommit }: {
     block: ArrangementBlock
     bpm: number
+    pxPerBar: number
     selected: boolean
     onSelect: () => void
     onCommit: (updater: (next: Arrangement) => void) => void
@@ -1016,6 +1061,10 @@ function getNextBlockStart(arrangement: Arrangement, trackId: string): number {
     .filter(block => block.trackId === trackId)
     .reduce((max, block) => Math.max(max, block.startBar + block.lengthBars), 0)
   return snapBar(end)
+}
+
+function clampNumber(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value))
 }
 
 type SpectrogramRequest = {
