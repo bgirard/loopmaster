@@ -544,14 +544,24 @@ const LaneRow = (
   },
 ) => {
   const blocks = arrangement.blocks.filter(block => block.trackId === track.id)
+  const laneClasses = track.muted
+    ? 'border-white/10 bg-zinc-700/25 grayscale opacity-60'
+    : 'border-white/10'
+  const laneHeaderClasses = track.muted
+    ? 'border-white/10 bg-zinc-800/75'
+    : 'border-white/10'
+  const laneBodyClasses = track.muted
+    ? 'bg-zinc-700/20'
+    : ''
+  const trackSwatchColor = track.muted ? '#71717a' : track.color
 
   return (
-    <div class="flex border-b border-white/10" style={{ height: laneHeight }}>
-      <div class="shrink-0 border-r border-white/10 px-3 py-2 flex flex-col justify-between"
+    <div class={`flex border-b transition-[background-color,filter,opacity] duration-150 ${laneClasses}`} style={{ height: laneHeight }}>
+      <div class={`shrink-0 border-r px-3 py-2 flex flex-col justify-between transition-colors duration-150 ${laneHeaderClasses}`}
         style={{ width: laneHeaderWidth }}
       >
         <div class="flex items-center gap-2">
-          <button class="w-3 h-3 shrink-0" style={{ backgroundColor: track.color }}
+          <button class="w-3 h-3 shrink-0" style={{ backgroundColor: trackSwatchColor }}
             onClick={() => {
               const name = prompt('Lane name', track.name)?.trim()
               if (!name) return
@@ -561,7 +571,7 @@ const LaneRow = (
               })
             }}
           />
-          <button class="text-sm text-white/80 min-w-0 truncate text-left flex-1"
+          <button class={`text-sm min-w-0 truncate text-left flex-1 ${track.muted ? 'text-white/45' : 'text-white/80'}`}
             onClick={() => {
               const name = prompt('Lane name', track.name)?.trim()
               if (!name) return
@@ -587,7 +597,7 @@ const LaneRow = (
           </button>
         </div>
         <div class="flex items-center gap-2">
-          <button class="text-xs px-2 py-1 bg-white/5 hover:bg-white/10"
+          <button class={`text-xs px-2 py-1 hover:bg-white/10 ${track.muted ? 'bg-white/15 text-white/80' : 'bg-white/5'}`}
             onClick={() => {
               onCommit(next => {
                 const t = next.tracks.find(item => item.id === track.id)
@@ -625,7 +635,7 @@ const LaneRow = (
           />
         </div>
       </div>
-      <div class="relative shrink-0" style={{ width: timelineWidth }}>
+      <div class={`relative shrink-0 transition-colors duration-150 ${laneBodyClasses}`} style={{ width: timelineWidth }}>
         {Array.from({ length: Math.ceil(timelineWidth / pxPerBar) + 1 }).map((_, bar) => (
           <div key={bar} class="absolute top-0 bottom-0 border-l border-white/5" style={{ left: bar * pxPerBar }} />
         ))}
