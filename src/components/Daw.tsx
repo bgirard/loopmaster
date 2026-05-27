@@ -14,7 +14,6 @@ import { useEffect, useRef, useState } from 'preact/hooks'
 import type { Arrangement, ArrangementBlock, ArrangementTrack, OneLiner } from '../../deno/types.ts'
 import { api } from '../api.ts'
 import type { DspProgramContext } from '../dsp.ts'
-import { useReactiveEffect } from '../hooks/useReactiveEffect.ts'
 import {
   createArrangementBlock,
   createArrangementTrack,
@@ -54,6 +53,9 @@ const maxTimelineZoom = 4
 const timelineZoomStep = 0.25
 const laneHeaderWidth = 180
 const laneHeight = 72
+const laneInsertEdgeHeight = 10
+const laneBlockInset = 8
+const laneBlockStackGap = 3
 const minSpectrogramWidth = 256
 const maxSpectrogramWidth = 2048
 const spectrogramWidthStep = 128
@@ -64,7 +66,10 @@ type LibraryItem =
   | { kind: 'one-liner'; oneLiner: OneLiner }
 
 type DropPreview = {
+  mode: 'track' | 'new-track'
   index: number
+  trackId?: string
+  trackName?: string
   startBar: number
   x: number
   y: number
@@ -73,9 +78,15 @@ type DropPreview = {
   lengthBars: number
 }
 
+type BlockLayout = {
+  rowIndex: number
+  rowCount: number
+}
+
 export const Daw = () => {
   const selectedBlockId = useSignal<string | null>(null)
   const selectedLibraryId = useSignal<string>('drums-four-on-floor')
+  const auditionRequest = useSignal(0)
   const seekPreviewSeconds = useSignal<number | null>(null)
   const dropPreview = useSignal<DropPreview | null>(null)
   const timelineZoom = useSignal(1)
@@ -220,6 +231,13 @@ export const Daw = () => {
   const addDraggedLibraryItem = (item: LibraryItem, preview: DropPreview) => {
     let createdId = ''
     commit(next => {
+      if (preview.mode === 'track' && preview.trackId) {
+        const block = createBlockFromLibraryItem(item, preview.trackId, preview.startBar)
+        createdId = block.id
+        next.blocks.push(block)
+        return
+      }
+
       const ordered = [...next.tracks].sort((a, b) => a.order - b.order)
       const track = createArrangementTrack({
         name: item.kind === 'template' ? item.template.name : 'One-liner',
@@ -233,6 +251,11 @@ export const Daw = () => {
       next.blocks.push(block)
     })
     selectedBlockId.value = createdId
+  }
+
+  const selectLibraryItem = (itemId: string) => {
+    selectedLibraryId.value = itemId
+    auditionRequest.value += 1
   }
 
   const startLibraryDrag = (itemId: string, event: DragEvent) => {
@@ -254,15 +277,32 @@ export const Daw = () => {
 
     const target = event.currentTarget as HTMLElement
     const bounds = target.getBoundingClientRect()
-    const index = Math.max(0, Math.min(tracks.length, Math.round((event.clientY - bounds.top) / laneHeight)))
+    const localY = event.clientY - bounds.top
+    const trackIndex = Math.floor(localY / laneHeight)
+    const existingTrack = tracks[trackIndex]
+    if (!existingTrack) {
+      dropPreview.value = null
+      return null
+    }
+
+    const laneOffsetY = localY - trackIndex * laneHeight
+    const mode = laneOffsetY <= laneInsertEdgeHeight || laneOffsetY >= laneHeight - laneInsertEdgeHeight
+      ? 'new-track'
+      : 'track'
+    const index = mode === 'new-track' && laneOffsetY >= laneHeight - laneInsertEdgeHeight
+      ? trackIndex + 1
+      : trackIndex
     const rawX = event.clientX - bounds.left - laneHeaderWidth
     const startBar = snapBar(rawX / pxPerBar)
     const lengthBars = getLibraryLengthBars(item)
     const preview = {
+      mode,
       index,
+      trackId: mode === 'track' ? existingTrack.id : undefined,
+      trackName: mode === 'track' ? existingTrack.name : undefined,
       startBar,
       x: Math.max(0, startBar * pxPerBar),
-      y: index * laneHeight,
+      y: mode === 'track' ? trackIndex * laneHeight : index * laneHeight,
       color: getLibraryColor(item),
       title: getLibraryTitle(item),
       lengthBars,
@@ -335,7 +375,7 @@ export const Daw = () => {
                       color={template.color}
                       title={template.name}
                       subtitle={`${template.defaultLengthBars} bars`}
-                      onSelect={() => selectedLibraryId.value = template.id}
+                      onSelect={() => selectLibraryItem(template.id)}
                       onAdd={() => addBlockFromLibraryItem({ kind: 'template', template })}
                       onDragStart={event => startLibraryDrag(template.id, event)}
                     />
@@ -354,7 +394,7 @@ export const Daw = () => {
                       color="#f472b6"
                       title="One-liner"
                       subtitle={oneLiner.code.split('\n').find(Boolean)?.slice(0, 36) || 'Community code'}
-                      onSelect={() => selectedLibraryId.value = `one-liner:${oneLiner.id}`}
+                      onSelect={() => selectLibraryItem(`one-liner:${oneLiner.id}`)}
                       onAdd={() => addBlockFromLibraryItem({ kind: 'one-liner', oneLiner })}
                       onDragStart={event => startLibraryDrag(`one-liner:${oneLiner.id}`, event)}
                     />
@@ -381,6 +421,7 @@ export const Daw = () => {
               <TemplateAudition
                 id={selectedLibraryId.value}
                 code={getPreviewCode(selectedLibraryItem)}
+                auditionRequest={auditionRequest.value}
               />
             )}
           </div>
@@ -464,14 +505,18 @@ export const Daw = () => {
               />
               {dropPreview.value && (
                 <div class="absolute left-0 right-0 z-30 pointer-events-none" style={{ top: dropPreview.value.y }}>
-                  <div class="absolute left-0 h-0.5 shadow-[0_0_12px_rgba(255,255,255,.5)]"
-                    style={{ right: 0, backgroundColor: dropPreview.value.color }}
-                  />
-                  <div class="absolute -top-3 left-3 px-2 py-1 text-[11px] text-black font-semibold"
-                    style={{ backgroundColor: dropPreview.value.color }}
-                  >
-                    New lane: {dropPreview.value.title}
-                  </div>
+                  {dropPreview.value.mode === 'new-track' && (
+                    <>
+                      <div class="absolute left-0 h-0.5 shadow-[0_0_12px_rgba(255,255,255,.5)]"
+                        style={{ right: 0, backgroundColor: dropPreview.value.color }}
+                      />
+                      <div class="absolute -top-3 left-3 px-2 py-1 text-[11px] text-black font-semibold"
+                        style={{ backgroundColor: dropPreview.value.color }}
+                      >
+                        New lane: {dropPreview.value.title}
+                      </div>
+                    </>
+                  )}
                   <div
                     class="absolute top-2 h-12 border border-white/50 bg-black/30"
                     style={{
@@ -544,6 +589,7 @@ const LaneRow = (
   },
 ) => {
   const blocks = arrangement.blocks.filter(block => block.trackId === track.id)
+  const blockLayouts = getBlockLayouts(blocks)
   const laneClasses = track.muted
     ? 'border-white/10 bg-zinc-700/25 grayscale opacity-60'
     : 'border-white/10'
@@ -646,6 +692,7 @@ const LaneRow = (
             block={block}
             bpm={arrangement.bpm}
             pxPerBar={pxPerBar}
+            layout={blockLayouts.get(block.id) ?? defaultBlockLayout}
             selected={selectedBlockId === block.id}
             onSelect={() => onSelectBlock(block.id)}
             onCommit={onCommit}
@@ -656,17 +703,79 @@ const LaneRow = (
   )
 }
 
+const defaultBlockLayout: BlockLayout = { rowIndex: 0, rowCount: 1 }
+
+function getBlockLayouts(blocks: ArrangementBlock[]): Map<string, BlockLayout> {
+  const layouts = new Map<string, BlockLayout>()
+  const sorted = [...blocks].sort((a, b) =>
+    a.startBar - b.startBar
+    || (a.startBar + a.lengthBars) - (b.startBar + b.lengthBars)
+    || a.name.localeCompare(b.name)
+  )
+  let group: ArrangementBlock[] = []
+  let groupEnd = -Infinity
+
+  const flushGroup = () => {
+    if (!group.length) return
+    assignBlockGroupLayouts(group, layouts)
+    group = []
+    groupEnd = -Infinity
+  }
+
+  for (const block of sorted) {
+    const start = block.startBar
+    const end = block.startBar + block.lengthBars
+    if (group.length && start >= groupEnd) flushGroup()
+    group.push(block)
+    groupEnd = Math.max(groupEnd, end)
+  }
+  flushGroup()
+  return layouts
+}
+
+function assignBlockGroupLayouts(group: ArrangementBlock[], layouts: Map<string, BlockLayout>): void {
+  const rowEnds: number[] = []
+  const rowByBlock = new Map<string, number>()
+
+  for (const block of group) {
+    const start = block.startBar
+    const end = block.startBar + block.lengthBars
+    let rowIndex = rowEnds.findIndex(rowEnd => start >= rowEnd)
+    if (rowIndex < 0) {
+      rowIndex = rowEnds.length
+      rowEnds.push(end)
+    }
+    else {
+      rowEnds[rowIndex] = end
+    }
+    rowByBlock.set(block.id, rowIndex)
+  }
+
+  const rowCount = Math.max(1, rowEnds.length)
+  for (const block of group) {
+    layouts.set(block.id, {
+      rowIndex: rowByBlock.get(block.id) ?? 0,
+      rowCount,
+    })
+  }
+}
+
 const TimelineBlock = (
-  { block, bpm, pxPerBar, selected, onSelect, onCommit }: {
+  { block, bpm, pxPerBar, layout, selected, onSelect, onCommit }: {
     block: ArrangementBlock
     bpm: number
     pxPerBar: number
+    layout: BlockLayout
     selected: boolean
     onSelect: () => void
     onCommit: (updater: (next: Arrangement) => void) => void
   },
 ) => {
   const blockWidth = Math.max(18, block.lengthBars * pxPerBar)
+  const usableHeight = laneHeight - laneBlockInset * 2
+  const totalGap = laneBlockStackGap * Math.max(0, layout.rowCount - 1)
+  const blockHeight = Math.max(16, (usableHeight - totalGap) / Math.max(1, layout.rowCount))
+  const blockTop = laneBlockInset + layout.rowIndex * (blockHeight + laneBlockStackGap)
 
   const beginDrag = (mode: 'move' | 'resize', e: MouseEvent) => {
     e.preventDefault()
@@ -694,12 +803,14 @@ const TimelineBlock = (
 
   return (
     <div
-      class={`absolute top-2 bottom-2 overflow-hidden cursor-grab border ${
+      class={`absolute overflow-hidden cursor-grab border ${
         selected ? 'border-white shadow-[0_0_0_1px_rgba(255,255,255,.5)]' : 'border-white/20'
       }`}
       style={{
         left: block.startBar * pxPerBar,
+        top: blockTop,
         width: blockWidth,
+        height: blockHeight,
         backgroundColor: block.muted ? '#333' : block.color,
         opacity: block.muted ? 0.45 : 0.9,
       }}
@@ -974,18 +1085,32 @@ const LabelledInput = (
   </label>
 )
 
-const TemplateAudition = ({ id, code }: { id: string; code: string }) => {
+const TemplateAudition = ({ id, code, auditionRequest }: { id: string; code: string; auditionRequest: number }) => {
   const program = useSignal<DspProgramContext | null>(null)
+  const lastStartedRequest = useRef(0)
+  const activeCtx = ctx.value
 
-  useReactiveEffect(() => {
-    if (!ctx.value) return
+  useEffect(() => {
+    if (!activeCtx) return
+    let cancelled = false
+    program.value = null
     const doc = createDoc(tokenize)
     doc.code = code
-    getProgramContext(ctx.value, `daw-template-${id}`, { doc }).then(result => {
+    getProgramContext(activeCtx, `daw-template-${id}`, { doc }).then(result => {
+      if (cancelled) return
       program.value = result
       result.fullResync.value = true
     })
-  }, [code, ctx])
+    return () => {
+      cancelled = true
+    }
+  }, [activeCtx, code, id])
+
+  useEffect(() => {
+    if (auditionRequest <= 0 || auditionRequest === lastStartedRequest.current || !program.value) return
+    lastStartedRequest.current = auditionRequest
+    void inlineTransport.start(program.value)
+  }, [auditionRequest, program.value])
 
   const isPlayingPreview = program.value != null && playingInlineContext.value === program.value
 
