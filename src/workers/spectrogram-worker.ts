@@ -17,9 +17,12 @@ type SpectrogramRequest = {
   code: string
   lengthBars: number
   bpm: number
+  width?: number
 }
 
-const width = 256
+const defaultWidth = 256
+const minWidth = 256
+const maxWidth = 2048
 const height = 96
 const fftSize = 1024
 const sampleRate = 48000
@@ -29,7 +32,7 @@ const dynamicRangeDb = 36
 const renderVmId = 777
 const recordVmId = 778
 const maxAnalysisFramesPerColumn = 8
-const renderCacheVersion = 3
+const renderCacheVersion = 4
 
 type PreviewRuntime = {
   preview: ReturnType<typeof createDspPreview>
@@ -47,13 +50,14 @@ self.onmessage = (event: MessageEvent<SpectrogramRequest>) => {
 }
 
 async function renderRequest(request: SpectrogramRequest): Promise<void> {
+  const renderWidth = getRequestWidth(request)
   try {
     sendProgress(request.id, 0.02)
     const cacheKey = getCacheKey(request)
     const cached = renderCache.get(cacheKey)
     if (cached) {
       const pixels = cached.slice()
-      self.postMessage({ id: request.id, type: 'result', width, height, pixels }, [pixels.buffer])
+      self.postMessage({ id: request.id, type: 'result', width: renderWidth, height, pixels }, [pixels.buffer])
       return
     }
     const previewRuntime = await getPreview()
@@ -69,16 +73,16 @@ async function renderRequest(request: SpectrogramRequest): Promise<void> {
     }
     const mono = mixMono(step.value.left, step.value.right)
     sendProgress(request.id, 0.84)
-    const pixels = computeSpectrogram(mono)
+    const pixels = computeSpectrogram(mono, renderWidth)
     rememberCache(cacheKey, pixels)
-    self.postMessage({ id: request.id, type: 'result', width, height, pixels }, [pixels.buffer])
+    self.postMessage({ id: request.id, type: 'result', width: renderWidth, height, pixels }, [pixels.buffer])
   }
   catch (error) {
     const cacheKey = getCacheKey(request)
     const cached = renderCache.get(cacheKey)
     if (cached) {
       const pixels = cached.slice()
-      self.postMessage({ id: request.id, type: 'result', width, height, pixels }, [pixels.buffer])
+      self.postMessage({ id: request.id, type: 'result', width: renderWidth, height, pixels }, [pixels.buffer])
       return
     }
     // Never synthesize a fallback spectrogram here: DAW blocks must show rendered audio analysis or nothing.
@@ -93,11 +97,11 @@ async function renderRequest(request: SpectrogramRequest): Promise<void> {
       code: request.code,
       previewCode: buildPreviewCode(request),
     })
-    const pixels = emptySpectrogram()
+    const pixels = emptySpectrogram(renderWidth)
     self.postMessage({
       id: request.id,
       type: 'result',
-      width,
+      width: renderWidth,
       height,
       pixels,
       error: debugError,
@@ -262,7 +266,7 @@ function buildPreviewCode(request: SpectrogramRequest): string {
   ].join('\n')
 }
 
-function computeSpectrogram(samples: Float32Array): Uint8ClampedArray {
+function computeSpectrogram(samples: Float32Array, width: number): Uint8ClampedArray {
   const pixels = new Uint8ClampedArray(width * height * 4)
   const window = hannWindow(fftSize)
   const decibels = new Float32Array(width * height)
@@ -444,7 +448,7 @@ function hannWindow(size: number): Float32Array {
   return window
 }
 
-function emptySpectrogram(): Uint8ClampedArray {
+function emptySpectrogram(width = defaultWidth): Uint8ClampedArray {
   return new Uint8ClampedArray(width * height * 4)
 }
 
@@ -468,7 +472,11 @@ function formatNumber(value: number): string {
 }
 
 function getCacheKey(request: SpectrogramRequest): string {
-  return `${renderCacheVersion}\n${request.templateId ?? ''}\n${request.name}\n${request.bpm}\n${request.lengthBars}\n${request.code}`
+  return `${renderCacheVersion}\n${getRequestWidth(request)}\n${request.templateId ?? ''}\n${request.name}\n${request.bpm}\n${request.lengthBars}\n${request.code}`
+}
+
+function getRequestWidth(request: SpectrogramRequest): number {
+  return clampInt(request.width ?? defaultWidth, minWidth, maxWidth)
 }
 
 function rememberCache(key: string, pixels: Uint8ClampedArray): void {

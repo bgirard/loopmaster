@@ -54,6 +54,9 @@ const maxTimelineZoom = 4
 const timelineZoomStep = 0.25
 const laneHeaderWidth = 180
 const laneHeight = 72
+const minSpectrogramWidth = 256
+const maxSpectrogramWidth = 2048
+const spectrogramWidthStep = 128
 const timelineCursor = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M2 12h20M7 6l-5 6 5 6M17 6l5 6-5 6\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E") 12 12, ew-resize'
 
 type LibraryItem =
@@ -652,6 +655,8 @@ const TimelineBlock = (
     onCommit: (updater: (next: Arrangement) => void) => void
   },
 ) => {
+  const blockWidth = Math.max(18, block.lengthBars * pxPerBar)
+
   const beginDrag = (mode: 'move' | 'resize', e: MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
@@ -683,13 +688,13 @@ const TimelineBlock = (
       }`}
       style={{
         left: block.startBar * pxPerBar,
-        width: Math.max(18, block.lengthBars * pxPerBar),
+        width: blockWidth,
         backgroundColor: block.muted ? '#333' : block.color,
         opacity: block.muted ? 0.45 : 0.9,
       }}
       onMouseDown={e => beginDrag('move', e)}
     >
-      <SpectrogramOverlay block={block} bpm={bpm} />
+      <SpectrogramOverlay block={block} bpm={bpm} displayWidth={blockWidth} />
       <div class="relative z-10 h-full px-2 py-1 flex flex-col justify-between text-black">
         <span class="text-xs font-bold truncate">{block.name}</span>
         <span class="text-[10px] opacity-70">{block.startBar + 1} / {block.lengthBars}b</span>
@@ -702,11 +707,12 @@ const TimelineBlock = (
   )
 }
 
-const SpectrogramOverlay = ({ block, bpm }: { block: ArrangementBlock; bpm: number }) => {
+const SpectrogramOverlay = ({ block, bpm, displayWidth }: { block: ArrangementBlock; bpm: number; displayWidth: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'failed'>('loading')
   const [progress, setProgress] = useState(0)
   const [hasImage, setHasImage] = useState(false)
+  const renderWidth = getSpectrogramRenderWidth(displayWidth)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -725,6 +731,7 @@ const SpectrogramOverlay = ({ block, bpm }: { block: ArrangementBlock; bpm: numb
       code: block.code,
       lengthBars: block.lengthBars,
       bpm,
+      width: renderWidth,
     }, value => {
       if (cancelled) return
       setProgress(value)
@@ -772,7 +779,7 @@ const SpectrogramOverlay = ({ block, bpm }: { block: ArrangementBlock; bpm: numb
     return () => {
       cancelled = true
     }
-  }, [block.id, block.name, block.templateId, block.code, block.lengthBars, bpm])
+  }, [block.id, block.name, block.templateId, block.code, block.lengthBars, bpm, renderWidth])
 
   return (
     <>
@@ -1067,6 +1074,15 @@ function clampNumber(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value))
 }
 
+function getSpectrogramRenderWidth(displayWidth: number): number {
+  const deviceScale = typeof devicePixelRatio === 'number' && Number.isFinite(devicePixelRatio)
+    ? clampNumber(devicePixelRatio, 1, 2)
+    : 1
+  const targetWidth = Math.max(minSpectrogramWidth, displayWidth * deviceScale)
+  const steppedWidth = Math.ceil(targetWidth / spectrogramWidthStep) * spectrogramWidthStep
+  return clampNumber(steppedWidth, minSpectrogramWidth, maxSpectrogramWidth)
+}
+
 type SpectrogramRequest = {
   blockId: string
   name: string
@@ -1074,6 +1090,7 @@ type SpectrogramRequest = {
   code: string
   lengthBars: number
   bpm: number
+  width: number
 }
 
 type SpectrogramResponse = {
