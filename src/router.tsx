@@ -53,7 +53,7 @@ window.addEventListener('popstate', e => {
 
 effect(() => {
   let side: SidebarTab = null
-  let main: MainPage = 'browse'
+  let main: MainPage = 'editor'
   const p = pathname.value
 
   if (p.startsWith('/docs')) {
@@ -158,8 +158,8 @@ effect(() => {
   }
   else if (p === '/') {
     sidebarTab.value = null
-    main = null
-    section.value = null
+    main = 'editor'
+    section.value = 'DAW'
   }
 
   if (side) sidebarTab.value = side

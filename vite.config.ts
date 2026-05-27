@@ -44,10 +44,18 @@ function copyWasm(): Plugin {
 }
 
 // https://vite.dev/config/
-export default ({ mode }: ConfigEnv): UserConfig => {
+export default ({ command, mode }: ConfigEnv): UserConfig => {
   const dirname = process.cwd()
   const env = loadEnv(mode, dirname)
   Object.assign(process.env, env)
+  const httpsKeyPath = path.join(os.homedir(), '.ssl-certs/localhost-key.pem')
+  const httpsCertPath = path.join(os.homedir(), '.ssl-certs/localhost.pem')
+  const https = command === 'serve' && fs.existsSync(httpsKeyPath) && fs.existsSync(httpsCertPath)
+    ? {
+      key: fs.readFileSync(httpsKeyPath),
+      cert: fs.readFileSync(httpsCertPath),
+    }
+    : undefined
 
   return defineConfig({
     root: '.',
@@ -96,12 +104,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       hmr: {
         host: 'localhost',
       },
-      https: {
-        key: fs.readFileSync(
-          path.resolve(__dirname, os.homedir(), '.ssl-certs/localhost-key.pem'),
-        ),
-        cert: fs.readFileSync(path.resolve(__dirname, os.homedir(), '.ssl-certs/localhost.pem')),
-      },
+      ...(https ? { https } : {}),
       proxy: {
         '/api': {
           target: 'http://127.0.0.1:8787',

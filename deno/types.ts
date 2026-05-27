@@ -88,6 +88,7 @@ export type Project = {
   id: string
   name: string
   code: string
+  arrangement?: Arrangement | undefined
   userId: string
   artistName: string
   likes: Like[]
@@ -99,11 +100,49 @@ export type Project = {
   updatedAt: number
 }
 
+const ArrangementParamValueSchema = z.union([z.string(), z.number(), z.boolean()])
+
+export const ArrangementTrackSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  color: z.string(),
+  volume: z.number(),
+  muted: z.boolean(),
+  soloed: z.boolean(),
+  order: z.number(),
+})
+export type ArrangementTrack = z.infer<typeof ArrangementTrackSchema>
+
+export const ArrangementBlockSchema = z.object({
+  id: z.string(),
+  trackId: z.string(),
+  startBar: z.number(),
+  lengthBars: z.number(),
+  name: z.string(),
+  color: z.string(),
+  templateId: z.string().optional(),
+  code: z.string(),
+  params: z.record(z.string(), ArrangementParamValueSchema),
+  volume: z.number(),
+  muted: z.boolean(),
+})
+export type ArrangementBlock = z.infer<typeof ArrangementBlockSchema>
+
+export const ArrangementSchema = z.object({
+  arrangementVersion: z.number(),
+  bpm: z.number(),
+  tracks: z.array(ArrangementTrackSchema),
+  blocks: z.array(ArrangementBlockSchema),
+  generatedCode: z.string(),
+})
+export type Arrangement = z.infer<typeof ArrangementSchema>
+
 export const ProjectSchema: z.ZodType<Project> = z.lazy(() =>
   z.object({
     id: z.string(),
     name: z.string(),
     code: z.string(),
+    arrangement: ArrangementSchema.optional(),
     userId: z.string(),
     artistName: z.string(),
     likes: z.array(LikeSchema),
@@ -122,6 +161,7 @@ export type Projects = z.infer<typeof ProjectsSchema>
 export const CreateProjectRequestSchema = z.strictObject({
   name: z.string().min(1),
   code: z.string(),
+  arrangement: ArrangementSchema.optional(),
   isPublic: z.boolean(),
   remixOfId: z.string().or(z.null()),
 })
@@ -130,6 +170,7 @@ export type CreateProjectRequest = z.infer<typeof CreateProjectRequestSchema>
 export const UpdateProjectRequestSchema = z.object({
   name: z.string().min(1),
   code: z.string(),
+  arrangement: ArrangementSchema.optional(),
   isPublic: z.boolean(),
   remixOfId: z.string().or(z.null()),
 })

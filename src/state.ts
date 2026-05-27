@@ -10,8 +10,15 @@ import { Deferred } from 'utils/deferred'
 import { luminate, saturate } from 'utils/rgb'
 import WaveFFT from 'wavefft'
 import type { Projects, Session } from '../deno/types.ts'
+import type { Arrangement } from '../deno/types.ts'
 import { api } from './api.ts'
 import { createDspContext, type DspContext, type DspProgramContext, type DspProgramContextOpts } from './dsp.ts'
+import {
+  arrangementSignature,
+  cloneArrangement,
+  compileArrangement,
+  normalizeArrangement,
+} from './lib/arrangement.ts'
 import { blendHex } from './lib/blend-hex.ts'
 import { createId } from './lib/create-id.ts'
 import { autocompleteState } from './lib/definition-tooltip.ts'
@@ -214,7 +221,32 @@ export const isActuallyPaused = signal(false)
 export const isActuallyStopped = signal(false)
 
 export const ctx = signal<DspContext | null>(null)
-createDspContext().then(c => ctx.value = c)
+const ctxReady = createDspContext().then(c => {
+  ctx.value = c
+  return c
+})
+
+async function getReadyDspContext() {
+  return ctx.value ?? await ctxReady
+}
+
+async function waitForProjectRefs(maxTries = 120) {
+  for (let i = 0; i < maxTries; i++) {
+    if (currentProjectId.value && currentProject.value && playingProjectId.value && playingProject.value) {
+      return {
+        currentId: currentProjectId.value,
+        playingId: playingProjectId.value,
+        currentProject: currentProject.value,
+        playingProject: playingProject.value,
+      }
+    }
+    await new Promise<void>(resolve => {
+      if (typeof requestAnimationFrame === 'function') requestAnimationFrame(() => resolve())
+      else setTimeout(resolve, 16)
+    })
+  }
+  return null
+}
 
 export const wasmMemoryUsage = signal<number | null>(null)
 export const memoryDebugInfo = signal<AggregatedMemoryInfo | null>(null)
@@ -233,6 +265,8 @@ export type Project = {
   name: string
   doc: Doc
   scratch: Doc
+  arrangement: Arrangement
+  savedArrangement: Arrangement | null
   sampleCount: number
   remixOfId: string | null
   isDirty: boolean
@@ -256,6 +290,9 @@ export function getNextUntitledName(): string {
 
 export function createProject(data: Partial<Project> = {}): Project {
   const id = data.id ?? `lm3-project-${createId()}`
+  const arrangement = normalizeArrangement(data.arrangement, data.doc?.code)
+  const generatedCode = compileArrangement(arrangement)
+  arrangement.generatedCode = generatedCode
   const project = signalify({
     serverId: data.serverId ?? null,
     userId: data.userId ?? session.value?.userId ?? null,
@@ -263,15 +300,50 @@ export function createProject(data: Partial<Project> = {}): Project {
     name: data.name ?? getNextUntitledName(),
     doc: createPersistedDoc(id, tokenize, data.doc),
     scratch: createPersistedDoc(`${id}-scratch`, tokenize, data.scratch),
+    arrangement,
+    savedArrangement: data.savedArrangement ? cloneArrangement(data.savedArrangement) : data.isSaved ? cloneArrangement(arrangement) : null,
     sampleCount: data.sampleCount ?? 0,
     remixOfId: data.remixOfId ?? null,
     get isDirty() {
       return this.doc.code !== this.scratch.code
+        || arrangementSignature(this.savedArrangement) !== arrangementSignature(this.arrangement)
     },
     isPublic: data.isPublic ?? false,
     isSaved: data.isSaved ?? false,
   })
+  if (!data.arrangement && !data.doc?.code && project.doc.code && project.doc.code !== generatedCode) {
+    const migrated = normalizeArrangement(undefined, project.doc.code)
+    migrated.generatedCode = compileArrangement(migrated)
+    project.arrangement = migrated
+    project.savedArrangement = data.isSaved ? cloneArrangement(migrated) : null
+    project.scratch.code = migrated.generatedCode
+  }
+  else {
+    project.scratch.code = generatedCode
+    if (!project.doc.code || !data.doc?.code) project.doc.code = generatedCode
+  }
   return project
+}
+
+export function setProjectArrangement(project: Project, arrangement: Arrangement) {
+  const normalized = normalizeArrangement(arrangement, project.doc.code)
+  normalized.generatedCode = compileArrangement(normalized)
+  project.arrangement = normalized
+  project.scratch.code = normalized.generatedCode
+  queueMicrotask(() => {
+    const programContext = programContexts.peek().get(project.id)
+    if (!programContext) return
+    programContext.then(context => {
+      context.fullResync.value = true
+      context.submitChanges()
+    })
+  })
+}
+
+export function updateProjectArrangement(project: Project, updater: (arrangement: Arrangement) => void) {
+  const next = cloneArrangement(project.arrangement)
+  updater(next)
+  setProjectArrangement(project, next)
 }
 
 export const currentProject = computed(() =>
@@ -285,6 +357,8 @@ export const playingProject = computed(() =>
     ? projects.value.find(project => project.id === playingProjectId.value)
     : null
 )
+
+export const transportReady = computed(() => Boolean(ctx.value && currentProjectId.value && currentProject.value))
 
 persistKeyed(
   () => `projects-${session.value?.userId ?? null}`,
@@ -301,6 +375,8 @@ persistKeyed(
       userId: project.userId,
       id: project.id,
       name: project.name,
+      arrangement: project.arrangement,
+      savedArrangement: project.savedArrangement,
       sampleCount: project.sampleCount,
       remixOfId: project.remixOfId,
       isPublic: project.isPublic,
@@ -445,16 +521,12 @@ effect(() => {
 })
 
 async function ensureProgramContexts() {
-  if (!ctx.value) return
+  const c = await getReadyDspContext()
+  const refs = await waitForProjectRefs()
+  if (!refs) return
 
-  const c = ctx.value
-  if (!currentProjectId.value || !currentProject.value) return
-  if (!playingProjectId.value || !playingProject.value) return
-
-  const currentId = currentProjectId.value
-  const playingId = playingProjectId.value
-  const currentCtx = await getProgramContext(c, currentId, { doc: currentProject.value!.scratch })
-  const playingCtx = await getProgramContext(c, playingId, { doc: playingProject.value!.scratch })
+  const currentCtx = await getProgramContext(c, refs.currentId, { doc: refs.currentProject.scratch })
+  const playingCtx = await getProgramContext(c, refs.playingId, { doc: refs.playingProject.scratch })
   batch(() => {
     currentCtx.fullResync.value = true
     playingCtx.fullResync.value = true
@@ -509,9 +581,8 @@ effect(() => {
 
 export const transport = {
   start: async () => {
-    if (!ctx.value) return
-
-    const dsp = ctx.value.dsp
+    const c = await getReadyDspContext()
+    const dsp = c.dsp
     await dsp.state.audioContext.resume()
 
     const contexts = await ensureProgramContexts()
@@ -540,8 +611,8 @@ export const transport = {
     }
   },
   pause: async () => {
-    if (!ctx.value) return
-    const dsp = ctx.value.dsp
+    const c = await getReadyDspContext()
+    const dsp = c.dsp
     const contexts = await ensureProgramContexts()
     if (!contexts) return
     if (isPlaying.value) {
@@ -552,8 +623,8 @@ export const transport = {
     }
   },
   stop: async () => {
-    if (!ctx.value) return
-    const dsp = ctx.value.dsp
+    const c = await getReadyDspContext()
+    const dsp = c.dsp
     const contexts = await ensureProgramContexts()
     if (!contexts) return
     const { currentProgramContext, playingProgramContext } = contexts
@@ -565,8 +636,8 @@ export const transport = {
     await dsp.stop([playingProgramContext.program])
   },
   restart: async () => {
-    if (!ctx.value) return
-    const dsp = ctx.value.dsp
+    const c = await getReadyDspContext()
+    const dsp = c.dsp
     await dsp.state.audioContext.resume()
     const contexts = await ensureProgramContexts()
     if (!contexts) return
@@ -590,8 +661,8 @@ export const transport = {
     }
   },
   beginSeek: async () => {
-    if (!ctx.value) return
-    const dsp = ctx.value.dsp
+    const c = await getReadyDspContext()
+    const dsp = c.dsp
     const contexts = await ensureProgramContexts()
     if (!contexts) return
     isScrubbing.value = true
@@ -599,8 +670,8 @@ export const transport = {
     dsp.pause([contexts.currentProgramContext.program])
   },
   endSeek: async () => {
-    if (!ctx.value) return
-    const dsp = ctx.value.dsp
+    const c = await getReadyDspContext()
+    const dsp = c.dsp
     const contexts = await ensureProgramContexts()
     if (!contexts) return
     if (scrubbingProgramState.value === DspProgramState.Start) {
@@ -612,8 +683,8 @@ export const transport = {
     isScrubbing.value = false
   },
   seek: async (seconds: number) => {
-    if (!ctx.value) return
-    const dsp = ctx.value.dsp
+    const c = await getReadyDspContext()
+    const dsp = c.dsp
     const contexts = await ensureProgramContexts()
     if (!contexts) return
     const sampleRate = contexts.currentProgramContext.latency.value.state.sampleRate
@@ -673,8 +744,8 @@ export const inlineTransport = {
     if (inlineStartInFlight) return
     inlineStartInFlight = true
     try {
-      if (!ctx.value) return
-      const dsp = ctx.value.dsp
+      const c = await getReadyDspContext()
+      const dsp = c.dsp
       await dsp.state.audioContext.resume()
       if (playingContext.value) {
         await transport.stop()
@@ -702,16 +773,16 @@ export const inlineTransport = {
   },
   stop: async () => {
     if (!playingInlineContext.value) return
-    if (!ctx.value) return
-    const dsp = ctx.value.dsp
+    const c = await getReadyDspContext()
+    const dsp = c.dsp
     const { program } = playingInlineContext.value
     playingInlineContext.value = null
     await dsp.stop([program])
   },
   restart: async () => {
     if (!playingInlineContext.value) return
-    if (!ctx.value) return
-    const dsp = ctx.value.dsp
+    const c = await getReadyDspContext()
+    const dsp = c.dsp
     await dsp.state.audioContext.resume()
     await dsp.seek(0, [playingInlineContext.value.program], false)
     await dsp.start([playingInlineContext.value.program])
@@ -778,7 +849,12 @@ export async function deleteProject(project: Project) {
 }
 
 export function discardChanges(project: Project) {
-  project.scratch.code = project.doc.code
+  if (project.savedArrangement) {
+    setProjectArrangement(project, project.savedArrangement)
+  }
+  else {
+    project.scratch.code = project.doc.code
+  }
 }
 
 export async function saveProject(project: Project, values: Partial<Project> = {}) {
@@ -789,6 +865,7 @@ export async function saveProject(project: Project, values: Partial<Project> = {
       if (values.name != null) project.name = values.name
       if (values.isPublic != null) project.isPublic = values.isPublic
       project.doc.code = project.scratch.code
+      project.savedArrangement = cloneArrangement(project.arrangement)
       project.isSaved = true
     })
   }
@@ -811,7 +888,7 @@ persist('workspace', () => {
   settings,
 }), data => {
   skipAnimations.value += 1
-  mainPage.value = data.mainPage ?? 'browse'
+  mainPage.value = data.mainPage ?? 'editor'
   sidebarTab.value = data.sidebarTab ?? null
   currentProjectId.value = data.currentProjectId ?? null
   Object.assign(settings, data.settings ?? {})
@@ -1287,8 +1364,10 @@ effect(() => {
   // Clamp to [0,1]
   gainA = Math.max(0, Math.min(1, gainA))
   gainB = Math.max(0, Math.min(1, gainB))
-  c.dsp.setProgramGain(a.program, gainA)
-  c.dsp.setProgramGain(b.program, gainB)
+  if ('setProgramGain' in c.dsp && typeof c.dsp.setProgramGain === 'function') {
+    c.dsp.setProgramGain(a.program, gainA)
+    c.dsp.setProgramGain(b.program, gainB)
+  }
 })
 
 export const bpmOverride = signal(0)

@@ -21,7 +21,15 @@ import type {
   Users,
 } from '../deno/types.ts'
 import { tokenize } from './lib/tokenizer.ts'
-import { busyLock, busyUnlock, createProject, type Project as StateProject, projects, session } from './state.ts'
+import {
+  busyLock,
+  busyUnlock,
+  createProject,
+  type Project as StateProject,
+  projects,
+  session,
+  setProjectArrangement,
+} from './state.ts'
 
 export const projectsLoading = signal(false)
 
@@ -191,6 +199,7 @@ export class API {
         body: JSON.stringify({
           name: project.name,
           code: project.scratch.code,
+          arrangement: project.arrangement,
           isPublic: project.isPublic,
           remixOfId: project.remixOfId,
         } satisfies CreateProjectRequest),
@@ -213,6 +222,7 @@ export class API {
         body: JSON.stringify({
           name: project.name,
           code: project.scratch.code,
+          arrangement: project.arrangement,
           isPublic: project.isPublic,
           remixOfId: project.remixOfId,
         } satisfies UpdateProjectRequest),
@@ -342,6 +352,10 @@ queueMicrotask(() => {
             const found = projects.value.find(p => p.serverId === project.id)
             if (found) {
               found.doc.code = project.code
+              if (project.arrangement) {
+                setProjectArrangement(found, project.arrangement)
+                found.savedArrangement = project.arrangement
+              }
               if (!found.scratch.code) found.scratch.code = project.code
               continue
             }
@@ -354,6 +368,8 @@ queueMicrotask(() => {
               id: project.id,
               name: project.name,
               doc,
+              arrangement: project.arrangement,
+              savedArrangement: project.arrangement,
               remixOfId: project.remixOf?.id,
               isPublic: project.isPublic,
               isSaved: true,

@@ -1,6 +1,6 @@
 import { CornersOutIcon } from '@phosphor-icons/react'
-import { computed, useSignal } from '@preact/signals'
-import { draw, type Header } from 'editor'
+import { computed } from '@preact/signals'
+import { draw } from 'editor'
 import { memoryDebug } from 'engine'
 import { useEffect } from 'preact/hooks'
 import { isMobile } from 'utils/is-mobile'
@@ -22,26 +22,23 @@ import {
   tickCount,
   wasmMemoryUsage,
 } from '../state.ts'
-import { createHeader } from '../widgets/header.ts'
 import { AboutMain } from './AboutMain.tsx'
 import { AdminMain } from './AdminMain.tsx'
 import { ArtistMain } from './ArtistMain.tsx'
 import { BrowseMain } from './BrowseMain.tsx'
 import { DJMain } from './DJMain.tsx'
+import { Daw } from './Daw.tsx'
 import { DocsMain } from './DocsMain.tsx'
 import { Editor } from './Editor.tsx'
 import { HelpMain } from './HelpMain.tsx'
 import { Intro } from './Intro.tsx'
 import { Landing } from './Landing.tsx'
-import { Nav } from './Nav.tsx'
 import { ProjectMain } from './ProjectMain.tsx'
 import { Sidebar } from './Sidebar.tsx'
 import { TutorialsMain } from './TutorialsMain.tsx'
 import { WallOfSounds } from './WallOfSounds.tsx'
 
 export const App = () => {
-  const header = useSignal<Header | null>(null)
-
   useEffect(() => () => ctx.value?.dispose(), [])
 
   useReactiveEffect(() => {
@@ -98,11 +95,6 @@ export const App = () => {
       </svg>
     `
   }, [])
-
-  useReactiveEffect(() => {
-    if (!ctx.value) return
-    header.value = createHeader(ctx.value, currentProgramContext.value)
-  })
 
   useEffect(() => {
     let rafId: ReturnType<typeof requestAnimationFrame>
@@ -182,26 +174,7 @@ export const App = () => {
                   : mainPage.value === 'dj'
                   ? <DJMain />
                   : mainPage.value === 'editor'
-                  ? (
-                    <>
-                      <div class="relative">
-                        <Nav />
-                      </div>
-                      {currentProgramContext.value?.doc && (
-                        <div class="flex-1 min-w-0 h-full overflow-hidden">
-                          <Editor
-                            doc={computed(() => currentProgramContext.value?.doc ?? null)}
-                            header={header.value}
-                          />
-                          <button onClick={() => settings.fullSize = !settings.fullSize}
-                            class="absolute top-14 right-5 text-white/40 hover:text-white"
-                          >
-                            <CornersOutIcon />
-                          </button>
-                        </div>
-                      )}
-                    </>
-                  )
+                  ? <Daw />
                   : null}
               </div>
               {showIntro.value && <Intro />}

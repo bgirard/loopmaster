@@ -1,13 +1,8 @@
 import {
   BookOpenIcon,
-  ChalkboardTeacherIcon,
   GearSixIcon,
-  GlobeIcon,
-  HeadphonesIcon,
-  MagicWandIcon,
   MagnifyingGlassIcon,
   QuestionIcon,
-  SquaresFourIcon,
   UserIcon,
   UsersThreeIcon,
   WaveformIcon,
@@ -20,12 +15,9 @@ import { Link } from '../router.tsx'
 import { docsSearch, primaryColor, session, sidebarOpen, type SidebarTab, sidebarTab } from '../state.ts'
 import { Account } from './Account.tsx'
 import { Admin } from './Admin.tsx'
-import { AI } from './AI.tsx'
 import { Artist } from './Artist.tsx'
-import { Browse } from './Browse.tsx'
 import { Bytecode } from './Bytecode.tsx'
 import { Console } from './Console.tsx'
-import { DJ } from './DJ.tsx'
 import { Docs } from './Docs.tsx'
 import { ExportAudio } from './ExportAudio.tsx'
 import { Help } from './Help.tsx'
@@ -35,8 +27,6 @@ import { Settings } from './Settings.tsx'
 import { ShareProject } from './ShareProject.tsx'
 import { Themes } from './Themes.tsx'
 import { Tools } from './Tools.tsx'
-import { Tutorials } from './Tutorials.tsx'
-import { WallOfSounds } from './WallOfSounds.tsx'
 
 const sidebarButtonClass =
   'select-none p-4 flex items-center justify-center hover:bg-white/5 focus:bg-white/5 outline-none text-neutral-400 text-sm'
@@ -79,18 +69,11 @@ export const Sidebar = () => (
       </div>
       <div class="flex flex-col items-stretch justify-start h-full overflow-y-scroll overflow-x-hidden">
         <SidebarTabLink icon={<WaveformIcon size={16} />} tab="projects" title="Projects" />
-        <SidebarTabLink icon={<HeadphonesIcon size={16} />} tab="dj" title="DJ" />
         <SidebarTabLink icon={<WrenchIcon size={16} />} tab="tools" title="Tools" />
         <SidebarTabButton icon={<GearSixIcon size={16} />} tab="settings" title="Settings" />
-        <SidebarTabLink icon={<GlobeIcon size={16} />} tab="browse/newest" title="Browse" />
         <SidebarTabButton icon={<UserIcon size={16} />} tab="account" title="Account" />
         <SidebarTabLink icon={<BookOpenIcon size={16} />} tab="docs" title="Docs" />
-        <SidebarTabLink icon={<ChalkboardTeacherIcon size={16} />} tab="tutorials" title="Tutorials" />
         <SidebarTabLink icon={<QuestionIcon size={16} />} tab="help" title="Help" />
-        {session.value?.isAdmin && (
-          <SidebarTabLink icon={<SquaresFourIcon size={16} />} tab="wall-of-sounds" title="Wall of Sounds" />
-        )}
-        {session.value?.isAdmin && <SidebarTabLink icon={<MagicWandIcon size={16} />} tab="ai" title="AI" />}
         {session.value?.isAdmin && <SidebarTabLink icon={<UsersThreeIcon size={16} />} tab="admin" title="Admin" />}
         <div class="flex-1" />
         <Link to="https://whop.com/loopmaster" title="Support me on Whop" target="_blank"
@@ -109,10 +92,9 @@ export const Sidebar = () => (
       <div class="flex flex-col w-full h-full max-h-[100dvh]">
         <div class={`select-none pl-2 py-1.5 w-full h-[50px] flex items-end border-b-2 border-[${primaryColor.value}]`}>
           <h2 class="text-sm font-bold w-full">
-            {{
+            {({
               '': '',
               'projects': 'Projects',
-              'browse': 'Browse',
               'bytecode': 'Bytecode',
               'console': 'Console',
               'themes': 'Themes',
@@ -134,12 +116,9 @@ export const Sidebar = () => (
                     placeholder="Search docs..." />
                 </div>
               ),
-              'tutorials': 'Tutorials',
               'admin': 'Admin',
               'artist': '',
-              'ai': 'AI',
-              'dj': 'DJ',
-            }[sidebarTab.value ?? ''] ?? ''}
+            } as Record<string, preact.ComponentChildren>)[sidebarTab.value ?? ''] ?? ''}
           </h2>
         </div>
         <div class="flex-1 min-h-0 flex flex-col">
@@ -166,18 +145,10 @@ export const Sidebar = () => (
               ? <Help />
               : sidebarTab.value === 'docs'
               ? <Docs />
-              : sidebarTab.value === 'tutorials'
-              ? <Tutorials />
-              : sidebarTab.value === 'browse'
-              ? <Browse />
               : sidebarTab.value === 'admin'
               ? <Admin />
               : sidebarTab.value === 'artist'
               ? <Artist />
-              : sidebarTab.value === 'ai'
-              ? <AI />
-              : sidebarTab.value === 'dj'
-              ? <DJ />
               : ''}
           </div>
         </div>

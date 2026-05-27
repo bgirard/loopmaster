@@ -244,22 +244,17 @@ async function createDspProgramContextImpl(
         }
 
         if (!shouldSkipSyncPreview.value) {
-          dsp.core.preview.setControlCompileSnapshot(ccs)
+          dsp.core.preview.setCode(code, { projectId: opts.projectId ?? null })
           const previewResult = dsp.core.preview.runPreview(opts.vmId)
           batch(() => {
             histories.value = previewResult.histories
             userCallHistories.value = previewResult.userCallHistories
           })
         }
-        if (shouldSkipSyncPreview.value) {
-          await program.setControlCompileSnapshotFast(ccs)
-        }
-        else {
-          await program.setControlCompileSnapshot(ccs, {
-            fullResync: forceFullResync,
-            projectId: opts.projectId ?? null,
-          })
-        }
+        await program.setCode(code, {
+          fullResync: forceFullResync,
+          projectId: opts.projectId ?? null,
+        })
         // Re-map currently cached histories to the new source map immediately.
         // Without this, user-call widgets can stay mapped to the previous program until transport restart.
         program.reapplySourceMapping(ccs)
@@ -290,7 +285,9 @@ export async function createDspContext() {
   }
   const dsp = await createDsp(dspState)
   effect(() => {
-    void dsp.setSyncChanges(settings.syncChanges)
+    if ('setSyncChanges' in dsp && typeof dsp.setSyncChanges === 'function') {
+      void dsp.setSyncChanges(settings.syncChanges)
+    }
   })
 
   const targetSeconds = signal(0)

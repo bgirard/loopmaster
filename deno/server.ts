@@ -379,6 +379,7 @@ app.post('/api/projects', async c => {
       id: newId(),
       name: parsed.data.name,
       code: parsed.data.code,
+      arrangement: parsed.data.arrangement,
       userId: session.userId,
       artistName: session.artistName,
       likes: [],
