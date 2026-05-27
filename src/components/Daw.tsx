@@ -1089,4 +1089,12 @@ function getSpectrogramWorker(): Worker {
   return spectrogramWorker
 }
 
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    spectrogramWorker?.terminate()
+    spectrogramWorker = null
+    spectrogramCallbacks.clear()
+  })
+}
+
 const palette = ['#22d3ee', '#a78bfa', '#fb7185', '#34d399', '#facc15', '#f472b6']

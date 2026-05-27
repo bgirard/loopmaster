@@ -40000,7 +40000,7 @@ var fft_default = (() => {
 		var ENVIRONMENT_IS_NODE = typeof process == "object" && process.versions?.node && process.type != "renderer";
 		if (ENVIRONMENT_IS_NODE) {
 			const { createRequire } = await __vitePreload(async () => {
-				const { createRequire: createRequire$1 } = await import("./__vite-browser-external-Bev4ocmY.js").then(__toDynamicImportESM(1));
+				const { createRequire: createRequire$1 } = await import("./__vite-browser-external-CdKovbN7.js").then(__toDynamicImportESM(1));
 				return { createRequire: createRequire$1 };
 			}, []);
 			var require$1 = createRequire(import.meta.url);
@@ -52408,7 +52408,7 @@ function getSpectrogramWorker() {
 	if (spectrogramWorker) return spectrogramWorker;
 	spectrogramWorker = new Worker(new URL(
 		/* @vite-ignore */
-		"/assets/spectrogram-worker-BqzwmaSv.js",
+		"/assets/spectrogram-worker-B-M1SiZ0.js",
 		"" + import.meta.url
 	), { type: "module" });
 	spectrogramWorker.onmessage = (event) => {
@@ -60014,4 +60014,4 @@ const App = () => {
 J(/* @__PURE__ */ u(App, {}), document.getElementById("app"));
 export { __commonJSMin as t };
 
-//# sourceMappingURL=index-D3EJxkSa.js.map
+//# sourceMappingURL=index-D-JWsZ5o.js.map

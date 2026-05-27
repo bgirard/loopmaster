@@ -48,390 +48,6 @@
 			"exportRuntime": true
 		}
 	};
-	const MINI_HISTORY_SIZE = 2048;
-	const MINI_HISTORY_HEADER_SIZE = 1;
-	const MINI_HISTORY_ENTRY_SIZE = 6;
-	const MINI_ARRAY_HEADER_SIZE = 2;
-	const MINI_HEADER_SIZE = 1;
-	const MINI_MAX_EVENT_VALUES = 16;
-	let MiniOp = /* @__PURE__ */ function(MiniOp$1) {
-		MiniOp$1[MiniOp$1["Event"] = 0] = "Event";
-		MiniOp$1[MiniOp$1["GroupStart"] = 1] = "GroupStart";
-		MiniOp$1[MiniOp$1["GroupEnd"] = 2] = "GroupEnd";
-		MiniOp$1[MiniOp$1["Rest"] = 3] = "Rest";
-		MiniOp$1[MiniOp$1["Octave"] = 4] = "Octave";
-		MiniOp$1[MiniOp$1["Transpose"] = 5] = "Transpose";
-		MiniOp$1[MiniOp$1["Scale"] = 6] = "Scale";
-		MiniOp$1[MiniOp$1["CycleStart"] = 7] = "CycleStart";
-		MiniOp$1[MiniOp$1["CycleEnd"] = 8] = "CycleEnd";
-		MiniOp$1[MiniOp$1["Swing"] = 9] = "Swing";
-		return MiniOp$1;
-	}({});
-	const MINI_GROUP_START_SIZE = 13;
-	const MINI_GROUP_END_SIZE = 1;
-	const MINI_REST_SIZE = 1;
-	const MINI_OCTAVE_SIZE = 2;
-	const MINI_TRANSPOSE_SIZE = 2;
-	const MINI_SCALE_SIZE = 3;
-	const MINI_CYCLE_START_SIZE = 4;
-	const MINI_CYCLE_END_SIZE = 1;
-	const MINI_EVENT_BASE_SIZE = 12 + MINI_MAX_EVENT_VALUES;
-	const MINI_SWING_SIZE = 2;
-	function computePeaks(ch0, w$1) {
-		const len = ch0.length | 0;
-		const outW = Math.max(1, w$1 | 0);
-		const out = new Float32Array(outW * 2);
-		if (len <= 0) {
-			out.fill(0);
-			return out;
-		}
-		for (let i$1 = 0; i$1 < outW; i$1++) {
-			const from = Math.floor(i$1 * len / outW);
-			const to = Math.floor((i$1 + 1) * len / outW);
-			const a$1 = Math.max(0, Math.min(len - 1, from));
-			const b$1 = Math.max(a$1 + 1, Math.min(len, to));
-			let mn = ch0[a$1] ?? 0;
-			let mx = mn;
-			for (let j$1 = a$1 + 1; j$1 < b$1; j$1++) {
-				const v$1 = ch0[j$1] ?? 0;
-				if (v$1 < mn) mn = v$1;
-				if (v$1 > mx) mx = v$1;
-			}
-			const base = i$1 * 2;
-			out[base] = mn;
-			out[base + 1] = mx;
-		}
-		return out;
-	}
-	const clamp$1 = (v$1, lo, hi) => Math.max(lo, Math.min(hi, v$1));
-	function detectSlices(samples, threshold, max) {
-		const m$1 = Math.max(1, max | 0);
-		const points = new Int32Array(m$1);
-		const len = samples.length | 0;
-		if (len <= 0) return {
-			points,
-			count: 0
-		};
-		let count = 0;
-		const thr = clamp$1(threshold, 0, 1);
-		const desiredBuckets = Math.max(256, Math.min(16384, m$1 * 16 | 0));
-		const maxBucketsByMinSize = Math.max(1, Math.floor(len / 32));
-		const bucketCount = Math.max(1, Math.min(len, desiredBuckets, maxBucketsByMinSize));
-		if (bucketCount <= 1) {
-			points[0] = 0;
-			return {
-				points,
-				count: 1
-			};
-		}
-		const peaks = computePeaks(samples, bucketCount);
-		const rise = new Float32Array(bucketCount);
-		let riseMax = 0;
-		let prevAmp = 0;
-		for (let i$1 = 0; i$1 < bucketCount; i$1++) {
-			const base = i$1 * 2;
-			const mn = peaks[base] ?? 0;
-			const mx = peaks[base + 1] ?? 0;
-			const amp = Math.max(Math.abs(mn), Math.abs(mx));
-			const d$1 = i$1 === 0 ? 0 : Math.max(0, amp - prevAmp);
-			rise[i$1] = d$1;
-			if (d$1 > riseMax) riseMax = d$1;
-			prevAmp = amp;
-		}
-		if (riseMax <= 0) {
-			points[0] = 0;
-			return {
-				points,
-				count: 1
-			};
-		}
-		const minRise = riseMax * (.02 + thr * .28);
-		const noveltyMin = riseMax * (.01 + thr * .18);
-		const ratioMin = thr * .9;
-		const minDistanceBuckets = 1 + (thr * 24 | 0);
-		const rearmLevel = riseMax * (.006 + thr * .06);
-		const cooldownFrames = 1 + (thr * 10 | 0);
-		const fastCoeff = .25;
-		const slowCoeff = .02;
-		let fast = rise[0] ?? 0;
-		let slow = fast;
-		let prev2 = 0;
-		let prev1 = 0;
-		let prevFast1 = fast;
-		let prevSlow1 = slow;
-		let lastPeakBucket = -1073741823;
-		let armed = true;
-		let cooldown = 0;
-		let mg = 0;
-		const bucketStart = (b$1) => Math.floor(b$1 * len / bucketCount);
-		for (let frame = 1; frame < bucketCount && count < m$1; frame++) {
-			const e$1 = rise[frame] ?? 0;
-			fast += (e$1 - fast) * fastCoeff;
-			slow += (e$1 - slow) * slowCoeff;
-			const novelty = Math.max(0, fast - slow);
-			const release = .995 + thr * .01;
-			mg *= release;
-			const mgMul = 1 + mg * (10 + thr * 12);
-			const effMinRise = minRise * mgMul;
-			const effNoveltyMin = noveltyMin * mgMul;
-			const baseMinDistanceBuckets = Math.max(2, Math.floor(minDistanceBuckets * (1 + mg * 2)));
-			const effMinDistanceBuckets = count <= 2 ? Math.max(baseMinDistanceBuckets, 4 + (thr * 8 | 0)) : baseMinDistanceBuckets;
-			if (!armed && novelty <= rearmLevel) armed = true;
-			if (cooldown > 0) cooldown--;
-			if (frame >= 2) {
-				if (prev1 > prev2 && prev1 >= novelty) {
-					const posBucket = frame - 1 | 0;
-					const bucketDelta = posBucket - lastPeakBucket;
-					const base = Math.max(prevSlow1, riseMax * 1e-5);
-					const ratio = prevFast1 / base;
-					if (armed && cooldown <= 0 && bucketDelta >= effMinDistanceBuckets && prevFast1 >= effMinRise && ratio >= 1 + ratioMin && prev1 >= effNoveltyMin) {
-						const s$1 = bucketStart(posBucket);
-						if (s$1 > (count > 0 ? points[count - 1] ?? 0 : -1)) {
-							points[count++] = s$1;
-							lastPeakBucket = posBucket;
-							armed = false;
-							cooldown = cooldownFrames;
-							mg = Math.min(1, mg + .75);
-						}
-					}
-				}
-			}
-			prev2 = prev1;
-			prev1 = novelty;
-			prevFast1 = fast;
-			prevSlow1 = slow;
-		}
-		if (count <= 0) {
-			points[0] = 0;
-			return {
-				points,
-				count: 1
-			};
-		}
-		return {
-			points,
-			count
-		};
-	}
-	var SampleManager = class {
-		samples = /* @__PURE__ */ new Map();
-		sampleVersion = /* @__PURE__ */ new Map();
-		sliceCache = /* @__PURE__ */ new Map();
-		freesoundIds = /* @__PURE__ */ new Map();
-		recordRequests = /* @__PURE__ */ new Map();
-		nextHandle = 1;
-		getSampleVersion(handle) {
-			return this.sampleVersion.get(handle) ?? 0;
-		}
-		bumpVersion(handle) {
-			this.sampleVersion.set(handle, (this.sampleVersion.get(handle) ?? 0) + 1);
-		}
-		registerFreesound(id) {
-			for (const [handle$1, fsId] of this.freesoundIds.entries()) if (fsId === id) return handle$1;
-			const handle = this.nextHandle++;
-			this.freesoundIds.set(handle, id);
-			this.samples.set(handle, {
-				id: handle,
-				channels: [],
-				length: 0,
-				sampleRate: 44100,
-				ready: false
-			});
-			return handle;
-		}
-		ensureFreesoundHandle(handle, freesoundId) {
-			if (this.samples.has(handle)) return;
-			this.freesoundIds.set(handle, freesoundId);
-			this.samples.set(handle, {
-				id: handle,
-				channels: [],
-				length: 0,
-				sampleRate: 44100,
-				ready: false
-			});
-		}
-		registerRecord(projectId, seconds, callbackId) {
-			const key = `${projectId ?? ""}\0${seconds}\0${callbackId}`;
-			for (const [handle$1, req] of this.recordRequests.entries()) if (`${req.projectId ?? ""}\0${req.seconds}\0${req.callbackId}` === key) return handle$1;
-			const handle = this.nextHandle++;
-			this.recordRequests.set(handle, {
-				projectId,
-				seconds,
-				callbackId
-			});
-			this.samples.set(handle, {
-				id: handle,
-				channels: [],
-				length: 0,
-				sampleRate: 44100,
-				ready: false
-			});
-			return handle;
-		}
-		ensureRecordHandle(handle, seconds, callbackId) {
-			if (this.samples.has(handle)) return;
-			this.recordRequests.set(handle, {
-				projectId: null,
-				seconds,
-				callbackId
-			});
-			this.samples.set(handle, {
-				id: handle,
-				channels: [],
-				length: 0,
-				sampleRate: 44100,
-				ready: false
-			});
-		}
-		getFreesoundId(handle) {
-			return this.freesoundIds.get(handle);
-		}
-		ensureInlineHandle(handle) {
-			if (this.samples.has(handle)) return;
-			this.samples.set(handle, {
-				id: handle,
-				channels: [],
-				length: 0,
-				sampleRate: 44100,
-				ready: false
-			});
-		}
-		registerEspeak() {
-			const handle = this.nextHandle++;
-			this.samples.set(handle, {
-				id: handle,
-				channels: [],
-				length: 0,
-				sampleRate: 44100,
-				ready: false
-			});
-			return handle;
-		}
-		registerInlineSample(channels, sampleRate$1) {
-			const handle = this.nextHandle++;
-			const copiedChannels = channels.map((ch) => new Float32Array(ch));
-			this.samples.set(handle, {
-				id: handle,
-				channels: copiedChannels,
-				length: copiedChannels[0]?.length ?? 0,
-				sampleRate: sampleRate$1,
-				ready: copiedChannels.length > 0 && (copiedChannels[0]?.length ?? 0) > 0
-			});
-			this.bumpVersion(handle);
-			return handle;
-		}
-		getRecordRequest(handle) {
-			return this.recordRequests.get(handle);
-		}
-		setSampleData(handle, channels, sampleRate$1) {
-			const sample = this.samples.get(handle);
-			if (!sample) return;
-			sample.channels = channels;
-			sample.length = channels[0]?.length ?? 0;
-			sample.sampleRate = sampleRate$1;
-			sample.ready = channels.length > 0 && sample.length > 0;
-			sample.error = void 0;
-			this.bumpVersion(handle);
-		}
-		setSampleError(handle, error$1) {
-			const sample = this.samples.get(handle);
-			if (!sample) return;
-			sample.error = error$1;
-			sample.ready = false;
-			this.bumpVersion(handle);
-		}
-		recordSample(handle, audioData, sampleRate$1) {
-			const sample = this.samples.get(handle);
-			if (!sample) return;
-			sample.channels = audioData.map((ch) => new Float32Array(ch));
-			sample.length = audioData[0]?.length ?? 0;
-			sample.sampleRate = sampleRate$1;
-			sample.ready = sample.channels.length > 0 && sample.length > 0;
-			this.bumpVersion(handle);
-		}
-		getSample(handle) {
-			return this.samples.get(handle) ?? null;
-		}
-		getSlices(handle, threshold) {
-			const sample = this.samples.get(handle);
-			if (!sample || !sample.ready || sample.channels.length === 0) return {
-				points: new Int32Array(1),
-				count: 1
-			};
-			let cacheMap = this.sliceCache.get(handle);
-			if (!cacheMap) {
-				cacheMap = /* @__PURE__ */ new Map();
-				this.sliceCache.set(handle, cacheMap);
-			}
-			const thresholdKey = Math.round(threshold * 1e3);
-			let cached = cacheMap.get(thresholdKey);
-			if (cached) return {
-				points: cached.points,
-				count: cached.count
-			};
-			const result = detectSlices(sample.channels[0], threshold, 256);
-			cached = {
-				threshold,
-				points: result.points,
-				count: result.count
-			};
-			cacheMap.set(thresholdKey, cached);
-			return {
-				points: result.points,
-				count: result.count
-			};
-		}
-		readChunk(handle, channel, offset, length) {
-			const sample = this.samples.get(handle);
-			if (!sample || !sample.ready) return new Float32Array(length);
-			const ch = sample.channels[channel];
-			if (!ch) return new Float32Array(length);
-			const start = Math.max(0, Math.min(offset | 0, ch.length));
-			const end = Math.max(start, Math.min(start + length, ch.length));
-			if (end - start === 0) return new Float32Array(length);
-			const result = new Float32Array(length);
-			result.set(ch.subarray(start, end));
-			return result;
-		}
-		areAllSamplesReady() {
-			for (const sample of this.samples.values()) if (!sample.ready) return false;
-			return true;
-		}
-		getRequiredSamples() {
-			return Array.from(this.samples.keys()).filter((handle) => {
-				const sample = this.samples.get(handle);
-				return sample && !sample.ready;
-			});
-		}
-		getSampleMemoryInfo() {
-			let totalChannelBytes = 0;
-			for (const sample of this.samples.values()) for (const ch of sample.channels) totalChannelBytes += ch.byteLength;
-			return {
-				handleCount: this.samples.size,
-				totalChannelBytes
-			};
-		}
-		clear() {
-			this.samples.clear();
-			this.sampleVersion.clear();
-			this.sliceCache.clear();
-			this.freesoundIds.clear();
-			this.recordRequests.clear();
-			this.nextHandle = 1;
-		}
-		clearHandle(handle) {
-			const sample = this.samples.get(handle);
-			if (sample) {
-				sample.channels = [];
-				sample.length = 0;
-				sample.ready = false;
-				sample.error = void 0;
-			}
-			this.bumpVersion(handle);
-			this.sliceCache.delete(handle);
-		}
-	};
-	const sampleManager = new SampleManager();
 	const AUDIO_VM_INFO_STRIDE = 29;
 	const HISTORY_META_STRIDE = 20;
 	let AudioVmOp = /* @__PURE__ */ function(AudioVmOp$1) {
@@ -13116,6 +12732,390 @@
 			usesInput: false
 		}
 	];
+	const MINI_HISTORY_SIZE = 2048;
+	const MINI_HISTORY_HEADER_SIZE = 1;
+	const MINI_HISTORY_ENTRY_SIZE = 6;
+	const MINI_ARRAY_HEADER_SIZE = 2;
+	const MINI_HEADER_SIZE = 1;
+	const MINI_MAX_EVENT_VALUES = 16;
+	let MiniOp = /* @__PURE__ */ function(MiniOp$1) {
+		MiniOp$1[MiniOp$1["Event"] = 0] = "Event";
+		MiniOp$1[MiniOp$1["GroupStart"] = 1] = "GroupStart";
+		MiniOp$1[MiniOp$1["GroupEnd"] = 2] = "GroupEnd";
+		MiniOp$1[MiniOp$1["Rest"] = 3] = "Rest";
+		MiniOp$1[MiniOp$1["Octave"] = 4] = "Octave";
+		MiniOp$1[MiniOp$1["Transpose"] = 5] = "Transpose";
+		MiniOp$1[MiniOp$1["Scale"] = 6] = "Scale";
+		MiniOp$1[MiniOp$1["CycleStart"] = 7] = "CycleStart";
+		MiniOp$1[MiniOp$1["CycleEnd"] = 8] = "CycleEnd";
+		MiniOp$1[MiniOp$1["Swing"] = 9] = "Swing";
+		return MiniOp$1;
+	}({});
+	const MINI_GROUP_START_SIZE = 13;
+	const MINI_GROUP_END_SIZE = 1;
+	const MINI_REST_SIZE = 1;
+	const MINI_OCTAVE_SIZE = 2;
+	const MINI_TRANSPOSE_SIZE = 2;
+	const MINI_SCALE_SIZE = 3;
+	const MINI_CYCLE_START_SIZE = 4;
+	const MINI_CYCLE_END_SIZE = 1;
+	const MINI_EVENT_BASE_SIZE = 12 + MINI_MAX_EVENT_VALUES;
+	const MINI_SWING_SIZE = 2;
+	function computePeaks(ch0, w$1) {
+		const len = ch0.length | 0;
+		const outW = Math.max(1, w$1 | 0);
+		const out = new Float32Array(outW * 2);
+		if (len <= 0) {
+			out.fill(0);
+			return out;
+		}
+		for (let i$1 = 0; i$1 < outW; i$1++) {
+			const from = Math.floor(i$1 * len / outW);
+			const to = Math.floor((i$1 + 1) * len / outW);
+			const a$1 = Math.max(0, Math.min(len - 1, from));
+			const b$1 = Math.max(a$1 + 1, Math.min(len, to));
+			let mn = ch0[a$1] ?? 0;
+			let mx = mn;
+			for (let j$1 = a$1 + 1; j$1 < b$1; j$1++) {
+				const v$1 = ch0[j$1] ?? 0;
+				if (v$1 < mn) mn = v$1;
+				if (v$1 > mx) mx = v$1;
+			}
+			const base = i$1 * 2;
+			out[base] = mn;
+			out[base + 1] = mx;
+		}
+		return out;
+	}
+	const clamp$1 = (v$1, lo, hi) => Math.max(lo, Math.min(hi, v$1));
+	function detectSlices(samples, threshold, max) {
+		const m$1 = Math.max(1, max | 0);
+		const points = new Int32Array(m$1);
+		const len = samples.length | 0;
+		if (len <= 0) return {
+			points,
+			count: 0
+		};
+		let count = 0;
+		const thr = clamp$1(threshold, 0, 1);
+		const desiredBuckets = Math.max(256, Math.min(16384, m$1 * 16 | 0));
+		const maxBucketsByMinSize = Math.max(1, Math.floor(len / 32));
+		const bucketCount = Math.max(1, Math.min(len, desiredBuckets, maxBucketsByMinSize));
+		if (bucketCount <= 1) {
+			points[0] = 0;
+			return {
+				points,
+				count: 1
+			};
+		}
+		const peaks = computePeaks(samples, bucketCount);
+		const rise = new Float32Array(bucketCount);
+		let riseMax = 0;
+		let prevAmp = 0;
+		for (let i$1 = 0; i$1 < bucketCount; i$1++) {
+			const base = i$1 * 2;
+			const mn = peaks[base] ?? 0;
+			const mx = peaks[base + 1] ?? 0;
+			const amp = Math.max(Math.abs(mn), Math.abs(mx));
+			const d$1 = i$1 === 0 ? 0 : Math.max(0, amp - prevAmp);
+			rise[i$1] = d$1;
+			if (d$1 > riseMax) riseMax = d$1;
+			prevAmp = amp;
+		}
+		if (riseMax <= 0) {
+			points[0] = 0;
+			return {
+				points,
+				count: 1
+			};
+		}
+		const minRise = riseMax * (.02 + thr * .28);
+		const noveltyMin = riseMax * (.01 + thr * .18);
+		const ratioMin = thr * .9;
+		const minDistanceBuckets = 1 + (thr * 24 | 0);
+		const rearmLevel = riseMax * (.006 + thr * .06);
+		const cooldownFrames = 1 + (thr * 10 | 0);
+		const fastCoeff = .25;
+		const slowCoeff = .02;
+		let fast = rise[0] ?? 0;
+		let slow = fast;
+		let prev2 = 0;
+		let prev1 = 0;
+		let prevFast1 = fast;
+		let prevSlow1 = slow;
+		let lastPeakBucket = -1073741823;
+		let armed = true;
+		let cooldown = 0;
+		let mg = 0;
+		const bucketStart = (b$1) => Math.floor(b$1 * len / bucketCount);
+		for (let frame = 1; frame < bucketCount && count < m$1; frame++) {
+			const e$1 = rise[frame] ?? 0;
+			fast += (e$1 - fast) * fastCoeff;
+			slow += (e$1 - slow) * slowCoeff;
+			const novelty = Math.max(0, fast - slow);
+			const release = .995 + thr * .01;
+			mg *= release;
+			const mgMul = 1 + mg * (10 + thr * 12);
+			const effMinRise = minRise * mgMul;
+			const effNoveltyMin = noveltyMin * mgMul;
+			const baseMinDistanceBuckets = Math.max(2, Math.floor(minDistanceBuckets * (1 + mg * 2)));
+			const effMinDistanceBuckets = count <= 2 ? Math.max(baseMinDistanceBuckets, 4 + (thr * 8 | 0)) : baseMinDistanceBuckets;
+			if (!armed && novelty <= rearmLevel) armed = true;
+			if (cooldown > 0) cooldown--;
+			if (frame >= 2) {
+				if (prev1 > prev2 && prev1 >= novelty) {
+					const posBucket = frame - 1 | 0;
+					const bucketDelta = posBucket - lastPeakBucket;
+					const base = Math.max(prevSlow1, riseMax * 1e-5);
+					const ratio = prevFast1 / base;
+					if (armed && cooldown <= 0 && bucketDelta >= effMinDistanceBuckets && prevFast1 >= effMinRise && ratio >= 1 + ratioMin && prev1 >= effNoveltyMin) {
+						const s$1 = bucketStart(posBucket);
+						if (s$1 > (count > 0 ? points[count - 1] ?? 0 : -1)) {
+							points[count++] = s$1;
+							lastPeakBucket = posBucket;
+							armed = false;
+							cooldown = cooldownFrames;
+							mg = Math.min(1, mg + .75);
+						}
+					}
+				}
+			}
+			prev2 = prev1;
+			prev1 = novelty;
+			prevFast1 = fast;
+			prevSlow1 = slow;
+		}
+		if (count <= 0) {
+			points[0] = 0;
+			return {
+				points,
+				count: 1
+			};
+		}
+		return {
+			points,
+			count
+		};
+	}
+	var SampleManager = class {
+		samples = /* @__PURE__ */ new Map();
+		sampleVersion = /* @__PURE__ */ new Map();
+		sliceCache = /* @__PURE__ */ new Map();
+		freesoundIds = /* @__PURE__ */ new Map();
+		recordRequests = /* @__PURE__ */ new Map();
+		nextHandle = 1;
+		getSampleVersion(handle) {
+			return this.sampleVersion.get(handle) ?? 0;
+		}
+		bumpVersion(handle) {
+			this.sampleVersion.set(handle, (this.sampleVersion.get(handle) ?? 0) + 1);
+		}
+		registerFreesound(id) {
+			for (const [handle$1, fsId] of this.freesoundIds.entries()) if (fsId === id) return handle$1;
+			const handle = this.nextHandle++;
+			this.freesoundIds.set(handle, id);
+			this.samples.set(handle, {
+				id: handle,
+				channels: [],
+				length: 0,
+				sampleRate: 44100,
+				ready: false
+			});
+			return handle;
+		}
+		ensureFreesoundHandle(handle, freesoundId) {
+			if (this.samples.has(handle)) return;
+			this.freesoundIds.set(handle, freesoundId);
+			this.samples.set(handle, {
+				id: handle,
+				channels: [],
+				length: 0,
+				sampleRate: 44100,
+				ready: false
+			});
+		}
+		registerRecord(projectId, seconds, callbackId) {
+			const key = `${projectId ?? ""}\0${seconds}\0${callbackId}`;
+			for (const [handle$1, req] of this.recordRequests.entries()) if (`${req.projectId ?? ""}\0${req.seconds}\0${req.callbackId}` === key) return handle$1;
+			const handle = this.nextHandle++;
+			this.recordRequests.set(handle, {
+				projectId,
+				seconds,
+				callbackId
+			});
+			this.samples.set(handle, {
+				id: handle,
+				channels: [],
+				length: 0,
+				sampleRate: 44100,
+				ready: false
+			});
+			return handle;
+		}
+		ensureRecordHandle(handle, seconds, callbackId) {
+			if (this.samples.has(handle)) return;
+			this.recordRequests.set(handle, {
+				projectId: null,
+				seconds,
+				callbackId
+			});
+			this.samples.set(handle, {
+				id: handle,
+				channels: [],
+				length: 0,
+				sampleRate: 44100,
+				ready: false
+			});
+		}
+		getFreesoundId(handle) {
+			return this.freesoundIds.get(handle);
+		}
+		ensureInlineHandle(handle) {
+			if (this.samples.has(handle)) return;
+			this.samples.set(handle, {
+				id: handle,
+				channels: [],
+				length: 0,
+				sampleRate: 44100,
+				ready: false
+			});
+		}
+		registerEspeak() {
+			const handle = this.nextHandle++;
+			this.samples.set(handle, {
+				id: handle,
+				channels: [],
+				length: 0,
+				sampleRate: 44100,
+				ready: false
+			});
+			return handle;
+		}
+		registerInlineSample(channels, sampleRate$1) {
+			const handle = this.nextHandle++;
+			const copiedChannels = channels.map((ch) => new Float32Array(ch));
+			this.samples.set(handle, {
+				id: handle,
+				channels: copiedChannels,
+				length: copiedChannels[0]?.length ?? 0,
+				sampleRate: sampleRate$1,
+				ready: copiedChannels.length > 0 && (copiedChannels[0]?.length ?? 0) > 0
+			});
+			this.bumpVersion(handle);
+			return handle;
+		}
+		getRecordRequest(handle) {
+			return this.recordRequests.get(handle);
+		}
+		setSampleData(handle, channels, sampleRate$1) {
+			const sample = this.samples.get(handle);
+			if (!sample) return;
+			sample.channels = channels;
+			sample.length = channels[0]?.length ?? 0;
+			sample.sampleRate = sampleRate$1;
+			sample.ready = channels.length > 0 && sample.length > 0;
+			sample.error = void 0;
+			this.bumpVersion(handle);
+		}
+		setSampleError(handle, error$1) {
+			const sample = this.samples.get(handle);
+			if (!sample) return;
+			sample.error = error$1;
+			sample.ready = false;
+			this.bumpVersion(handle);
+		}
+		recordSample(handle, audioData, sampleRate$1) {
+			const sample = this.samples.get(handle);
+			if (!sample) return;
+			sample.channels = audioData.map((ch) => new Float32Array(ch));
+			sample.length = audioData[0]?.length ?? 0;
+			sample.sampleRate = sampleRate$1;
+			sample.ready = sample.channels.length > 0 && sample.length > 0;
+			this.bumpVersion(handle);
+		}
+		getSample(handle) {
+			return this.samples.get(handle) ?? null;
+		}
+		getSlices(handle, threshold) {
+			const sample = this.samples.get(handle);
+			if (!sample || !sample.ready || sample.channels.length === 0) return {
+				points: new Int32Array(1),
+				count: 1
+			};
+			let cacheMap = this.sliceCache.get(handle);
+			if (!cacheMap) {
+				cacheMap = /* @__PURE__ */ new Map();
+				this.sliceCache.set(handle, cacheMap);
+			}
+			const thresholdKey = Math.round(threshold * 1e3);
+			let cached = cacheMap.get(thresholdKey);
+			if (cached) return {
+				points: cached.points,
+				count: cached.count
+			};
+			const result = detectSlices(sample.channels[0], threshold, 256);
+			cached = {
+				threshold,
+				points: result.points,
+				count: result.count
+			};
+			cacheMap.set(thresholdKey, cached);
+			return {
+				points: result.points,
+				count: result.count
+			};
+		}
+		readChunk(handle, channel, offset, length) {
+			const sample = this.samples.get(handle);
+			if (!sample || !sample.ready) return new Float32Array(length);
+			const ch = sample.channels[channel];
+			if (!ch) return new Float32Array(length);
+			const start = Math.max(0, Math.min(offset | 0, ch.length));
+			const end = Math.max(start, Math.min(start + length, ch.length));
+			if (end - start === 0) return new Float32Array(length);
+			const result = new Float32Array(length);
+			result.set(ch.subarray(start, end));
+			return result;
+		}
+		areAllSamplesReady() {
+			for (const sample of this.samples.values()) if (!sample.ready) return false;
+			return true;
+		}
+		getRequiredSamples() {
+			return Array.from(this.samples.keys()).filter((handle) => {
+				const sample = this.samples.get(handle);
+				return sample && !sample.ready;
+			});
+		}
+		getSampleMemoryInfo() {
+			let totalChannelBytes = 0;
+			for (const sample of this.samples.values()) for (const ch of sample.channels) totalChannelBytes += ch.byteLength;
+			return {
+				handleCount: this.samples.size,
+				totalChannelBytes
+			};
+		}
+		clear() {
+			this.samples.clear();
+			this.sampleVersion.clear();
+			this.sliceCache.clear();
+			this.freesoundIds.clear();
+			this.recordRequests.clear();
+			this.nextHandle = 1;
+		}
+		clearHandle(handle) {
+			const sample = this.samples.get(handle);
+			if (sample) {
+				sample.channels = [];
+				sample.length = 0;
+				sample.ready = false;
+				sample.error = void 0;
+			}
+			this.bumpVersion(handle);
+			this.sliceCache.delete(handle);
+		}
+	};
+	const sampleManager = new SampleManager();
 	function collectParamNames(params) {
 		const names = /* @__PURE__ */ new Set();
 		for (const p$1 of params) if (p$1.type === "param") names.add(p$1.name);
@@ -24035,6 +24035,55 @@
 		scaleIndex = 0;
 		rootMidi = 0;
 	};
+	function disassembleBytecode(bytecode, indent$1 = 0) {
+		const lines = [];
+		const u32 = new Uint32Array(bytecode.buffer, bytecode.byteOffset, bytecode.length);
+		let pc = 0;
+		const pad = "  ".repeat(indent$1);
+		while (pc < bytecode.length) {
+			const opcode = u32[pc];
+			const info = getOpcodeInfo(opcode);
+			const name = AudioVmOp[opcode] ?? `Unknown(${opcode})`;
+			const here = pc++;
+			switch (info.kind) {
+				case "param":
+				case "pc-param": {
+					const param = Math.round(bytecode[pc]);
+					const suffix = name === "CallFunction" ? ` arg(s)` : "";
+					lines.push(`${pad}${here}: ${name} ${param}${suffix}`);
+					pc++;
+					break;
+				}
+				case "three-param":
+					lines.push(`${pad}${here}: ${name} ${Math.round(bytecode[pc])} ${Math.round(bytecode[pc + 1])} ${Math.round(bytecode[pc + 2])}`);
+					pc += 3;
+					break;
+				case "table": {
+					const len = Math.round(bytecode[pc]);
+					lines.push(`${pad}${here}: ${name} len=${len}`);
+					pc += 1 + len;
+					break;
+				}
+				case "define-function": {
+					const id = Math.round(bytecode[pc]);
+					const paramCount = Math.round(bytecode[pc + 1]);
+					const firstParamIn = Math.round(bytecode[pc + 2]);
+					const closureCount = Math.round(bytecode[pc + 3]);
+					const localCount = Math.round(bytecode[pc + 4]);
+					const len = Math.round(bytecode[pc + 5]);
+					lines.push(`${pad}${here}: ${name} id=${id} paramCount=${paramCount} firstParamIn=${firstParamIn} closureCount=${closureCount} localCount=${localCount} len=${len}`);
+					pc += 6;
+					lines.push(...disassembleBytecode(bytecode.subarray(pc, pc + len), indent$1 + 1));
+					pc += len;
+					break;
+				}
+				case "none":
+					lines.push(`${pad}${here}: ${name}`);
+					break;
+			}
+		}
+		return lines;
+	}
 	function compile(program, preludeLines = 0, opts) {
 		const state = new State();
 		if (opts?.projectId !== void 0) state.projectId = opts.projectId;
@@ -26681,6 +26730,128 @@ drums=(seed=1)->{
 			}
 		};
 	}
+	function getCapturedValuesFromCaptureStore(opts) {
+		const { core, mainBytecode, captureStoreGlobalIdx, numDeps, defaultParamRecordGlobals, recordGlobalIndices, sampleRate: sampleRate$1, tempVmId = 0, bpm = 120, callbackId = 0, useNestedCaptureStore = false } = opts;
+		const mainPtr = core.wasm.createFloat32Buffer(mainBytecode.length) >>> 0;
+		new Float32Array(core.memory.buffer, mainPtr, mainBytecode.length).set(mainBytecode);
+		core.wasm.resetAudioVmAt(tempVmId);
+		const nyquist = sampleRate$1 / 2;
+		core.wasm.runAudioVmAt(tempVmId, mainPtr, mainBytecode.length, 128, 0, sampleRate$1, nyquist, Math.PI / nyquist, bpm);
+		const capturedValues = [];
+		const skipIndices = /* @__PURE__ */ new Set();
+		const undefinedRecordGlobals = /* @__PURE__ */ new Set();
+		if (defaultParamRecordGlobals?.length) recordGlobalIndices.forEach((recordGlobalIdx, i$1) => {
+			if (defaultParamRecordGlobals.includes(recordGlobalIdx)) skipIndices.add(i$1);
+		});
+		for (let i$1 = 0; i$1 < numDeps; i$1++) {
+			const recordGlobalIdx = recordGlobalIndices[i$1];
+			const isUndefined = useNestedCaptureStore ? core.wasm.getAudioVmNestedArrayElementIsUndefined(tempVmId, captureStoreGlobalIdx, callbackId, i$1) : core.wasm.getAudioVmArrayElementIsUndefined(tempVmId, captureStoreGlobalIdx, i$1);
+			const value = useNestedCaptureStore ? core.wasm.getAudioVmNestedArrayElementAt(tempVmId, captureStoreGlobalIdx, callbackId, i$1) : core.wasm.getAudioVmArrayElementAt(tempVmId, captureStoreGlobalIdx, i$1);
+			const treatAsUndefined = isUndefined || Number.isNaN(value);
+			if (treatAsUndefined) undefinedRecordGlobals.add(recordGlobalIdx);
+			capturedValues.push(skipIndices.has(i$1) ? 0 : treatAsUndefined ? 0 : value);
+		}
+		core.wasm.freeFloat32Buffer(mainPtr);
+		const invalidIdx = capturedValues.findIndex((v$1, i$1) => !skipIndices.has(i$1) && Number.isNaN(v$1));
+		if (invalidIdx >= 0) throw new Error(`Invalid capture at index ${invalidIdx}: captured variable is not a scalar (e.g. was reassigned to a function or array).`);
+		return {
+			capturedValues,
+			undefinedRecordGlobals
+		};
+	}
+	function findMaxRecordGlobalIdx(recordGlobalIndices) {
+		let maxRecordGlobalIdx = -1;
+		for (const recordGlobalIdx of recordGlobalIndices) if (recordGlobalIdx > maxRecordGlobalIdx) maxRecordGlobalIdx = recordGlobalIdx;
+		return maxRecordGlobalIdx;
+	}
+	function preSizeGlobalsArray(core, minSize) {
+		if (minSize <= 0) return;
+		core.wasm.ensureSampleRecordGlobalsSize(minSize);
+	}
+	function setCapturedValues(core, recordGlobalIndices, capturedValues, skipRecordGlobals, recordVmId$1) {
+		for (let i$1 = 0; i$1 < recordGlobalIndices.length; i$1++) {
+			const recordGlobalIdx = recordGlobalIndices[i$1];
+			if (skipRecordGlobals.has(recordGlobalIdx)) continue;
+			const value = capturedValues[i$1] ?? 0;
+			core.wasm.setSampleRecordGlobal(recordGlobalIdx, value);
+		}
+	}
+	function initializeSampleRecord(core, setupBytecode, loopBytecode, numSamples, sampleRate$1) {
+		const setupPtr = core.wasm.createFloat32Buffer(setupBytecode.length) >>> 0;
+		new Float32Array(core.memory.buffer, setupPtr, setupBytecode.length).set(setupBytecode);
+		const loopPtr = core.wasm.createFloat32Buffer(loopBytecode.length) >>> 0;
+		new Float32Array(core.memory.buffer, loopPtr, loopBytecode.length).set(loopBytecode);
+		core.wasm.initSampleRecord(setupPtr, setupBytecode.length, loopPtr, loopBytecode.length, numSamples, sampleRate$1);
+		core.wasm.freeFloat32Buffer(setupPtr);
+		core.wasm.freeFloat32Buffer(loopPtr);
+	}
+	function runRecordSetup(core) {
+		core.wasm.runSampleRecordSetup();
+	}
+	function executeRecordLoop(core) {
+		core.wasm.recordSampleAll();
+	}
+	function extractRecordOutput(core, numSamples) {
+		const outputPtr = core.wasm.getSampleRecordOutputPtr() >>> 0;
+		const output = new Float32Array(numSamples);
+		const wasmOutput = new Float32Array(core.memory.buffer, outputPtr, numSamples);
+		output.set(wasmOutput);
+		return output;
+	}
+	function executeRecordCallbackWithSampleRecord(opts) {
+		const { core, setupBytecode, loopBytecode, recordGlobalIndices, capturedValues, defaultParamRecordGlobals, undefinedRecordGlobals, maxSetupGlobalIndex, numSamples, sampleRate: sampleRate$1 } = opts;
+		initializeSampleRecord(core, setupBytecode, loopBytecode, numSamples, sampleRate$1);
+		const maxRecordGlobalIdx = findMaxRecordGlobalIdx(recordGlobalIndices);
+		preSizeGlobalsArray(core, Math.max(maxRecordGlobalIdx, opts.maxSetupGlobalIndex ?? -1) + 1);
+		setCapturedValues(core, recordGlobalIndices, capturedValues, new Set(undefinedRecordGlobals ?? []), 1);
+		runRecordSetup(core);
+		executeRecordLoop(core);
+		return extractRecordOutput(core, numSamples);
+	}
+	function processRecordRequest(opts) {
+		const { core, recordRequest, recordCallbacks, mainBytecode, sampleRate: sampleRate$1 = 48e3, bpm = 120, tempVmId = 0 } = opts;
+		const { seconds, callbackId } = recordRequest;
+		const callbackData = recordCallbacks.get(callbackId);
+		if (!callbackData) return null;
+		const { setup: setupBytecode, loop: loopBytecode, captureStoreGlobalIdx, recordGlobalIndices, defaultParamRecordGlobals, maxSetupGlobalIndex } = callbackData;
+		const numSamples = Math.floor(seconds * sampleRate$1);
+		const numDeps = recordGlobalIndices.length;
+		try {
+			const { capturedValues, undefinedRecordGlobals } = getCapturedValuesFromCaptureStore({
+				core,
+				mainBytecode,
+				captureStoreGlobalIdx,
+				numDeps,
+				defaultParamRecordGlobals,
+				recordGlobalIndices,
+				sampleRate: sampleRate$1,
+				tempVmId,
+				bpm,
+				callbackId,
+				useNestedCaptureStore: callbackData.useNestedCaptureStore
+			});
+			return {
+				output: executeRecordCallbackWithSampleRecord({
+					core,
+					setupBytecode,
+					loopBytecode,
+					recordGlobalIndices,
+					capturedValues,
+					defaultParamRecordGlobals,
+					undefinedRecordGlobals,
+					maxSetupGlobalIndex,
+					numSamples,
+					sampleRate: sampleRate$1
+				}),
+				capturedValues
+			};
+		} catch (error$1) {
+			console.groupCollapsed("Main bytecode");
+			console.log(disassembleBytecode(mainBytecode).join("\n"));
+			console.groupEnd();
+			throw error$1;
+		}
+	}
 	function createWasmImports(memory) {
 		return {
 			debug: { debugAudioVmOp: (pc, op = -1, stackTop) => {} },
@@ -26917,8 +27088,10 @@ drums=(seed=1)->{
 	const sampleRate = 48e3;
 	const minFrequency = 20;
 	const maxFrequency = 2e4;
-	const dynamicRangeDb = 72;
+	const dynamicRangeDb = 36;
 	const renderVmId = 777;
+	const recordVmId = 778;
+	const renderCacheVersion = 2;
 	let previewPromise = null;
 	const renderCache = /* @__PURE__ */ new Map();
 	const fftBitReversal = createBitReversalTable(fftSize);
@@ -26942,12 +27115,12 @@ drums=(seed=1)->{
 				}, [pixels$1.buffer]);
 				return;
 			}
-			const preview = await getPreview();
+			const previewRuntime = await getPreview();
 			sendProgress(request.id, .08);
 			const code = buildPreviewCode(request);
 			const bars = Math.max(.25, request.lengthBars || 1);
 			let step;
-			const generator = preview.renderToAudio(code, bars, 4, renderVmId);
+			const generator = renderToAudio(previewRuntime, code, bars, 4, renderVmId);
 			while (!(step = generator.next()).done) {
 				sendProgress(request.id, .08 + clamp(step.value, 0, 1) * .72);
 				await new Promise((resolve) => setTimeout(resolve, 0));
@@ -26985,7 +27158,8 @@ drums=(seed=1)->{
 				templateId: request.templateId,
 				lengthBars: request.lengthBars,
 				bpm: request.bpm,
-				code: request.code
+				code: request.code,
+				previewCode: buildPreviewCode(request)
 			});
 			const pixels = emptySpectrogram();
 			self.postMessage({
@@ -27018,24 +27192,109 @@ drums=(seed=1)->{
 		previewPromise = (async () => {
 			const response = await fetch("/as/build/index.wasm");
 			if (!response.ok) throw new Error(`Failed to fetch WASM: ${response.status}`);
-			return createDspPreview(createWasmRuntime(await wasmSetup({
+			const core = await wasmSetup({
 				binary: await response.arrayBuffer(),
 				sourcemapUrl: "/as/build/index.wasm.map",
 				config: asconfig_default,
 				imports: ({ memory }) => createWasmImports(memory)
-			})));
+			});
+			const runtime = createWasmRuntime(core);
+			return {
+				preview: createDspPreview(runtime),
+				runtime,
+				core
+			};
 		})();
 		return previewPromise;
+	}
+	function* renderToAudio(previewRuntime, code, bars, beatsPerBar = 4, vmId = 999) {
+		const { preview, runtime, core } = previewRuntime;
+		const result = preview.setCode(code);
+		if (result.errors.length > 0) throw new Error(`Compilation failed:\n${result.errors.join("\n")}`);
+		if (!result.compile.bytecode) throw new Error("No bytecode generated");
+		const bytecode = trimAudioBytecode(result.compile.bytecode);
+		const bpm = result.compile.bpm;
+		ensureRecordSamples({
+			core,
+			registrations: result.compile.sampleRegistrations,
+			recordCallbacks: result.compile.recordCallbacks,
+			mainBytecode: bytecode,
+			bpm
+		});
+		const totalSamples = Math.floor(bars * beatsPerBar * 60 / bpm * sampleRate);
+		const chunk = 128;
+		const numChunks = Math.ceil(totalSamples / chunk);
+		const renderedLength = numChunks * chunk;
+		const left = new Float32Array(renderedLength);
+		const right = new Float32Array(renderedLength);
+		const nyquist = sampleRate / 2;
+		const piOverNyquist = Math.PI / nyquist;
+		const audioOpsPtr = runtime.createFloat32Buffer(bytecode.length);
+		try {
+			new Float32Array(runtime.buffer, audioOpsPtr, bytecode.length).set(bytecode);
+			runtime.resetAudioVmAt(vmId);
+			let offset = 0;
+			for (let i$1 = 0; i$1 < numChunks; i$1++) {
+				runtime.runAudioVmAt(vmId, audioOpsPtr, bytecode.length, chunk, offset, sampleRate, nyquist, piOverNyquist, bpm);
+				const infoPtr = runtime.getAudioVmInfoPtr(vmId);
+				const aInfo = new Uint32Array(runtime.buffer, infoPtr, 10);
+				const outputLeftPtr = aInfo[8];
+				const outputRightPtr = aInfo[9];
+				if (outputLeftPtr && outputRightPtr) {
+					left.set(new Float32Array(runtime.buffer, outputLeftPtr, chunk), offset);
+					right.set(new Float32Array(runtime.buffer, outputRightPtr, chunk), offset);
+				}
+				offset += chunk;
+				if ((i$1 + 1) % 128 === 0 || i$1 === numChunks - 1) yield totalSamples > 0 ? Math.min(1, offset / totalSamples) : 1;
+			}
+		} finally {
+			runtime.freeFloat32Buffer(audioOpsPtr);
+		}
+		yield 1;
+		return {
+			left: left.subarray(0, totalSamples).slice(),
+			right: right.subarray(0, totalSamples).slice()
+		};
+	}
+	function trimAudioBytecode(bytecode) {
+		const postIndex = new Uint32Array(bytecode.buffer, bytecode.byteOffset, bytecode.length).findLastIndex((opcode) => opcode === AudioVmOp.Post);
+		return postIndex >= 0 ? bytecode.subarray(0, postIndex + 1) : bytecode;
+	}
+	function ensureRecordSamples({ core, registrations, recordCallbacks, mainBytecode, bpm }) {
+		for (const registration of registrations) {
+			if (registration.type === "inline" && registration.inlineChannels && registration.inlineSampleRate != null) {
+				sampleManager.setSampleData(registration.handle, registration.inlineChannels, registration.inlineSampleRate);
+				continue;
+			}
+			if (registration.type !== "record" || registration.recordSeconds == null || registration.recordCallbackId == null) continue;
+			const record = processRecordRequest({
+				core,
+				recordRequest: {
+					seconds: registration.recordSeconds,
+					callbackId: registration.recordCallbackId
+				},
+				recordCallbacks: recordCallbacks ?? /* @__PURE__ */ new Map(),
+				mainBytecode,
+				sampleRate,
+				bpm,
+				tempVmId: recordVmId
+			});
+			if (!record) {
+				sampleManager.setSampleError(registration.handle, `No record callback ${registration.recordCallbackId}`);
+				continue;
+			}
+			sampleManager.setSampleData(registration.handle, [record.output], sampleRate);
+		}
 	}
 	function buildPreviewCode(request) {
 		const source = stripOutputPipes(request.code).trim() || "dc(0)";
 		return [
 			`bpm=${formatNumber(clamp(request.bpm || 120, 20, 260))}`,
-			"lm_preview=()->{",
+			"lm_preview=(_lm_preview_arg)->{",
 			"  bt=t",
 			indent(source),
 			"}",
-			";lm_preview() |> out($)"
+			"out(lm_preview(0))"
 		].join("\n");
 	}
 	function computeSpectrogram(samples) {
@@ -27070,11 +27329,36 @@ drums=(seed=1)->{
 		}
 		if (!Number.isFinite(peakDb)) return pixels;
 		const floorDb = peakDb - dynamicRangeDb;
+		const columnEnergy = new Float32Array(width);
+		const rowMinEnergy = new Float32Array(height);
+		const rowMaxEnergy = new Float32Array(height);
+		rowMinEnergy.fill(1);
+		let maxColumnEnergy = 0;
+		let minColumnEnergy = 1;
+		for (let column = 0; column < width; column++) {
+			let sum = 0;
+			for (let row = 0; row < height; row++) {
+				const normalized = normalizeDb(decibels[row * width + column], floorDb);
+				rowMinEnergy[row] = Math.min(rowMinEnergy[row], normalized);
+				rowMaxEnergy[row] = Math.max(rowMaxEnergy[row], normalized);
+				sum += normalized * normalized;
+			}
+			const rms = Math.sqrt(sum / height);
+			columnEnergy[column] = rms;
+			maxColumnEnergy = Math.max(maxColumnEnergy, rms);
+			minColumnEnergy = Math.min(minColumnEnergy, rms);
+		}
+		const columnRange = Math.max(.001, maxColumnEnergy - minColumnEnergy);
 		for (let row = 0; row < height; row++) {
 			const freq = 1 - row / Math.max(1, height - 1);
+			const rowRange = Math.max(.001, rowMaxEnergy[row] - rowMinEnergy[row]);
 			for (let column = 0; column < width; column++) {
-				const raw = (decibels[row * width + column] - floorDb) / dynamicRangeDb;
-				const energy = clamp(Math.pow(clamp(raw, 0, 1), .85), 0, 1);
+				const absoluteEnergy = normalizeDb(decibels[row * width + column], floorDb);
+				const rowContrast = clamp((absoluteEnergy - rowMinEnergy[row]) / rowRange, 0, 1);
+				const columnContrast = clamp((columnEnergy[column] - minColumnEnergy) / columnRange, 0, 1);
+				const transientEnergy = Math.pow(rowContrast * columnContrast, .72);
+				const bedEnergy = Math.pow(absoluteEnergy, 1.55) * .42;
+				const energy = clamp(Math.max(bedEnergy, transientEnergy), 0, 1);
 				const index = (row * width + column) * 4;
 				const [r$1, g$1, b$1, a$1] = heatColor(energy, freq);
 				pixels[index] = r$1;
@@ -27176,7 +27460,7 @@ drums=(seed=1)->{
 		return Number.isInteger(value) ? String(value) : Number(value.toFixed(4)).toString();
 	}
 	function getCacheKey(request) {
-		return `${request.templateId ?? ""}\n${request.name}\n${request.bpm}\n${request.lengthBars}\n${request.code}`;
+		return `${renderCacheVersion}\n${request.templateId ?? ""}\n${request.name}\n${request.bpm}\n${request.lengthBars}\n${request.code}`;
 	}
 	function rememberCache(key, pixels) {
 		if (renderCache.size > 120) {
@@ -27185,36 +27469,39 @@ drums=(seed=1)->{
 		}
 		renderCache.set(key, pixels.slice());
 	}
+	function normalizeDb(value, floorDb) {
+		return clamp((value - floorDb) / dynamicRangeDb, 0, 1);
+	}
 	function heatColor(energy, freq) {
-		if (energy < .06) return [
-			12,
-			15,
-			27,
-			Math.round(energy * 210)
+		if (energy < .08) return [
+			7,
+			10,
+			18,
+			Math.round(energy * 160)
 		];
-		if (energy < .26) return [
-			34,
-			211,
-			238,
-			Math.round(48 + energy * 260)
+		if (energy < .28) return [
+			20,
+			Math.round(145 + freq * 80),
+			220,
+			Math.round(38 + energy * 210)
 		];
-		if (energy < .52) return [
-			167,
-			139,
-			250,
-			Math.round(62 + energy * 230)
+		if (energy < .55) return [
+			142,
+			92,
+			246,
+			Math.round(58 + energy * 220)
 		];
-		if (energy < .78) return [
-			250,
-			204,
-			21,
-			Math.round(82 + energy * 180)
+		if (energy < .82) return [
+			245,
+			Math.round(120 + freq * 90),
+			32,
+			Math.round(78 + energy * 190)
 		];
 		return [
 			255,
-			255,
-			Math.round(210 + freq * 45),
-			Math.round(130 + energy * 120)
+			Math.round(210 - freq * 95),
+			Math.round(64 + freq * 80),
+			Math.round(112 + energy * 130)
 		];
 	}
 	function clamp(value, min, max) {
@@ -27225,4 +27512,4 @@ drums=(seed=1)->{
 	}
 })();
 
-//# sourceMappingURL=spectrogram-worker-BqzwmaSv.js.map
+//# sourceMappingURL=spectrogram-worker-B-M1SiZ0.js.map

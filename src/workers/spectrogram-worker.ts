@@ -1,9 +1,13 @@
 import asconfig from '../../node_modules/engine/asconfig.json'
 import type * as WasmExports from '../../node_modules/engine/as/build/index'
+import { AudioVmOp } from '../../node_modules/engine/src/dsp/audio-vm-bindings.ts'
 import { createDspPreview } from '../../node_modules/engine/src/dsp/dsp-preview.ts'
+import type { RecordCallback, SampleRegistration } from '../../node_modules/engine/src/live/compiler/types.ts'
+import { processRecordRequest } from '../../node_modules/engine/src/lib/record-utils.ts'
+import { sampleManager } from '../../node_modules/engine/src/lib/sample-manager.ts'
 import { createWasmImports } from '../../node_modules/engine/src/lib/wasm-imports.ts'
-import { createWasmRuntime } from '../../node_modules/engine/src/lib/wasm-runtime.ts'
-import { wasmSetup } from '../../node_modules/engine/src/lib/wasm-setup.ts'
+import { createWasmRuntime, type WasmRuntime } from '../../node_modules/engine/src/lib/wasm-runtime.ts'
+import { wasmSetup, type WasmSetup } from '../../node_modules/engine/src/lib/wasm-setup.ts'
 
 type SpectrogramRequest = {
   id: number
@@ -21,10 +25,18 @@ const fftSize = 1024
 const sampleRate = 48000
 const minFrequency = 20
 const maxFrequency = 20000
-const dynamicRangeDb = 72
+const dynamicRangeDb = 36
 const renderVmId = 777
+const recordVmId = 778
+const renderCacheVersion = 2
 
-let previewPromise: Promise<ReturnType<typeof createDspPreview>> | null = null
+type PreviewRuntime = {
+  preview: ReturnType<typeof createDspPreview>
+  runtime: WasmRuntime
+  core: WasmSetup<typeof WasmExports>
+}
+
+let previewPromise: Promise<PreviewRuntime> | null = null
 const renderCache = new Map<string, Uint8ClampedArray>()
 const fftBitReversal = createBitReversalTable(fftSize)
 const spectrogramBands = createSpectrogramBands()
@@ -43,12 +55,12 @@ async function renderRequest(request: SpectrogramRequest): Promise<void> {
       self.postMessage({ id: request.id, type: 'result', width, height, pixels }, [pixels.buffer])
       return
     }
-    const preview = await getPreview()
+    const previewRuntime = await getPreview()
     sendProgress(request.id, 0.08)
     const code = buildPreviewCode(request)
     const bars = Math.max(0.25, request.lengthBars || 1)
     let step: IteratorResult<number, { left: Float32Array; right: Float32Array }> | undefined
-    const generator = preview.renderToAudio(code, bars, 4, renderVmId)
+    const generator = renderToAudio(previewRuntime, code, bars, 4, renderVmId)
     while (!(step = generator.next()).done) {
       sendProgress(request.id, 0.08 + clamp(step.value, 0, 1) * 0.72)
       // Keep the render incremental inside the worker so long blocks do not monopolize one task.
@@ -78,6 +90,7 @@ async function renderRequest(request: SpectrogramRequest): Promise<void> {
       lengthBars: request.lengthBars,
       bpm: request.bpm,
       code: request.code,
+      previewCode: buildPreviewCode(request),
     })
     const pixels = emptySpectrogram()
     self.postMessage({
@@ -106,7 +119,7 @@ function sendProgress(id: number, progress: number): void {
   self.postMessage({ id, type: 'progress', progress: clamp(progress, 0, 1) })
 }
 
-async function getPreview(): Promise<ReturnType<typeof createDspPreview>> {
+async function getPreview(): Promise<PreviewRuntime> {
   if (previewPromise) return previewPromise
   previewPromise = (async () => {
     const response = await fetch('/as/build/index.wasm')
@@ -118,20 +131,133 @@ async function getPreview(): Promise<ReturnType<typeof createDspPreview>> {
       config: asconfig,
       imports: ({ memory }) => createWasmImports(memory),
     })
-    return createDspPreview(createWasmRuntime(core))
+    const runtime = createWasmRuntime(core)
+    return { preview: createDspPreview(runtime), runtime, core }
   })()
   return previewPromise
+}
+
+function* renderToAudio(
+  previewRuntime: PreviewRuntime,
+  code: string,
+  bars: number,
+  beatsPerBar = 4,
+  vmId = 999,
+): Generator<number, { left: Float32Array; right: Float32Array }, void> {
+  const { preview, runtime, core } = previewRuntime
+  const result = preview.setCode(code)
+  if (result.errors.length > 0) throw new Error(`Compilation failed:\n${result.errors.join('\n')}`)
+  if (!result.compile.bytecode) throw new Error('No bytecode generated')
+  const bytecode = trimAudioBytecode(result.compile.bytecode)
+  const bpm = result.compile.bpm
+  ensureRecordSamples({
+    core,
+    registrations: result.compile.sampleRegistrations,
+    recordCallbacks: result.compile.recordCallbacks,
+    mainBytecode: bytecode,
+    bpm,
+  })
+  const totalSamples = Math.floor((bars * beatsPerBar * 60 / bpm) * sampleRate)
+  const chunk = 128
+  const numChunks = Math.ceil(totalSamples / chunk)
+  const renderedLength = numChunks * chunk
+  const left = new Float32Array(renderedLength)
+  const right = new Float32Array(renderedLength)
+  const nyquist = sampleRate / 2
+  const piOverNyquist = Math.PI / nyquist
+  const audioOpsPtr = runtime.createFloat32Buffer(bytecode.length)
+  try {
+    new Float32Array(runtime.buffer, audioOpsPtr, bytecode.length).set(bytecode)
+    runtime.resetAudioVmAt(vmId)
+    let offset = 0
+    for (let i = 0; i < numChunks; i++) {
+      runtime.runAudioVmAt(vmId, audioOpsPtr, bytecode.length, chunk, offset, sampleRate, nyquist, piOverNyquist, bpm)
+      const infoPtr = runtime.getAudioVmInfoPtr(vmId)
+      const aInfo = new Uint32Array(runtime.buffer, infoPtr, 10)
+      const outputLeftPtr = aInfo[8]
+      const outputRightPtr = aInfo[9]
+      if (outputLeftPtr && outputRightPtr) {
+        left.set(new Float32Array(runtime.buffer, outputLeftPtr, chunk), offset)
+        right.set(new Float32Array(runtime.buffer, outputRightPtr, chunk), offset)
+      }
+      offset += chunk
+      if ((i + 1) % 128 === 0 || i === numChunks - 1) {
+        yield totalSamples > 0 ? Math.min(1, offset / totalSamples) : 1
+      }
+    }
+  }
+  finally {
+    runtime.freeFloat32Buffer(audioOpsPtr)
+  }
+  yield 1
+  return {
+    left: left.subarray(0, totalSamples).slice(),
+    right: right.subarray(0, totalSamples).slice(),
+  }
+}
+
+function trimAudioBytecode(bytecode: Float32Array): Float32Array {
+  const opcodes = new Uint32Array(bytecode.buffer, bytecode.byteOffset, bytecode.length)
+  const postIndex = opcodes.findLastIndex(opcode => opcode === AudioVmOp.Post)
+  return postIndex >= 0 ? bytecode.subarray(0, postIndex + 1) : bytecode
+}
+
+function ensureRecordSamples({
+  core,
+  registrations,
+  recordCallbacks,
+  mainBytecode,
+  bpm,
+}: {
+  core: WasmSetup<typeof WasmExports>
+  registrations: SampleRegistration[]
+  recordCallbacks?: Map<number, RecordCallback>
+  mainBytecode: Float32Array
+  bpm: number
+}): void {
+  for (const registration of registrations) {
+    if (registration.type === 'inline' && registration.inlineChannels && registration.inlineSampleRate != null) {
+      sampleManager.setSampleData(registration.handle, registration.inlineChannels, registration.inlineSampleRate)
+      continue
+    }
+
+    if (
+      registration.type !== 'record'
+      || registration.recordSeconds == null
+      || registration.recordCallbackId == null
+    ) {
+      continue
+    }
+
+    const record = processRecordRequest({
+      core,
+      recordRequest: {
+        seconds: registration.recordSeconds,
+        callbackId: registration.recordCallbackId,
+      },
+      recordCallbacks: recordCallbacks ?? new Map(),
+      mainBytecode,
+      sampleRate,
+      bpm,
+      tempVmId: recordVmId,
+    })
+    if (!record) {
+      sampleManager.setSampleError(registration.handle, `No record callback ${registration.recordCallbackId}`)
+      continue
+    }
+    sampleManager.setSampleData(registration.handle, [record.output], sampleRate)
+  }
 }
 
 function buildPreviewCode(request: SpectrogramRequest): string {
   const source = stripOutputPipes(request.code).trim() || 'dc(0)'
   return [
     `bpm=${formatNumber(clamp(request.bpm || 120, 20, 260))}`,
-    'lm_preview=()->{',
+    'lm_preview=(_lm_preview_arg)->{',
     '  bt=t',
     indent(source),
     '}',
-    ';lm_preview() |> out($)',
+    'out(lm_preview(0))',
   ].join('\n')
 }
 
@@ -175,12 +301,38 @@ function computeSpectrogram(samples: Float32Array): Uint8ClampedArray {
 
   if (!Number.isFinite(peakDb)) return pixels
   const floorDb = peakDb - dynamicRangeDb
+  const columnEnergy = new Float32Array(width)
+  const rowMinEnergy = new Float32Array(height)
+  const rowMaxEnergy = new Float32Array(height)
+  rowMinEnergy.fill(1)
+  let maxColumnEnergy = 0
+  let minColumnEnergy = 1
+
+  for (let column = 0; column < width; column++) {
+    let sum = 0
+    for (let row = 0; row < height; row++) {
+      const normalized = normalizeDb(decibels[row * width + column]!, floorDb)
+      rowMinEnergy[row] = Math.min(rowMinEnergy[row]!, normalized)
+      rowMaxEnergy[row] = Math.max(rowMaxEnergy[row]!, normalized)
+      sum += normalized * normalized
+    }
+    const rms = Math.sqrt(sum / height)
+    columnEnergy[column] = rms
+    maxColumnEnergy = Math.max(maxColumnEnergy, rms)
+    minColumnEnergy = Math.min(minColumnEnergy, rms)
+  }
+  const columnRange = Math.max(0.001, maxColumnEnergy - minColumnEnergy)
 
   for (let row = 0; row < height; row++) {
     const freq = 1 - row / Math.max(1, height - 1)
+    const rowRange = Math.max(0.001, rowMaxEnergy[row]! - rowMinEnergy[row]!)
     for (let column = 0; column < width; column++) {
-      const raw = (decibels[row * width + column]! - floorDb) / dynamicRangeDb
-      const energy = clamp(Math.pow(clamp(raw, 0, 1), 0.85), 0, 1)
+      const absoluteEnergy = normalizeDb(decibels[row * width + column]!, floorDb)
+      const rowContrast = clamp((absoluteEnergy - rowMinEnergy[row]!) / rowRange, 0, 1)
+      const columnContrast = clamp((columnEnergy[column]! - minColumnEnergy) / columnRange, 0, 1)
+      const transientEnergy = Math.pow(rowContrast * columnContrast, 0.72)
+      const bedEnergy = Math.pow(absoluteEnergy, 1.55) * 0.42
+      const energy = clamp(Math.max(bedEnergy, transientEnergy), 0, 1)
       const index = (row * width + column) * 4
       const [r, g, b, a] = heatColor(energy, freq)
       pixels[index] = r
@@ -303,7 +455,7 @@ function formatNumber(value: number): string {
 }
 
 function getCacheKey(request: SpectrogramRequest): string {
-  return `${request.templateId ?? ''}\n${request.name}\n${request.bpm}\n${request.lengthBars}\n${request.code}`
+  return `${renderCacheVersion}\n${request.templateId ?? ''}\n${request.name}\n${request.bpm}\n${request.lengthBars}\n${request.code}`
 }
 
 function rememberCache(key: string, pixels: Uint8ClampedArray): void {
@@ -314,12 +466,16 @@ function rememberCache(key: string, pixels: Uint8ClampedArray): void {
   renderCache.set(key, pixels.slice())
 }
 
+function normalizeDb(value: number, floorDb: number): number {
+  return clamp((value - floorDb) / dynamicRangeDb, 0, 1)
+}
+
 function heatColor(energy: number, freq: number): [number, number, number, number] {
-  if (energy < 0.06) return [12, 15, 27, Math.round(energy * 210)]
-  if (energy < 0.26) return [34, 211, 238, Math.round(48 + energy * 260)]
-  if (energy < 0.52) return [167, 139, 250, Math.round(62 + energy * 230)]
-  if (energy < 0.78) return [250, 204, 21, Math.round(82 + energy * 180)]
-  return [255, 255, Math.round(210 + freq * 45), Math.round(130 + energy * 120)]
+  if (energy < 0.08) return [7, 10, 18, Math.round(energy * 160)]
+  if (energy < 0.28) return [20, Math.round(145 + freq * 80), 220, Math.round(38 + energy * 210)]
+  if (energy < 0.55) return [142, 92, 246, Math.round(58 + energy * 220)]
+  if (energy < 0.82) return [245, Math.round(120 + freq * 90), 32, Math.round(78 + energy * 190)]
+  return [255, Math.round(210 - freq * 95), Math.round(64 + freq * 80), Math.round(112 + energy * 130)]
 }
 
 function clamp(value: number, min: number, max: number): number {
