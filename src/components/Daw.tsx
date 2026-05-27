@@ -597,15 +597,16 @@ const LaneRow = (
           </button>
         </div>
         <div class="flex items-center gap-2">
-          <button class={`text-xs px-2 py-1 hover:bg-white/10 ${track.muted ? 'bg-white/15 text-white/80' : 'bg-white/5'}`}
+          <button class={`grid size-7 place-items-center hover:bg-white/10 ${track.muted ? 'text-white/85' : 'bg-white/5 text-white/70'}`}
             onClick={() => {
               onCommit(next => {
                 const t = next.tracks.find(item => item.id === track.id)
                 if (t) t.muted = !t.muted
               })
             }}
+            title={track.muted ? 'Unmute lane' : 'Mute lane'}
           >
-            {track.muted ? <SpeakerSlashIcon size={14} /> : <SpeakerHighIcon size={14} />}
+            {track.muted ? <SpeakerSlashIcon size={16} /> : <SpeakerHighIcon size={14} />}
           </button>
           <button class={`text-xs px-2 py-1 ${track.soloed ? 'text-black' : 'text-white/60'} hover:bg-white/10`}
             style={{ backgroundColor: track.soloed ? primaryColor.value : 'rgba(255,255,255,0.05)' }}
