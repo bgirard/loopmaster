@@ -107,6 +107,41 @@ export const Daw = () => {
       })
   }, [])
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+      if (isEditableShortcutTarget(event.target)) return
+
+      if (event.code === 'Space') {
+        event.preventDefault()
+        if (!transportReady.value) return
+        if (isPlaying.value) void transport.stop()
+        else void transport.start()
+        return
+      }
+
+      const digit = getTimelineDigit(event)
+      if (digit == null || !transportReady.value || !ctx.value) return
+      const project = currentProject.value
+      if (!project) return
+      const arrangement = project.arrangement
+      const arrangementLength = getArrangementLengthBars(arrangement)
+      const bar = clampNumber(digit === 0 ? 9 : digit - 1, 0, arrangementLength)
+      const seconds = bar * BEATS_PER_BAR * 60 / arrangement.bpm
+      event.preventDefault()
+      seekPreviewSeconds.value = seconds
+      ctx.value.targetSeconds.value = seconds
+      void transport.seek(seconds).finally(() => {
+        requestAnimationFrame(() => {
+          seekPreviewSeconds.value = null
+        })
+      })
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   const project = currentProject.value
   if (!project) {
     return <div class="h-full bg-black text-white/60" />
@@ -1208,6 +1243,17 @@ function getNextBlockStart(arrangement: Arrangement, trackId: string): number {
 
 function clampNumber(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value))
+}
+
+function getTimelineDigit(event: KeyboardEvent): number | null {
+  if (/^Digit\d$/.test(event.code)) return Number(event.code.slice(5))
+  if (/^Numpad\d$/.test(event.code)) return Number(event.code.slice(6))
+  return /^\d$/.test(event.key) ? Number(event.key) : null
+}
+
+function isEditableShortcutTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false
+  return target.closest('input, textarea, select, [contenteditable="true"], [role="textbox"]') != null
 }
 
 function getSpectrogramRenderWidth(displayWidth: number): number {
