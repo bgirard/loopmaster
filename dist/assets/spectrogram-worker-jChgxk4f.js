@@ -27091,7 +27091,8 @@ drums=(seed=1)->{
 	const dynamicRangeDb = 36;
 	const renderVmId = 777;
 	const recordVmId = 778;
-	const renderCacheVersion = 2;
+	const maxAnalysisFramesPerColumn = 8;
+	const renderCacheVersion = 3;
 	let previewPromise = null;
 	const renderCache = /* @__PURE__ */ new Map();
 	const fftBitReversal = createBitReversalTable(fftSize);
@@ -27304,25 +27305,35 @@ drums=(seed=1)->{
 		const real = new Float32Array(fftSize);
 		const imaginary = new Float32Array(fftSize);
 		const powerSpectrum = new Float32Array(fftSize / 2 + 1);
+		const bandPowers = new Float32Array(height);
 		let peakDb = -Infinity;
 		for (let column = 0; column < width; column++) {
-			const start = Math.floor(column / Math.max(1, width - 1) * Math.max(0, samples.length - 1)) - Math.floor(fftSize / 2);
-			for (let i$1 = 0; i$1 < fftSize; i$1++) {
-				real[i$1] = (samples[start + i$1] ?? 0) * window$1[i$1];
-				imaginary[i$1] = 0;
-			}
-			fft(real, imaginary);
-			for (let bin = 0; bin < powerSpectrum.length; bin++) {
-				const re = real[bin];
-				const im = imaginary[bin];
-				powerSpectrum[bin] = (re * re + im * im) / (fftSize * fftSize);
+			bandPowers.fill(0);
+			const columnStart = Math.floor(column / width * samples.length);
+			const columnLength = Math.max(columnStart + 1, Math.floor((column + 1) / width * samples.length)) - columnStart;
+			const frameCount = clampInt(Math.ceil(columnLength / (fftSize / 2)), 1, maxAnalysisFramesPerColumn);
+			for (let frame = 0; frame < frameCount; frame++) {
+				const start = columnStart + Math.floor((frame + .5) / frameCount * columnLength) - Math.floor(fftSize / 2);
+				for (let i$1 = 0; i$1 < fftSize; i$1++) {
+					real[i$1] = (samples[start + i$1] ?? 0) * window$1[i$1];
+					imaginary[i$1] = 0;
+				}
+				fft(real, imaginary);
+				for (let bin = 0; bin < powerSpectrum.length; bin++) {
+					const re = real[bin];
+					const im = imaginary[bin];
+					powerSpectrum[bin] = (re * re + im * im) / (fftSize * fftSize);
+				}
+				for (let row = 0; row < height; row++) {
+					const band = spectrogramBands[row];
+					let power = 0;
+					for (let bin = band.startBin; bin <= band.endBin; bin++) power += powerSpectrum[bin] ?? 0;
+					power /= band.endBin - band.startBin + 1;
+					bandPowers[row] = Math.max(bandPowers[row], power);
+				}
 			}
 			for (let row = 0; row < height; row++) {
-				const band = spectrogramBands[row];
-				let power = 0;
-				for (let bin = band.startBin; bin <= band.endBin; bin++) power += powerSpectrum[bin] ?? 0;
-				power /= band.endBin - band.startBin + 1;
-				const value = 10 * Math.log10(power + 1e-20);
+				const value = 10 * Math.log10(bandPowers[row] + 1e-20);
 				decibels[row * width + column] = value;
 				peakDb = Math.max(peakDb, value);
 			}
@@ -27512,4 +27523,4 @@ drums=(seed=1)->{
 	}
 })();
 
-//# sourceMappingURL=spectrogram-worker-B-M1SiZ0.js.map
+//# sourceMappingURL=spectrogram-worker-jChgxk4f.js.map

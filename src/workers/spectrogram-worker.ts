@@ -28,7 +28,8 @@ const maxFrequency = 20000
 const dynamicRangeDb = 36
 const renderVmId = 777
 const recordVmId = 778
-const renderCacheVersion = 2
+const maxAnalysisFramesPerColumn = 8
+const renderCacheVersion = 3
 
 type PreviewRuntime = {
   preview: ReturnType<typeof createDspPreview>
@@ -268,32 +269,44 @@ function computeSpectrogram(samples: Float32Array): Uint8ClampedArray {
   const real = new Float32Array(fftSize)
   const imaginary = new Float32Array(fftSize)
   const powerSpectrum = new Float32Array(fftSize / 2 + 1)
+  const bandPowers = new Float32Array(height)
   let peakDb = -Infinity
 
   for (let column = 0; column < width; column++) {
-    const center = Math.floor(column / Math.max(1, width - 1) * Math.max(0, samples.length - 1))
-    const start = center - Math.floor(fftSize / 2)
-    for (let i = 0; i < fftSize; i++) {
-      const sample = samples[start + i] ?? 0
-      real[i] = sample * window[i]!
-      imaginary[i] = 0
-    }
+    bandPowers.fill(0)
+    const columnStart = Math.floor(column / width * samples.length)
+    const columnEnd = Math.max(columnStart + 1, Math.floor((column + 1) / width * samples.length))
+    const columnLength = columnEnd - columnStart
+    const frameCount = clampInt(Math.ceil(columnLength / (fftSize / 2)), 1, maxAnalysisFramesPerColumn)
 
-    fft(real, imaginary)
+    for (let frame = 0; frame < frameCount; frame++) {
+      const center = columnStart + Math.floor((frame + 0.5) / frameCount * columnLength)
+      const start = center - Math.floor(fftSize / 2)
+      for (let i = 0; i < fftSize; i++) {
+        const sample = samples[start + i] ?? 0
+        real[i] = sample * window[i]!
+        imaginary[i] = 0
+      }
 
-    for (let bin = 0; bin < powerSpectrum.length; bin++) {
-      const re = real[bin]!
-      const im = imaginary[bin]!
-      powerSpectrum[bin] = (re * re + im * im) / (fftSize * fftSize)
+      fft(real, imaginary)
+
+      for (let bin = 0; bin < powerSpectrum.length; bin++) {
+        const re = real[bin]!
+        const im = imaginary[bin]!
+        powerSpectrum[bin] = (re * re + im * im) / (fftSize * fftSize)
+      }
+
+      for (let row = 0; row < height; row++) {
+        const band = spectrogramBands[row]!
+        let power = 0
+        for (let bin = band.startBin; bin <= band.endBin; bin++) power += powerSpectrum[bin] ?? 0
+        power /= band.endBin - band.startBin + 1
+        bandPowers[row] = Math.max(bandPowers[row]!, power)
+      }
     }
 
     for (let row = 0; row < height; row++) {
-      const band = spectrogramBands[row]!
-      let power = 0
-      for (let bin = band.startBin; bin <= band.endBin; bin++) power += powerSpectrum[bin] ?? 0
-      power /= band.endBin - band.startBin + 1
-
-      const value = 10 * Math.log10(power + 1e-20)
+      const value = 10 * Math.log10(bandPowers[row]! + 1e-20)
       decibels[row * width + column] = value
       peakDb = Math.max(peakDb, value)
     }
