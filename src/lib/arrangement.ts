@@ -4,6 +4,9 @@ import { createId } from './create-id.ts'
 export const ARRANGEMENT_VERSION = 1
 export const DEFAULT_BLOCK_LENGTH_BARS = 4
 export const DEFAULT_ARRANGEMENT_LENGTH_BARS = 16
+export const DEFAULT_LANE_HEIGHT = 72
+export const MIN_LANE_HEIGHT = 20
+export const MAX_LANE_HEIGHT = 200
 export const SNAP_STEPS_PER_BAR = 4
 export const BEATS_PER_BAR = 4
 
@@ -27,6 +30,7 @@ export function createArrangementTrack(data: Partial<ArrangementTrack> = {}): Ar
     muted: data.muted ?? false,
     soloed: data.soloed ?? false,
     order: data.order ?? 0,
+    height: clampLaneHeight(data.height ?? DEFAULT_LANE_HEIGHT),
   }
 }
 
@@ -99,6 +103,10 @@ export function snapBar(value: number): number {
   return Math.max(0, Math.round(value * SNAP_STEPS_PER_BAR) / SNAP_STEPS_PER_BAR)
 }
 
+export function clampLaneHeight(value: number): number {
+  return Math.max(MIN_LANE_HEIGHT, Math.min(MAX_LANE_HEIGHT, value))
+}
+
 export function compileArrangement(input: Arrangement): string {
   const arrangement = cloneArrangement(input)
   const tracks = [...arrangement.tracks].sort((a, b) => a.order - b.order || a.name.localeCompare(b.name))
@@ -135,8 +143,8 @@ export function compileArrangement(input: Arrangement): string {
     const id = `lm_${index}_${safeIdentifier(block.id)}`
     const start = snapBar(block.startBar)
     const end = snapBar(block.startBar + block.lengthBars)
-    const startBeat = barsToBeats(start)
-    const endBeat = barsToBeats(end)
+    const startBeat = start * BEATS_PER_BAR
+    const endBeat = end * BEATS_PER_BAR
     const volume = clamp(block.volume * track.volume, 0, 2)
     const source = prepareBlockCode(block.code, startBeat)
 
@@ -187,10 +195,6 @@ function indent(value: string): string {
 
 function formatNumber(value: number): string {
   return Number.isInteger(value) ? String(value) : Number(value.toFixed(4)).toString()
-}
-
-function barsToBeats(value: number): number {
-  return value * BEATS_PER_BAR
 }
 
 function clamp(value: number, min: number, max: number): number {

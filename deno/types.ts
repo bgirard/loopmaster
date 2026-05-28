@@ -110,6 +110,7 @@ export const ArrangementTrackSchema = z.object({
   muted: z.boolean(),
   soloed: z.boolean(),
   order: z.number(),
+  height: z.number().optional(),
 })
 export type ArrangementTrack = z.infer<typeof ArrangementTrackSchema>
 

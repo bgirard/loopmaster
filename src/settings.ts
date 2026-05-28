@@ -9,6 +9,7 @@ export const settings = signalify({
   showKnobs: true,
   showDocs: true,
   wordWrap: true,
+  fancyBlockCodeEditor: false,
   analyserType: 'waveform' as 'waveform' | 'spectrum' | 'amplitude',
   fullSize: false,
   debug: false,

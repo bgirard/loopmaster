@@ -14,6 +14,7 @@ const SettingsMap = {
   showKnobs: { name: 'Show Knobs', shortcut: 'alt+k' },
   showDocs: { name: 'Show Docs', shortcut: 'alt+o' },
   wordWrap: { name: 'Word Wrap', shortcut: 'alt+p' },
+  fancyBlockCodeEditor: { name: 'Fancy Block Code Editor', shortcut: 'alt+b' },
 } as const
 
 const SettingsButton = ({ onClick, children }: { onClick: () => void; children: preact.ComponentChildren }) => (

@@ -972,6 +972,10 @@ effect(() => {
         settings.wordWrap = !settings.wordWrap
         return true
       }
+      else if (e.key === 'b') {
+        settings.fancyBlockCodeEditor = !settings.fancyBlockCodeEditor
+        return true
+      }
       else if (e.key === 'l') {
         toggleAnalyserType()
         return true
