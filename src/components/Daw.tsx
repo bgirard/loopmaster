@@ -237,6 +237,7 @@ export const Daw = () => {
   const arrangementLength = arrangement ? getArrangementLengthBars(arrangement) : 16
   const pxPerBar = basePxPerBar * timelineZoom.value
   const timelineWidth = arrangementLength * pxPerBar
+  const timelineContentWidth = laneHeaderWidth + timelineWidth
   const playheadSeconds = seekPreviewSeconds.value ?? currentProgramContext.value?.timeSeconds.value ?? 0
   const playheadBar = arrangement ? (playheadSeconds * arrangement.bpm) / (BEATS_PER_BAR * 60) : 0
   const playheadX = Math.max(0, Math.min(timelineWidth, playheadBar * pxPerBar))
@@ -689,7 +690,7 @@ export const Daw = () => {
 
         <main class="flex-1 min-w-0 min-h-0 flex flex-col">
           <div class="flex-1 min-h-0 overflow-auto">
-            <div class="sticky top-0 z-20 flex h-9 border-b border-white/10" style={{ backgroundColor: theme.value.black }}>
+            <div class="sticky top-0 z-20 flex h-9 border-b border-white/10" style={{ width: timelineContentWidth, backgroundColor: theme.value.black }}>
               <div class="shrink-0 border-r border-white/10 px-3 flex items-center justify-between"
                 style={{ width: laneHeaderWidth }}
               >
@@ -776,7 +777,7 @@ export const Daw = () => {
             </div>
             <div
               class={`relative ${dropPreview.value ? 'bg-white/[0.02]' : ''}`}
-              style={{ minHeight: tracksHeight + newLanePreviewHeight }}
+              style={{ minHeight: tracksHeight + newLanePreviewHeight, minWidth: timelineContentWidth }}
               onDragOver={event => {
                 if (!event.dataTransfer) return
                 event.preventDefault()
@@ -825,6 +826,7 @@ export const Daw = () => {
                   track={track}
                   arrangement={arrangement}
                   selectedBlockId={selectedBlockId.value}
+                  contentWidth={timelineContentWidth}
                   timelineWidth={timelineWidth}
                   pxPerBar={pxPerBar}
                   height={height}
@@ -834,7 +836,7 @@ export const Daw = () => {
                   onCommit={commit}
                 />
               ))}
-              <div class="border-b border-dashed border-white/10 pointer-events-none" style={{ height: newLanePreviewHeight }} />
+              <div class="border-b border-dashed border-white/10 pointer-events-none" style={{ height: newLanePreviewHeight, width: timelineContentWidth }} />
             </div>
           </div>
 
@@ -880,10 +882,11 @@ export const Daw = () => {
 }
 
 const LaneRow = (
-  { track, arrangement, selectedBlockId, timelineWidth, pxPerBar, height, baseHeight, laneZoom, onSelectBlock, onCommit }: {
+  { track, arrangement, selectedBlockId, contentWidth, timelineWidth, pxPerBar, height, baseHeight, laneZoom, onSelectBlock, onCommit }: {
     track: ArrangementTrack
     arrangement: Arrangement
     selectedBlockId: string | null
+    contentWidth: number
     timelineWidth: number
     pxPerBar: number
     height: number
@@ -935,7 +938,7 @@ const LaneRow = (
   }
 
   return (
-    <div class={`flex overflow-hidden border-b transition-[background-color,filter,opacity] duration-150 ${laneClasses}`} style={{ height }}>
+    <div class={`flex overflow-hidden border-b transition-[background-color,filter,opacity] duration-150 ${laneClasses}`} style={{ height, width: contentWidth }}>
       <div class={`relative shrink-0 border-r px-3 py-2 flex flex-col justify-between transition-colors duration-150 ${laneHeaderClasses}`}
         style={{ width: laneHeaderWidth }}
       >
