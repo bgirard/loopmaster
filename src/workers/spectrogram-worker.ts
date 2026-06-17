@@ -8,6 +8,7 @@ import { sampleManager } from '../../node_modules/engine/src/lib/sample-manager.
 import { createWasmImports } from '../../node_modules/engine/src/lib/wasm-imports.ts'
 import { createWasmRuntime, type WasmRuntime } from '../../node_modules/engine/src/lib/wasm-runtime.ts'
 import { wasmSetup, type WasmSetup } from '../../node_modules/engine/src/lib/wasm-setup.ts'
+import { buildSpectrogramPreviewCode } from '../lib/spectrogram-preview.ts'
 
 type SpectrogramRequest = {
   id: number
@@ -62,7 +63,7 @@ async function renderRequest(request: SpectrogramRequest): Promise<void> {
     }
     const previewRuntime = await getPreview()
     sendProgress(request.id, 0.08)
-    const code = buildPreviewCode(request)
+    const code = buildSpectrogramPreviewCode(request)
     const bars = Math.max(0.25, request.lengthBars || 1)
     let step: IteratorResult<number, { left: Float32Array; right: Float32Array }> | undefined
     const generator = renderToAudio(previewRuntime, code, bars, 4, renderVmId)
@@ -95,7 +96,7 @@ async function renderRequest(request: SpectrogramRequest): Promise<void> {
       lengthBars: request.lengthBars,
       bpm: request.bpm,
       code: request.code,
-      previewCode: buildPreviewCode(request),
+      previewCode: buildSpectrogramPreviewCode(request),
     })
     const pixels = emptySpectrogram(renderWidth)
     self.postMessage({
@@ -252,18 +253,6 @@ function ensureRecordSamples({
     }
     sampleManager.setSampleData(registration.handle, [record.output], sampleRate)
   }
-}
-
-function buildPreviewCode(request: SpectrogramRequest): string {
-  const source = stripOutputPipes(request.code).trim() || 'dc(0)'
-  return [
-    `bpm=${formatNumber(clamp(request.bpm || 120, 20, 260))}`,
-    'lm_preview=(_lm_preview_arg)->{',
-    '  bt=t',
-    indent(source),
-    '}',
-    'out(lm_preview(0))',
-  ].join('\n')
 }
 
 function computeSpectrogram(samples: Float32Array, width: number): Uint8ClampedArray {
@@ -457,18 +446,6 @@ function mixMono(left: Float32Array, right: Float32Array): Float32Array {
   const mono = new Float32Array(length)
   for (let i = 0; i < length; i++) mono[i] = (left[i]! + right[i]!) * 0.5
   return mono
-}
-
-function stripOutputPipes(code: string): string {
-  return code.replace(/\|>\s*(?:out|outs|solo|sout)\s*\([^)]*\)/g, '').trim()
-}
-
-function indent(value: string): string {
-  return value.split('\n').map(line => `  ${line}`).join('\n')
-}
-
-function formatNumber(value: number): string {
-  return Number.isInteger(value) ? String(value) : Number(value.toFixed(4)).toString()
 }
 
 function getCacheKey(request: SpectrogramRequest): string {

@@ -180,7 +180,7 @@ export function compileArrangement(input: Arrangement): string {
   return lines.join('\n').trimEnd()
 }
 
-function migrateArrangementBlockCode(block: Pick<ArrangementBlock, 'templateId' | 'code'>): string {
+export function migrateArrangementBlockCode(block: Pick<ArrangementBlock, 'templateId' | 'code'>): string {
   let code = migrateLegacyEveryCalls(block.code)
   const shouldMigrateHypnosis = block.templateId === hypnosisCommunityTemplateId
     || obsoleteHypnosisFragments.every(fragment => code.includes(fragment))
@@ -218,14 +218,14 @@ function prepareFullProjectBlockCode(code: string, startBeat: number, gateName: 
   ].filter(Boolean).join('\n')
 }
 
-function isFullProjectBlock(code: string): boolean {
+export function isFullProjectBlock(code: string): boolean {
   outputPipePattern.lastIndex = 0
   const outputCount = [...code.matchAll(outputPipePattern)].length
   outputPipePattern.lastIndex = 0
   return outputCount > 1 || /\bmix\s*=>/.test(code)
 }
 
-function stripOutputPipes(code: string): string {
+export function stripOutputPipes(code: string): string {
   return code
     .replace(outputPipePattern, '')
     .trim()
