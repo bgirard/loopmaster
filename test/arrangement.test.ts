@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
+import { controlPipeline } from 'engine/src/live/pipeline.ts'
 import type { Arrangement } from '../deno/types.ts'
 import {
   ARRANGEMENT_VERSION,
@@ -15,6 +16,7 @@ import {
   normalizeArrangement,
   snapBar,
 } from '../src/lib/arrangement.ts'
+import { dawTemplates, getTemplate, type DawTemplate } from '../src/lib/daw-templates.ts'
 
 describe('DAW arrangement model', () => {
   it('creates a default arrangement from legacy code and strips direct outputs', () => {
@@ -150,4 +152,128 @@ describe('DAW arrangement compiler', () => {
 
     assert.match(code, /silence=dc\(0\)\nsilence \|> out\(\$\)$/)
   })
+
+  it('keeps the Hypnosis community track output routes playable as a block', () => {
+    const template = getTemplate('community-c2i73g')
+    assert.ok(template)
+    const staleCode = template.code
+      .replaceAll('rhodes(#1*o4,trig)', 'piano(#1*o4,trig)')
+      .replaceAll('supersaw($,7,.035)', 'pad($,every(1/2,1/8))')
+      .replaceAll('trig:at(1/8,1/2)', 'trig:every(1/2,1/8)')
+
+    const track = createArrangementTrack({ id: 'track-a' })
+    const block = createArrangementBlock({
+      id: 'hypnosis',
+      trackId: track.id,
+      name: template.name,
+      code: template.code,
+    })
+    const code = compileArrangement({
+      arrangementVersion: ARRANGEMENT_VERSION,
+      bpm: 120,
+      tracks: [track],
+      blocks: [block],
+      generatedCode: '',
+    })
+
+    assert.equal((code.match(/\|>\s*out\(/g) ?? []).length, 8)
+    assert.match(code, /mix=>compressor\(\$\)\*2\.2\|>limiter\(\$\)/)
+    assert.match(code, /trig=tram\('x-x-x-x-'\) sine\(#5\*o2\+10k\*ad\(\.00001,\.02422,100,trig\),trig\)\*ad\(\.001,\.10,10,trig\) \|> out\(\(\$\)\*lm_0_hypnosis_gate\*1\)/)
+    assert.match(code, /trig=tram\('xx-'\) tri\(#1\*o2\)\*ad\(\.02,\.3,3,trig\) \|> \$\+delay\(\$,.27,.6\) \|> out\(\(\$\*\.12\)\*lm_0_hypnosis_gate\*1\)/)
+    assert.doesNotMatch(code, /lm_0_hypnosis\(\)\*lm_0_hypnosis_gate/)
+
+    const result = controlPipeline.compileSource(code, { projectId: 'hypnosis-community-regression' })
+    assert.deepEqual(result.errors, [])
+    assert.deepEqual(result.compile.errors, [])
+    assert.ok(result.compile.bytecode.length > 0)
+
+    const normalized = normalizeArrangement({
+      arrangementVersion: ARRANGEMENT_VERSION,
+      bpm: 120,
+      tracks: [track],
+      blocks: [{
+        ...block,
+        templateId: 'community-c2i73g',
+        code: staleCode,
+      }],
+      generatedCode: '',
+    })
+
+    assert.doesNotMatch(normalized.blocks[0]!.code, /piano|pad\(\$|every\(1\/2,1\/8\)/)
+    const staleResult = controlPipeline.compileSource(normalized.generatedCode, { projectId: 'hypnosis-stale-community-regression' })
+    assert.deepEqual(staleResult.errors, [])
+    assert.deepEqual(staleResult.compile.errors, [])
+    assert.ok(staleResult.compile.bytecode.length > 0)
+  })
+
+  it('compiles every community template after insertion as a DAW block', () => {
+    const failures: string[] = []
+
+    for (const template of dawTemplates.filter(template => template.id.startsWith('community-'))) {
+      const code = compileCommunityTemplateAsBlock(template)
+      const result = controlPipeline.compileSource(code, { projectId: `community-template-${template.id}` })
+      const errors = [
+        ...result.errors,
+        ...result.compile.errors.map(error => error.message),
+      ]
+
+      if (errors.length) {
+        failures.push(`${template.id} ${template.name}: ${errors.join('; ')}`)
+      }
+      else {
+        assert.ok(result.compile.bytecode.length > 0)
+      }
+    }
+
+    assert.deepEqual(failures, [])
+  })
+
+  it('migrates stale Agony community blocks using legacy two-argument every calls', () => {
+    const template = getTemplate('community-66d79i')
+    assert.ok(template)
+    const staleCode = template.code.replace('trig=at(2.25/16,1/2)', 'trig=every(1/2,2.25/16)')
+    const track = createArrangementTrack({ id: 'track-a' })
+    const normalized = normalizeArrangement({
+      arrangementVersion: ARRANGEMENT_VERSION,
+      bpm: 120,
+      tracks: [track],
+      blocks: [
+        createArrangementBlock({
+          id: 'agony',
+          trackId: track.id,
+          name: template.name,
+          templateId: template.id,
+          code: staleCode,
+        }),
+      ],
+      generatedCode: '',
+    })
+
+    assert.match(normalized.blocks[0]!.code, /trig=at\(2\.25\/16,1\/2\)/)
+    assert.doesNotMatch(normalized.blocks[0]!.code, /every\(1\/2,2\.25\/16\)/)
+
+    const result = controlPipeline.compileSource(normalized.generatedCode, { projectId: 'agony-stale-community-regression' })
+    assert.deepEqual(result.errors, [])
+    assert.deepEqual(result.compile.errors, [])
+    assert.ok(result.compile.bytecode.length > 0)
+  })
 })
+
+function compileCommunityTemplateAsBlock(template: DawTemplate): string {
+  const track = createArrangementTrack({ id: 'track-a' })
+  return compileArrangement({
+    arrangementVersion: ARRANGEMENT_VERSION,
+    bpm: 120,
+    tracks: [track],
+    blocks: [
+      createArrangementBlock({
+        id: template.id.replace(/-/g, '_'),
+        trackId: track.id,
+        name: template.name,
+        templateId: template.id,
+        code: template.code,
+      }),
+    ],
+    generatedCode: '',
+  })
+}

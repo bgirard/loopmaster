@@ -12,6 +12,14 @@ export const BEATS_PER_BAR = 4
 
 const blockIdPrefix = 'lm-block-'
 const trackIdPrefix = 'lm-track-'
+const outputPipePattern = /\|>\s*(out|outs|solo|sout)\s*\(([^)]*)\)/g
+const legacyEveryPattern = /\bevery\(\s*([^,()]+)\s*,\s*([^()]+?)\s*\)/g
+const hypnosisCommunityTemplateId = 'community-c2i73g'
+const obsoleteHypnosisFragments = [
+  'piano(#1*o4,trig)',
+  'pad($,every(1/2,1/8))',
+  'trig:every(1/2,1/8)',
+]
 
 export function cloneArrangement(arrangement: Arrangement): Arrangement {
   return JSON.parse(JSON.stringify(arrangement)) as Arrangement
@@ -43,7 +51,10 @@ export function createArrangementBlock(data: Partial<ArrangementBlock> & Pick<Ar
     name: data.name ?? 'Code block',
     color: data.color ?? '#22d3ee',
     templateId: data.templateId,
-    code: data.code ?? 'sine(a4)*ad(trig:every(1/8))',
+    code: migrateArrangementBlockCode({
+      templateId: data.templateId,
+      code: data.code ?? 'sine(a4)*ad(trig:every(1/8))',
+    }),
     params: data.params ?? {},
     volume: data.volume ?? 1,
     muted: data.muted ?? false,
@@ -146,20 +157,44 @@ export function compileArrangement(input: Arrangement): string {
     const startBeat = start * BEATS_PER_BAR
     const endBeat = end * BEATS_PER_BAR
     const volume = clamp(block.volume * track.volume, 0, 2)
-    const source = prepareBlockCode(block.code, startBeat)
+    const blockCode = migrateArrangementBlockCode(block)
 
     lines.push(`// Block: ${escapeComment(block.name)} / ${escapeComment(track.name)}`)
     lines.push(`label(${formatNumber(start + 1)},'${escapeString(block.name)}',${index % 6})`)
     lines.push(`${id}_gate=step(${formatNumber(startBeat)},t)*(1-step(${formatNumber(endBeat)},t))`)
-    lines.push(`${id}=()->{`)
-    lines.push(indent(source || 'dc(0)'))
-    lines.push('}')
-    lines.push(`${id}()*${id}_gate*${formatNumber(volume)} |> out($)`)
+    if (isFullProjectBlock(blockCode)) {
+      const source = prepareFullProjectBlockCode(blockCode, startBeat, `${id}_gate`, volume)
+      lines.push(indent(source || 'dc(0)'))
+    }
+    else {
+      const source = prepareBlockCode(blockCode, startBeat)
+      lines.push(`${id}=()->{`)
+      lines.push(indent(source || 'dc(0)'))
+      lines.push('}')
+      lines.push(`${id}()*${id}_gate*${formatNumber(volume)} |> out($)`)
+    }
     lines.push('')
   })
 
   lines.push(`label(${formatNumber(getArrangementLengthBars(arrangement) + 1)},'end',0)`)
   return lines.join('\n').trimEnd()
+}
+
+function migrateArrangementBlockCode(block: Pick<ArrangementBlock, 'templateId' | 'code'>): string {
+  let code = migrateLegacyEveryCalls(block.code)
+  const shouldMigrateHypnosis = block.templateId === hypnosisCommunityTemplateId
+    || obsoleteHypnosisFragments.every(fragment => code.includes(fragment))
+  if (!shouldMigrateHypnosis) return code
+
+  return code
+    .replaceAll('piano(#1*o4,trig)', 'rhodes(#1*o4,trig)')
+    .replaceAll('pad($,every(1/2,1/8))', 'supersaw($,7,.035)')
+    .replaceAll('pad($,at(1/8,1/2))', 'supersaw($,7,.035)')
+    .replaceAll('trig:every(1/2,1/8)', 'trig:at(1/8,1/2)')
+}
+
+function migrateLegacyEveryCalls(code: string): string {
+  return code.replace(legacyEveryPattern, (_, every: string, offset: string) => `at(${offset.trim()},${every.trim()})`)
 }
 
 function prepareBlockCode(code: string, startBeat: number): string {
@@ -171,9 +206,28 @@ function prepareBlockCode(code: string, startBeat: number): string {
   ].filter(Boolean).join('\n')
 }
 
+function prepareFullProjectBlockCode(code: string, startBeat: number, gateName: string, volume: number): string {
+  const shifted = code.trim().replace(/\bt\b/g, 'bt')
+  const routed = shifted.replace(outputPipePattern, (_, fn: string, outputExpression: string) => {
+    const expression = outputExpression.trim() || '$'
+    return `|> ${fn}((${expression})*${gateName}*${formatNumber(volume)})`
+  })
+  return [
+    `bt=t-${formatNumber(startBeat)}`,
+    routed,
+  ].filter(Boolean).join('\n')
+}
+
+function isFullProjectBlock(code: string): boolean {
+  outputPipePattern.lastIndex = 0
+  const outputCount = [...code.matchAll(outputPipePattern)].length
+  outputPipePattern.lastIndex = 0
+  return outputCount > 1 || /\bmix\s*=>/.test(code)
+}
+
 function stripOutputPipes(code: string): string {
   return code
-    .replace(/\|>\s*(?:out|outs|solo|sout)\s*\([^)]*\)/g, '')
+    .replace(outputPipePattern, '')
     .trim()
 }
 
