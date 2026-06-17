@@ -1,0 +1,87 @@
+[
+  {
+    "id": "rnk2y0",
+    "name": "Trap Beat 1",
+    "code": "bpm = 124\n\n//*Drums*\n\n// Hi-hat\n\noh(.5,tram('..x. .x.[..] ..x. .x.[x...]',2)) |> chorus($,rate:.255,spread:.3) |> stereo($,.012) |> out($*0.8) \n\n// Kick\n\ntrig=tram('x... .x.. x..x .x.[x.]',2) sine(52+100k*ad(.0009,.012,500,trig),trig)*ad(.0014,.5,8,trig) |> out($*1) \n\n// 808 Kick\n\nmelody=[e1, e1, f1, e1, e1, e1, d1, f1]\n\nsine(melody[t])\n  * ad(\n      .001,2.1,4,\n      trig:\n        euclid(16, 16, bar:1)\n        * tram('x--- -x-- x--x -x-x', 2)\n    )\n|> tanh($*8)\n|> lp($,500)\n|> out($*0.5)\n\n// Snare\n\ntrig=tram('..x.',2/2) white(17,trig)+tri(#3*o2,trig) \n|> $*ad(.001,.5,28,trig) \n|> bps($,.6k,.9) \n|> bps($,1.4k,.75) \n|> bps($,7k,.7) \n|> clamp($*100,-0.4,.4) \n|> out($*0.55) \n\n//*Synth*\n\n// Siren\n\nenv = ad(attack:0.001, decay:0.85, exponent:0, trig:every(4/1))\n//Siren\n\nsqr(a5 + -160*env) * env \n|> tanh($*10)\n|> hp($,2k)\n|> $+dattorro($*3)+delay($,0.76,0.3)\n|> out($*0.12)\n\nenv = ad(attack:0.001, decay:0.7, exponent:0, trig:every(4/1))\n//Siren\n2\n\nsqr(a4 + -120*env) * env \n|> tanh($*50)\n|> hp($,3k)\n|> $+dattorro($*3)+delay($,0.85,0.2)\n|> out($*0.09)\n\nenv = ad(attack:0.001, decay:0.7, exponent:0, trig:every(4/1))\n//Siren 3\n\nsqr(a6 + -200*env) * env \n|> tanh($*20)\n|> hp($,3k)\n|> $+dattorro($*3)+delay($,0.85,0.2)\n|> out($*0.08)\n\n// TB-303 Lead\n\nenvelope=ad(attack:.001,decay:1,exponent:12.5,trig:every(1/8))\n//Synth Bass\n\npos=t*1\nnote=[e1,e2,e0,g2,e1,e2,e0,e2][pos]\naccent=[.7k,16.8k,.8k,.4k,.7k,5.8k,.8k,3k][pos]*.5 \nslide=[1.8,.05,.8,.01,2,.08,.8,.01][pos]\n\nramp(note |> slew($,slide,.2,exp:2))\n\n|> diodeladder($,\n  cutoff:250+(accent |> slew($,.08,.06,3,))*envelope\n\n    +fractal(123,.006)**4*5k,\n  q:.98,\n  k:0.0025,\n  sat:0.9)\n\n|> tanh($*20)\n\n|> out($*.12)\n\n\n"
+  },
+  {
+    "id": "66d79i",
+    "name": "Agony",
+    "code": "bpm=144 transpose=-2\n\ntrig=tram('x-x-x-x-') \n\nkick=sine(#5*o2+10k*ad(.00001,.02422,100,trig),trig)*ad(.001,.10,10,trig) \n\nkick |> out($)\n\ntrig=tram('xxx',1/2) tri(#1*o2)*ad(.02,.3,3,trig) |> $+delay($,.15,.5) |> compressor($,key:kick) |> out($*.3)\n\noh(.3) |> out($)\n\nch(.6,trig:tram('xxxx',1/4))*[.1,.2,.8,.6][t*4] |> out($*.5)\n\ntrig=every(1/2,2.25/16)\n\n#iii7sus4 |> $.map(hz->sine(hz*hz/2+sine(0.25k,trig)*500+200*ad(.01,.025,trig),trig)).avg()*ad(.00001,2.08,8,trig) |> out(.2*$)\n\n\nmix=>compressor($)*2.2|>limiter($)"
+  },
+  {
+    "id": "c2i73g",
+    "name": "Hypnosis",
+    "code": "bpm=144 transpose=-1.1 scale='saba'\n\ntrig=tram('x-x-x-x-') sine(#5*o2+10k*ad(.00001,.02422,100,trig),trig)*ad(.001,.10,10,trig) |> out($)\n\ntrig=tram('xx-') tri(#1*o2)*ad(.02,.3,3,trig) |> $+delay($,.27,.6) |> out($*.12)\n\ntrig=tram('xxxx',1/4) ch(.445,trig)*[.1,.1,.76,.4][t*4] |> out($)\n\ntrig=tram('-x',1/4) oh(.7,trig) |> out($*.35)\n\ntrig=tram('--xx',1/4) piano(#1*o4,trig) |> out($*.25)\n\n#i*o4 |> pad($,every(1/2,1/8)) |> flanger($,4,.08,.038,.9) |> hp($,100) |> lp($,300,.5) |> out($*.65)\n\n#1*o2 |> saw($)*ad(.24,1.4,trig:every(1/2,1/8)) |> lpm($,310,.05) |> hpm($,90,.05) |> out($*.06)\n\nsd(1188,trig:tram('-- -- -- -x',1)) |> $+dattorro($,.01,.01,.3) |> out($*.4)\n\nmix=>compressor($)*2.2|>limiter($)\n"
+  },
+  {
+    "id": "han76c",
+    "name": "Desires",
+    "code": "bpm=144\n\nscale='saba'\n\nminimoog=hz->{\n   saw(hz/2)*.7\n  +sqr(hz*1.018)*.6\n  +tri(hz*0.952)*.3\n  |> $*.7 |> lpm($, 207, 1) |> tanh($*2) |> stereo($,.004) |> widen($,.0007)\n}\n\nbd(\n  punch:10.3k,\n  cutoff:95k,\n  q:.62,\n  fm:trig->ad(.00005,.09,200,trig),\n  filter:trig->ad(.001,.1,100,trig),\n  amp:trig->ad(.0032,.5,21,trig),\n  phase:.52,\n  offset:.01,\n) |> bus(0,$)\n\nbus(0) |> $+delay($,.11,.2)/2+delay($,.3,.2)/2 |> lp($,55)/2 |> bus(1,$)\n\nchord=[#i7,#i7,#i7,#vi7][t].reverse()\n\nchord.random(every(1/2))*o4 |> marimba($,trig:euclid(3,8,2)) |> bus(1,$*.3)\n\n;(chord*o3).take(3).map(hz->marimba(hz,trig:euclid(5,8,1))).avg() |> bus(1,$*.3)\n\nminimoog(chord[0]*o2)*ad(trig:euclid(5,8,1)) |> lp($,chord[0]*o3,1) |> bus(1,$*.2)\n\nch(0.2, trig:tram('xxxx',1/4))*[.2,.2,.7,.8][t*4] |> bus(1,$*.4)\n\nbus(0) |> out($)\n\nbus(1) |> $+dattorro($) |> compressor($,att:.0001,rel:.16,thr:-21,ratio:5,knee:4,key:bus(0)) |> out($)\n\nmix=>compressor($,thr:-13)*2 |> limiter($)\n"
+  },
+  {
+    "id": "6q9nia",
+    "name": "Oriental",
+    "code": "bpm=144\n\nscale='saba' transpose=-2\n\nminimoog=hz->{\n   saw(hz/2)*.5\n  +sqr(hz*1.018)*.4\n  +tri(hz*0.952)*.6\n  |> $*.7 |> lpm($, 207, 1) |> tanh($*2) |> stereo($,.004) |> widen($,.0007)\n}\n\nchord=[#i,#iv,#i,#ii][t/2]\n\ntrig=euclid(3,8,3)\n\nchord.markov(trig) |> piano($*[o3,o4,o5].random(trig),trig) |> bus(1,$*.85)\n\n;(chord*o4).map((hz,i)->piano(hz*(i==0?.5:1),trig)).avg() |> bus(1,$*.85)\n\nminimoog(chord[0]*o2)*ad(trig:euclid(5,8,1)) |> lp($,chord[0]*o3,1) |> bus(1,$*.2)\n\nbd(\n  punch:13.3k,\n  cutoff:95k,\n  q:.62,\n  fm:trig->ad(.00005,.09,200,trig),\n  filter:trig->ad(.001,.1,100,trig),\n  amp:trig->ad(.0032,.5,21,trig),\n  phase:.52,\n  offset:.01,\n) |> bus(0,$)\n\nbus(0) |> $+delay($,.11,.2)/2+delay($,.3,.2)/2 |> lp($,55)/2 |> bus(1,$)\n\nbus(0) |> out($)\n\nch(0.44, trig:tram('xxxx',1/4))*[.2,.2,.7,.8][t*4] |> bus(1,$*.4)\n\noh() |> bus(1,$*.5)\n\nbus(1) |> $+dattorro($) |> compressor($,att:.0001,rel:.16,thr:-21,ratio:5,knee:4,key:bus(0)) |> out($)\n"
+  },
+  {
+    "id": "rvqrl1",
+    "name": "Motion",
+    "code": "bpm=144\n\nscale='saba'\n\nminimoog=hz->{\n   saw(hz/2)*.7\n  +sqr(hz*1.018)*.6\n  +tri(hz*0.952)*.3\n  |> $*.7 |> lpm($, 207, 1) |> tanh($*2) |> stereo($,.004) |> widen($,.0007)\n}\n\nbd(\n  punch:10.3k,\n  cutoff:95k,\n  q:.62,\n  fm:trig->ad(.00005,.09,200,trig),\n  filter:trig->ad(.001,.1,100,trig),\n  amp:trig->ad(.0032,.5,21,trig),\n  phase:.52,\n  offset:.01,\n) |> bus(0,$)\n\nbus(0) |> $+delay($,.11,.2)/2+delay($,.3,.2)/2 |> lp($,55)/2 |> bus(1,$)\n\nchord=[#i7,#i11,#i7,#iii7][t].reverse()\n\nsynth=(in,trig)->in|>sine($+sine($)*$*1.25)*.5+sqr($/2)*.4+tri($*2)*.7 |> lps($,300+5k*ad(e:5,trig),.8)*ad(e:2,trig) |> $+delay($,.5*co,.4)*.2\n\nchord.markov(every(1/4))*o3 |> synth($,trig:euclid(3,8,1)) |> bus(1,$*.3)\n\npad=(in,trig)->in|>sine($+sine($*.4)*$*2.02)*ad(trig) |> lps($,400,.9)*.6\n\n;(chord*o4).take(3).map(hz->pad(hz,trig:euclid(3,8,2))+pad(hz*4,trig:euclid(3,8,1))*.3).avg() |> bus(1,$*.3)\n\nminimoog(chord[0]*o2)*ad(trig:euclid(5,8,1)) |> lp($,chord[0]*o3,1) |> bus(1,$*.2)\n\nch(0.2, trig:tram('xxxx',1/4))*[.2,.2,.7,.8][t*4] |> bus(1,$*.4)\n\nbus(0) |> out($)\n\nbus(1) |> $+dattorro($) |> compressor($,att:.0001,rel:.16,thr:-21,ratio:5,knee:4,key:bus(0)) |> out($)\n\nmix=>compressor($,thr:-13)*2 |> limiter($)\n"
+  },
+  {
+    "id": "cw0uwl",
+    "name": "Rotate",
+    "code": "bpm=144\n\ntranspose=-7 scale='saba'\n\ntrig=every(1/4)\n\nenv=ad(.00001,1,30,trig)\n\nsine(#5*o2+190k*env**180,.21,trig)*env |> lp($,100+8k*env**400) |> out($*.5)\n\nenv=ad(.03,.13,trig:euclid(3,8,0,1/2))\n\nsaw(#1*o2)*env |> lpm($,160,.05) |> out($*.45)\n\nch(.9,trig:tram('xxxx',1/4))*[.1,.2,.8,.6][t*4] |> out($*.5)\n\noh(.15) |> out($)\n\ntrig=tram('x--x--x.',1) sine(80+160*ad(.001,.92,4,trig))*ad(.00001,.12,4,trig) |> out($*.28)\n\ntrig=tram('x--.--x.',1/2) #vi7sus4.shuffle(5).step(trig)*[o3,o4][t/4] |> sine($+sine($*(1+floor(lfosah(1)*10)))*$)*ad(trig) |> hp($,428,1.3) |> $+delay($,.18,.3) |> $+dattorro($) |> out($*.12)\n\nmix=>compressor($)*2 |> limiter($)\n"
+  },
+  {
+    "id": "na1v8p",
+    "name": "Untitled",
+    "code": "\ndrums() |> out($)\n\nenvelope=ad(attack:.001,decay:1,exponent:12.5,trig:every(1/8))\n\npos=t*2\nnote=[g1,g2,g0,b2][pos]\naccent=[.7k,21.8k,.8k,.4k, .7k,12.8k,2.8k,.4k][pos]*.5 // <-- tweak this!\nslide=[1.8,.03,.8,.01, 1.8,.8,1.8,.03][pos]\n\nramp(note |> slew($,slide,.1,exp:2)) // <-- try changing to sqr!\n\n|> diodeladder($,\n  cutoff:200+(accent |> slew($,.08,.06,3))*envelope\n\n    +fractal(123,.006)**4*5k, // <-- and this!\n  q:.98,\n  k:0.0025,\n  sat:.9\n)\n|> tanh($*25)\n\n|> out($*.15) "
+  },
+  {
+    "id": "dne350",
+    "name": "Down",
+    "code": "bpm=144\n\ntranspose=-8 scale='dorian'\n\ntrig=every(1/4)\n\nenv=ad(.00001,1,30,trig)\n\nsine(#5*o2+180k*env**180,.21,trig)*env |> lp($,100+8k*env**400) |> out($*.5)\n\nenv=ad(.02,.15,trig:euclid(5,8,0,1/2))\n\ntri(#1*o2)*env |> lpm($,500) |> out($*.5)\n\ntrig=every(1/2,2/16)\n\n#ii7sus4 |> $.map(hz->sine(hz*hz*hz/4+sine(1.0k)*300+400*ad(.06,.02,trig),trig)).avg()*ad(.00001,1.08,8,trig) |> out(.3*$)\n\ntrig=tram('-xx--xx-',1) sine(80+100*ad(.001,.92,4,trig))*ad(.00001,.12,4,trig) |> out($*.25)\n\nch(trig:tram('xxxx',1/4))*[.1,.2,.8,.2][t*4] |> out($*.5)\n\noh() |> out($)\n\nmix=>compressor($)*2 |> limiter($)\n"
+  },
+  {
+    "id": "buynki",
+    "name": "Disoriental",
+    "code": "bpm=144\n\nscale='saba' transpose=-2\n\nbd(#5*o2,trig:tram('x-x-x-x- x-x-x-x- x-x-x-x- xx-xx[xxx]-x',4)) |> out($)\n\ntri(#1*o2)*ad(.01,.8,trig:euclid(5,8)) |> lpm($,184,1) |> out($*.25)\n\npoly(3,euclid(3,8,3),trig->(#v7sus2*o3).markov(trig),marimba) |> $+dattorro($) |> out($*.9)\n\nch(.8,trig:tram('xxxx',1/4))*[.4,.4,.8,.5][t*4] |> out($*.62)\n\noh(.2)+sd() |> out($)\n\nmix=>compressor($,thr:-13)*2 |> limiter($)\n"
+  },
+  {
+    "id": "fdp7kj",
+    "name": "Ritual",
+    "code": "bpm=144 scale='saba' transpose=-2\n\nkicksynth=(x,trig=1)->sine(x+10000*ad(.001,.92,344,trig),offset:.5,trig)*ad(.012,.8,11,trig)\n\nkick=(y=52,trig=every(1/4))->sampler(record(.2,()->kicksynth(y)),trig,offset:.05)\n\nkick(#1*o2,trig:tram('x-x-x-x- x-x-x-x- x-x-x-x- x-x-x-xx',4)) |> bus(0,$*.6)\n\nminimoog=hz->{\n   saw(hz/2)*.6\n  +sqr(hz*1.018)*.4\n  +tri(hz*0.952)*.3\n  |> $*.8 |> lpm($, 113, 1) |> tanh($*3) |> stereo($,.002) |> widen($,.0003)\n}\n\n;[#1,#3].glide(1/2)*o2 |> minimoog($) |> lps($,130,.72) |> bus(1,$*.15)\n\nfx=>sine($/8+sine($/4)*$)*ad(.01,4,2,trig:every(4))*0.2\n\nfx(#6*o5) |> dattorro($,.7,.8,.9) |> bus(1,$*.8)\n\ntrig=tram('x--.--x-',2) #vi7sus4.shuffle(5).step(trig)*[o2,o3][t/3] |> sine($+sine($*(1+floor(lfosah(.5)*2)))*$)*ad(trig) |> hp($,528,1.3) |> $+delay($,.2,.3) |> $+dattorro($) |> out($*.3)\n\noh(.5,tram('..x. .x.. ..x. .X.[x.]',2)) |> chorus($,rate:4,spread:.3) |> stereo($,.012) |> bus(1,$*.5)\n\nbus(0) |> out($)\n\nbus(1) |> compressor($,thr:-22,key:bus(0)) |> out($*.5)\n\nmix=>compressor($,thr:-18)*3 |> limiter($)\n"
+  },
+  {
+    "id": "sipaxr",
+    "name": "Hymn",
+    "code": "bpm=144 scale='saba' transpose=-3\n\nkicksynth=(x,trig=1)->sine(x+18.6k*ad(.0038,.59,248,trig),offset:.5,trig)*ad(.014,.8,20,trig)\n\nkick=(y=52,trig=every(1/4))->sampler(record(.4,()->kicksynth(y)),trig,offset:.02)\n\nkick(#1*o2,trig:tram('x-x-x-x- x-x-x-x- x-x-x-x- x-x-x-xx',4)) |> compressor($,thr:-12)*3 |> limiter($) |> bus(0,$*.6)\n\n;[#1,#3].glide(1/2)*o2 |> tri($) |> lp($,60,1.5) |> bus(1,$*.08)\n\n;(#iv7sus4*o3).shuffle(11).walk(1/16) |> (sine($+sine($/1.02)*$*1.05)+sine($+sine($*4.02)*$*1.05)+sine($+sine($*12.02)*$*1.05))*ad(.010,.25,3,trig:every(1/4)) |> lp($,2k) |> $+dattorro($,.5,.8)*.24 |> hp($,277,3) |> bus(1,$*1.5)\n\noh(.5,tram('..x. .x.. ..x. .X.[x.]',2)) |> chorus($,rate:.255,spread:.3) |> stereo($,.012) |> bus(1,$*.8)\n\nperc=>sine($/4+sine($/8)*$*2);perc(#1*o4)*ad(.006,.06,9,trig:tram('x-x-[xx]-[xxx]-',1/2)) |> bus(1,$*.4)\n\nbus(0) |> out($)\n\nbus(1) |> compressor($,att:.0001,rel:.50,thr:-41,ratio:8,knee:8,key:bus(0)) |> out($)\n\n\nmix=>compressor($*.6,thr:-17)*3 |> limiter($)\n"
+  },
+  {
+    "id": "kk0hyv",
+    "name": "Dreams",
+    "code": "bpm=144 transpose=-3 scale='saba'\n\ntrig=tram('x-x-x-x-') sine(#1*o2+100k*ad(.0009,.012,500,trig),trig)*ad(.0014,.5,8,trig) |> out($)\n\ntrig=tram('-x',1/4) gauss(98,trig)*ad(.006,.32,4,trig) |> hps($,12k,.75) |> out($)\n\ntrig=tram('xx-X',1/4) gauss(5,trig)*ad(.001,.09,4,trig) |> hps($,12k,.75)*.1 |> out($)\n\ntrig=tram('---x',1/2) ;(white(11,trig)+tri(#3*o2)*1)*ad(.001,.24,28,trig)*.9 |> bps($,1.8k,.5) |> out($*.7)\n\ntrig=tram('-x-x-x-[xxx]') sine([180,300,500].random(every(1/16)))*ad(.001,.02,trig)*.3 |> out($*1.2)\n\ntrig=tram('x--.--x-',1/2) #vi7sus4.shuffle(15).step(trig)*[o2,o3][t/3] |> sine($+sine($*(1+floor(lfosah(.5)*15)))*$)*ad(trig) |> hp($,328,1.3) |> $+delay($,.2,.3) |> $+dattorro($) |> out($*.3)\n\n;[#1,#3].glide(1/2)*o2 |> tri($) |> out($*.08)\n\nmix=>compressor($,thr:-20)*2 |> limiter($)"
+  },
+  {
+    "id": "b4uez5",
+    "name": "Deep",
+    "code": "scale='hex' transpose=[2,2,2,2, 2,2,2,2, 2,2,2,2, 2,2,21,23][t/1]\n\nsynth=>sine($/.54+sine($*1.98)*$*2.52)\n\noversample(3,()->((#vi7sus4*o1).map(synth).avg()/7+(#vi7sus4*o2).map(synth).avg()/18)\n\n|> hps($,364,.90) |> lps($,123,.93) |> hs($,845,q:2,gain:36)) |> bus(1,$)\n\nkicksynth=(x,trig=1)->sine(x+18000*ad(.001,.8,300,trig),offset:.5,trig)*ad(.012,.8,16,trig)\n\nkick=(y=52,trig=every(1/4))->sampler(record(.2,()->kicksynth(y)),trig,offset:.05)  \n\nkick(trig:every(1/4)) |> lp($,60,2.7) |> bus(0,$)\n\nch(w:.5,trig:tram('--x-',1/4)) |> bus(1,$)\n\nsnare=(trig)->sampler(record(.155,()->{sdsynth(seed:1142,trig:step(.06,dec()))|>$+fdn($,.8,.7,.3,.2)}),trig)\n\nsnare(trig:tram('-x',1/2)) |> out($)\n\ntrig:=tram('--[xxx]---x-',1/2) sine(69+99*ad(.001,.84,2,trig))*ad(.00001,.12,6,trig) |> bus(1,$)\n\nbus(0) |> out($)\n\nbus(1) |> compressor($,thr:-22,key:bus(0)) |> out($*.5)\n\n\n\nmix=>compressor($,thr:-25)*6 |> limiter($)\n"
+  },
+  {
+    "id": "gyq2wm",
+    "name": "Tribal",
+    "code": "bpm=144 scale='saba' transpose=-3\n\nkicksynth=(x,trig=1)->sine(x+21654*ad(.001,.92,344,trig),offset:.5,trig)*ad(.012,.8,11,trig)\n\nkick=(y=52,trig=every(1/4))->sampler(record(.2,()->kicksynth(y)),trig,offset:.05)\n\nkick(#1*o2,trig:every(1/4)) |> bus(0,$*.6)\n\nch(.47,step(.61,swing(t,65)*4%1))*[.6,.2,.8,1.3][swing(t*4,.65)] |> bus(1,$*.9)\n\ntri([#1,#3][t]*o2) |> lp($,65,3) |> bus(1,$*.08)\n\ntrig:=tram('x---x-[xxx]-',1/2) sine(#1*o3+#12*o3*ad(.001,.11,2,trig))*ad(.00001,.12,6,trig) |> bus(1,$*.2)\n\nsynth=>oversample(4,()->sine($/4+sine($/1)*$*5))*ad(.0001,.06,6,trig:euclid(10,12))\n\nsynth(#2*o3)+synth(#20*o3)*.4 |> $+delay($,.30,.34,x->hp(x,3150,.7))*.5 |> bus(1,$*.23)\n\npad=>oversample(4,()->sine($+sine($)*$));(#iv9sus4*o4).map(pad).avg() |> bus(2,$*.07)\n\nbus(0) |> out($*1)\n\nbus(1) |> compressor($,thr:-22,key:bus(0)) |> out($*.5)\n\nbus(2) |> compressor($,thr:-47,rel:.4,key:bus(0)) |> out($*.9)\n\n\n\nmix=>compressor($,thr:-16)*5 |> limiter($)\n"
+  },
+  {
+    "id": "sjhxh4",
+    "name": "Little techno",
+    "code": "bpm=144\n\nkicksynth=(x,trig=1)->sine(x+18000*ad(.001,.8,300,trig),offset:.5,trig)*ad(.012,.8,16,trig)\n\nkick=(y=52,trig=every(1/4))->sampler(record(.2,()->kicksynth(y)),trig,offset:.05)\n\nkick(52,trig:every(1/4)) |> out($)\n\ntrig=every(1/8) synth=>oversample(4,()->sine($+sine($/2)*$)*ad(.0001,.5,3,trig)*.2)\n\nmel=[61,62,65,67,71,60]\n\nmel[t*4] |> ntof($)     |> synth($) |> out(    $)\n\nmel[t*4] |> ntof($+65)  |> synth($) |> out($/1.5)\n\nmel[t*4] |> ntof($+.65) |> synth($) |> out($/2.5)\n\ntrig=tram('x-x-x-[xxx]-',1/2) sine(80+100*ad(.001,.92,4,trig))*ad(.00001,.12,4,trig) |> out($*.75)\n\nch(334) |> out($)\n\noh() |> out($)\n\nmix=>lp($,200)\n\n\n\n\nmix=>$*.5 \n"
+  },
+  {
+    "id": "a2umaq",
+    "name": "Mystic",
+    "code": "bpm=144\n\nmel=[60,62,66]\n\nsynth=>sine($/2+sine($/3*12)*$/2)\n\nmel[t*4] |> ntof($) |> synth($/4) |> out($/3)\n\nmel[t*4] |> ntof($) |> synth($*11.1) |> out($/68)\n\nkicksynth=(x,trig=1)->sine(x+16800*ad(.0008,.7,287,trig),offset:.5,trig)*ad(.012,.6,13,trig)\n\nkicksynth(54,trig:every(1/4)) |> out(       $)\n\nmix=>lp($,200)\n\n\n\n\nmix=>$*.7\n"
+  }
+]

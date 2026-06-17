@@ -3,8 +3,19 @@ import { fileURLToPath } from 'node:url'
 import ts from 'typescript'
 
 const tsRegex = /^file:.*(?<!\.d)\.m?ts$/
+const jsonRegex = /^file:.*\.json$/
 
 export async function load(url, context, nextLoad) {
+  if (jsonRegex.test(url)) {
+    const filename = fileURLToPath(url)
+    const source = await readFile(filename, 'utf8')
+    return {
+      format: 'module',
+      shortCircuit: true,
+      source: `export default ${source};`,
+    }
+  }
+
   if (!tsRegex.test(url)) {
     return nextLoad(url, context)
   }

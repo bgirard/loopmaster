@@ -1,4 +1,5 @@
 import type { ArrangementBlock } from '../../deno/types.ts'
+import communityProjects from './community-projects.json'
 
 export type TemplateParam = {
   name: string
@@ -17,6 +18,37 @@ export type DawTemplate = {
   previewCode?: string
   params: TemplateParam[]
 }
+
+const communityTrackColors = [
+  '#e879f9',
+  '#c084fc',
+  '#a78bfa',
+  '#818cf8',
+  '#60a5fa',
+  '#38bdf8',
+  '#22d3ee',
+  '#2dd4bf',
+  '#34d399',
+  '#4ade80',
+  '#a3e635',
+  '#facc15',
+  '#fb923c',
+  '#fb7185',
+  '#f472b6',
+  '#d946ef',
+  '#8b5cf6',
+]
+
+const communityTrackTemplates: DawTemplate[] = communityProjects.map((project, index) => ({
+  id: `community-${project.id}`,
+  name: project.name,
+  category: 'Community Tracks',
+  color: communityTrackColors[index % communityTrackColors.length]!,
+  defaultLengthBars: 16,
+  code: project.code,
+  previewCode: project.code,
+  params: [],
+}))
 
 export const dawTemplates: DawTemplate[] = [
   {
@@ -391,6 +423,7 @@ export const dawTemplates: DawTemplate[] = [
       { name: 'gain', label: 'Gain', type: 'number', defaultValue: 0.28 },
     ],
   },
+  ...communityTrackTemplates,
 ]
 
 export function getTemplate(id: string | undefined): DawTemplate | undefined {

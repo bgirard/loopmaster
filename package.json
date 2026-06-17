@@ -10,7 +10,8 @@
     "install:all": "bun run install:web && bun run install:api",
     "install:web": "bun install",
     "install:api": "deno install --no-npm",
-    "build": "NODE_OPTIONS=\"--import ./loader.mjs\" vite build"
+    "build": "NODE_OPTIONS=\"--import ./loader.mjs\" vite build",
+    "test": "node --import ./loader.mjs --test test/*.test.ts"
   },
   "dependencies": {
     "@md-parser/parser": "^0.11.1",
