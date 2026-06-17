@@ -98,6 +98,7 @@
 		AudioVmOp$1[AudioVmOp$1["Time"] = 7] = "Time";
 		AudioVmOp$1[AudioVmOp$1["TableLookup"] = 8] = "TableLookup";
 		AudioVmOp$1[AudioVmOp$1["Alloc"] = 9] = "Alloc";
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 		AudioVmOp$1[AudioVmOp$1["Write"] = 10] = "Write";
 		AudioVmOp$1[AudioVmOp$1["Read"] = 11] = "Read";
 		AudioVmOp$1[AudioVmOp$1["Tram"] = 12] = "Tram";
@@ -231,155 +232,236 @@
 		AudioVmOp$1[AudioVmOp$1["GenSvf_bss"] = 140] = "GenSvf_bss";
 		AudioVmOp$1[AudioVmOp$1["GenSvf_peaks"] = 141] = "GenSvf_peaks";
 		AudioVmOp$1[AudioVmOp$1["GenSvf_aps"] = 142] = "GenSvf_aps";
+========
+		AudioVmOp$1[AudioVmOp$1["Append"] = 10] = "Append";
+		AudioVmOp$1[AudioVmOp$1["Write"] = 11] = "Write";
+		AudioVmOp$1[AudioVmOp$1["Advance"] = 12] = "Advance";
+		AudioVmOp$1[AudioVmOp$1["Read"] = 13] = "Read";
+		AudioVmOp$1[AudioVmOp$1["Tram"] = 14] = "Tram";
+		AudioVmOp$1[AudioVmOp$1["Mini"] = 15] = "Mini";
+		AudioVmOp$1[AudioVmOp$1["Timeline"] = 16] = "Timeline";
+		AudioVmOp$1[AudioVmOp$1["Oversample"] = 17] = "Oversample";
+		AudioVmOp$1[AudioVmOp$1["MakeArray"] = 18] = "MakeArray";
+		AudioVmOp$1[AudioVmOp$1["ArrayGet"] = 19] = "ArrayGet";
+		AudioVmOp$1[AudioVmOp$1["ArraySet"] = 20] = "ArraySet";
+		AudioVmOp$1[AudioVmOp$1["ArrayLen"] = 21] = "ArrayLen";
+		AudioVmOp$1[AudioVmOp$1["ArrayPush"] = 22] = "ArrayPush";
+		AudioVmOp$1[AudioVmOp$1["Walk"] = 23] = "Walk";
+		AudioVmOp$1[AudioVmOp$1["Glide"] = 24] = "Glide";
+		AudioVmOp$1[AudioVmOp$1["Step"] = 25] = "Step";
+		AudioVmOp$1[AudioVmOp$1["Random"] = 26] = "Random";
+		AudioVmOp$1[AudioVmOp$1["StoreInit"] = 27] = "StoreInit";
+		AudioVmOp$1[AudioVmOp$1["StoreGet"] = 28] = "StoreGet";
+		AudioVmOp$1[AudioVmOp$1["StoreSet"] = 29] = "StoreSet";
+		AudioVmOp$1[AudioVmOp$1["GetSystem"] = 30] = "GetSystem";
+		AudioVmOp$1[AudioVmOp$1["GetGlobal"] = 31] = "GetGlobal";
+		AudioVmOp$1[AudioVmOp$1["GetLocal"] = 32] = "GetLocal";
+		AudioVmOp$1[AudioVmOp$1["SetGlobal"] = 33] = "SetGlobal";
+		AudioVmOp$1[AudioVmOp$1["SetLocal"] = 34] = "SetLocal";
+		AudioVmOp$1[AudioVmOp$1["GetClosure"] = 35] = "GetClosure";
+		AudioVmOp$1[AudioVmOp$1["SetClosure"] = 36] = "SetClosure";
+		AudioVmOp$1[AudioVmOp$1["GetCellRefLocal"] = 37] = "GetCellRefLocal";
+		AudioVmOp$1[AudioVmOp$1["GetCellRefGlobal"] = 38] = "GetCellRefGlobal";
+		AudioVmOp$1[AudioVmOp$1["GetCellRefClosure"] = 39] = "GetCellRefClosure";
+		AudioVmOp$1[AudioVmOp$1["DefineFunction"] = 40] = "DefineFunction";
+		AudioVmOp$1[AudioVmOp$1["CallFunction"] = 41] = "CallFunction";
+		AudioVmOp$1[AudioVmOp$1["Return"] = 42] = "Return";
+		AudioVmOp$1[AudioVmOp$1["Throw"] = 43] = "Throw";
+		AudioVmOp$1[AudioVmOp$1["PushTryBlock"] = 44] = "PushTryBlock";
+		AudioVmOp$1[AudioVmOp$1["PopTryBlock"] = 45] = "PopTryBlock";
+		AudioVmOp$1[AudioVmOp$1["Jump"] = 46] = "Jump";
+		AudioVmOp$1[AudioVmOp$1["JumpIfFalse"] = 47] = "JumpIfFalse";
+		AudioVmOp$1[AudioVmOp$1["JumpIfTrue"] = 48] = "JumpIfTrue";
+		AudioVmOp$1[AudioVmOp$1["PushClosure"] = 49] = "PushClosure";
+		AudioVmOp$1[AudioVmOp$1["PopScope"] = 50] = "PopScope";
+		AudioVmOp$1[AudioVmOp$1["Dup"] = 51] = "Dup";
+		AudioVmOp$1[AudioVmOp$1["Pop"] = 52] = "Pop";
+		AudioVmOp$1[AudioVmOp$1["Neg"] = 53] = "Neg";
+		AudioVmOp$1[AudioVmOp$1["Not"] = 54] = "Not";
+		AudioVmOp$1[AudioVmOp$1["BitNot"] = 55] = "BitNot";
+		AudioVmOp$1[AudioVmOp$1["Add"] = 56] = "Add";
+		AudioVmOp$1[AudioVmOp$1["Sub"] = 57] = "Sub";
+		AudioVmOp$1[AudioVmOp$1["Mul"] = 58] = "Mul";
+		AudioVmOp$1[AudioVmOp$1["Div"] = 59] = "Div";
+		AudioVmOp$1[AudioVmOp$1["Mod"] = 60] = "Mod";
+		AudioVmOp$1[AudioVmOp$1["Pow"] = 61] = "Pow";
+		AudioVmOp$1[AudioVmOp$1["Greater"] = 62] = "Greater";
+		AudioVmOp$1[AudioVmOp$1["Less"] = 63] = "Less";
+		AudioVmOp$1[AudioVmOp$1["GreaterEqual"] = 64] = "GreaterEqual";
+		AudioVmOp$1[AudioVmOp$1["LessEqual"] = 65] = "LessEqual";
+		AudioVmOp$1[AudioVmOp$1["Equal"] = 66] = "Equal";
+		AudioVmOp$1[AudioVmOp$1["NotEqual"] = 67] = "NotEqual";
+		AudioVmOp$1[AudioVmOp$1["And"] = 68] = "And";
+		AudioVmOp$1[AudioVmOp$1["Or"] = 69] = "Or";
+		AudioVmOp$1[AudioVmOp$1["BitAnd"] = 70] = "BitAnd";
+		AudioVmOp$1[AudioVmOp$1["BitOr"] = 71] = "BitOr";
+		AudioVmOp$1[AudioVmOp$1["BitXor"] = 72] = "BitXor";
+		AudioVmOp$1[AudioVmOp$1["ShiftLeft"] = 73] = "ShiftLeft";
+		AudioVmOp$1[AudioVmOp$1["ShiftRight"] = 74] = "ShiftRight";
+		AudioVmOp$1[AudioVmOp$1["IsUndefined"] = 75] = "IsUndefined";
+		AudioVmOp$1[AudioVmOp$1["IsScalar"] = 76] = "IsScalar";
+		AudioVmOp$1[AudioVmOp$1["IsAudio"] = 77] = "IsAudio";
+		AudioVmOp$1[AudioVmOp$1["IsArray"] = 78] = "IsArray";
+		AudioVmOp$1[AudioVmOp$1["IsFunction"] = 79] = "IsFunction";
+		AudioVmOp$1[AudioVmOp$1["MathUnary"] = 80] = "MathUnary";
+		AudioVmOp$1[AudioVmOp$1["MathBinary"] = 81] = "MathBinary";
+		AudioVmOp$1[AudioVmOp$1["MathTernary"] = 82] = "MathTernary";
+		AudioVmOp$1[AudioVmOp$1["GenBiquad_lp"] = 83] = "GenBiquad_lp";
+		AudioVmOp$1[AudioVmOp$1["GenBiquad_hp"] = 84] = "GenBiquad_hp";
+		AudioVmOp$1[AudioVmOp$1["GenBiquad_bp"] = 85] = "GenBiquad_bp";
+		AudioVmOp$1[AudioVmOp$1["GenBiquad_bs"] = 86] = "GenBiquad_bs";
+		AudioVmOp$1[AudioVmOp$1["GenBiquad_ap"] = 87] = "GenBiquad_ap";
+		AudioVmOp$1[AudioVmOp$1["GenEmit_default"] = 88] = "GenEmit_default";
+		AudioVmOp$1[AudioVmOp$1["GenLfosqr_default"] = 89] = "GenLfosqr_default";
+		AudioVmOp$1[AudioVmOp$1["GenLfotri_default"] = 90] = "GenLfotri_default";
+		AudioVmOp$1[AudioVmOp$1["GenCompressor_default"] = 91] = "GenCompressor_default";
+		AudioVmOp$1[AudioVmOp$1["GenGauss_default"] = 92] = "GenGauss_default";
+		AudioVmOp$1[AudioVmOp$1["GenEuclid_default"] = 93] = "GenEuclid_default";
+		AudioVmOp$1[AudioVmOp$1["GenAd_default"] = 94] = "GenAd_default";
+		AudioVmOp$1[AudioVmOp$1["GenSine_default"] = 95] = "GenSine_default";
+		AudioVmOp$1[AudioVmOp$1["GenPhasor_default"] = 96] = "GenPhasor_default";
+		AudioVmOp$1[AudioVmOp$1["GenRamp_default"] = 97] = "GenRamp_default";
+		AudioVmOp$1[AudioVmOp$1["GenBrown_default"] = 98] = "GenBrown_default";
+		AudioVmOp$1[AudioVmOp$1["GenAdsr_default"] = 99] = "GenAdsr_default";
+		AudioVmOp$1[AudioVmOp$1["GenDattorro_default"] = 100] = "GenDattorro_default";
+		AudioVmOp$1[AudioVmOp$1["GenLforamp_default"] = 101] = "GenLforamp_default";
+		AudioVmOp$1[AudioVmOp$1["GenEnvfollow_default"] = 102] = "GenEnvfollow_default";
+		AudioVmOp$1[AudioVmOp$1["GenInc_default"] = 103] = "GenInc_default";
+		AudioVmOp$1[AudioVmOp$1["GenImpulse_default"] = 104] = "GenImpulse_default";
+		AudioVmOp$1[AudioVmOp$1["GenEvery_default"] = 105] = "GenEvery_default";
+		AudioVmOp$1[AudioVmOp$1["GenTestOversample_default"] = 106] = "GenTestOversample_default";
+		AudioVmOp$1[AudioVmOp$1["GenVelvet_default"] = 107] = "GenVelvet_default";
+		AudioVmOp$1[AudioVmOp$1["GenDiodeladder_default"] = 108] = "GenDiodeladder_default";
+		AudioVmOp$1[AudioVmOp$1["GenPitchshift_default"] = 109] = "GenPitchshift_default";
+		AudioVmOp$1[AudioVmOp$1["GenSqr_default"] = 110] = "GenSqr_default";
+		AudioVmOp$1[AudioVmOp$1["GenFdn_default"] = 111] = "GenFdn_default";
+		AudioVmOp$1[AudioVmOp$1["GenTri_default"] = 112] = "GenTri_default";
+		AudioVmOp$1[AudioVmOp$1["GenLfosaw_default"] = 113] = "GenLfosaw_default";
+		AudioVmOp$1[AudioVmOp$1["GenAcc_default"] = 114] = "GenAcc_default";
+		AudioVmOp$1[AudioVmOp$1["GenTestGain_default"] = 115] = "GenTestGain_default";
+		AudioVmOp$1[AudioVmOp$1["GenSlicer_default"] = 116] = "GenSlicer_default";
+		AudioVmOp$1[AudioVmOp$1["GenSustain_default"] = 117] = "GenSustain_default";
+		AudioVmOp$1[AudioVmOp$1["GenMoog_lpm"] = 118] = "GenMoog_lpm";
+		AudioVmOp$1[AudioVmOp$1["GenMoog_hpm"] = 119] = "GenMoog_hpm";
+		AudioVmOp$1[AudioVmOp$1["GenRandom_default"] = 120] = "GenRandom_default";
+		AudioVmOp$1[AudioVmOp$1["GenSah_default"] = 121] = "GenSah_default";
+		AudioVmOp$1[AudioVmOp$1["GenSampler_default"] = 122] = "GenSampler_default";
+		AudioVmOp$1[AudioVmOp$1["GenAt_default"] = 123] = "GenAt_default";
+		AudioVmOp$1[AudioVmOp$1["GenLimiter_default"] = 124] = "GenLimiter_default";
+		AudioVmOp$1[AudioVmOp$1["GenSmooth_default"] = 125] = "GenSmooth_default";
+		AudioVmOp$1[AudioVmOp$1["GenWhite_default"] = 126] = "GenWhite_default";
+		AudioVmOp$1[AudioVmOp$1["GenMarkov_default"] = 127] = "GenMarkov_default";
+		AudioVmOp$1[AudioVmOp$1["GenFractal_default"] = 128] = "GenFractal_default";
+		AudioVmOp$1[AudioVmOp$1["GenSaw_default"] = 129] = "GenSaw_default";
+		AudioVmOp$1[AudioVmOp$1["GenAudio_default"] = 130] = "GenAudio_default";
+		AudioVmOp$1[AudioVmOp$1["GenOnepole_lp1"] = 131] = "GenOnepole_lp1";
+		AudioVmOp$1[AudioVmOp$1["GenOnepole_hp1"] = 132] = "GenOnepole_hp1";
+		AudioVmOp$1[AudioVmOp$1["GenZerox_default"] = 133] = "GenZerox_default";
+		AudioVmOp$1[AudioVmOp$1["GenPwm_default"] = 134] = "GenPwm_default";
+		AudioVmOp$1[AudioVmOp$1["GenLfosah_default"] = 135] = "GenLfosah_default";
+		AudioVmOp$1[AudioVmOp$1["GenSlew_default"] = 136] = "GenSlew_default";
+		AudioVmOp$1[AudioVmOp$1["GenAnalyser_default"] = 137] = "GenAnalyser_default";
+		AudioVmOp$1[AudioVmOp$1["GenFreeverb_default"] = 138] = "GenFreeverb_default";
+		AudioVmOp$1[AudioVmOp$1["GenPink_default"] = 139] = "GenPink_default";
+		AudioVmOp$1[AudioVmOp$1["GenSvf_lps"] = 140] = "GenSvf_lps";
+		AudioVmOp$1[AudioVmOp$1["GenSvf_hps"] = 141] = "GenSvf_hps";
+		AudioVmOp$1[AudioVmOp$1["GenSvf_bps"] = 142] = "GenSvf_bps";
+		AudioVmOp$1[AudioVmOp$1["GenSvf_bss"] = 143] = "GenSvf_bss";
+		AudioVmOp$1[AudioVmOp$1["GenSvf_peaks"] = 144] = "GenSvf_peaks";
+		AudioVmOp$1[AudioVmOp$1["GenSvf_aps"] = 145] = "GenSvf_aps";
+		AudioVmOp$1[AudioVmOp$1["GenHold_default"] = 146] = "GenHold_default";
+		AudioVmOp$1[AudioVmOp$1["GenDc_default"] = 147] = "GenDc_default";
+		AudioVmOp$1[AudioVmOp$1["GenLfosine_default"] = 148] = "GenLfosine_default";
+		AudioVmOp$1[AudioVmOp$1["GenBiquadshelf_ls"] = 149] = "GenBiquadshelf_ls";
+		AudioVmOp$1[AudioVmOp$1["GenBiquadshelf_hs"] = 150] = "GenBiquadshelf_hs";
+		AudioVmOp$1[AudioVmOp$1["GenBiquadshelf_peak"] = 151] = "GenBiquadshelf_peak";
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 		return AudioVmOp$1;
 	}({});
 	const genSpecs = [
 		{
 			id: 0,
-			genName: "Phasor",
-			variantName: "default",
-			className: "Phasor_default_hz_scalar_offset_scalar_trig_scalar",
-			paramNames: [
-				"hz",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"scalar",
-				"scalar",
-				"scalar"
-			],
-			emitNames: ["phase"],
-			usesInput: false
+			genName: "Biquad",
+			variantName: "lp",
+			className: "Biquad_lp_cutoff_scalar_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: true
 		},
 		{
 			id: 1,
-			genName: "Phasor",
-			variantName: "default",
-			className: "Phasor_default_hz_scalar_offset_scalar_trig_audio",
-			paramNames: [
-				"hz",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"scalar",
-				"scalar",
-				"audio"
-			],
-			emitNames: ["phase"],
-			usesInput: false
+			genName: "Biquad",
+			variantName: "lp",
+			className: "Biquad_lp_cutoff_scalar_q_audio",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: true
 		},
 		{
 			id: 2,
-			genName: "Phasor",
-			variantName: "default",
-			className: "Phasor_default_hz_scalar_offset_audio_trig_scalar",
-			paramNames: [
-				"hz",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"scalar",
-				"audio",
-				"scalar"
-			],
-			emitNames: ["phase"],
-			usesInput: false
+			genName: "Biquad",
+			variantName: "lp",
+			className: "Biquad_lp_cutoff_audio_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: true
 		},
 		{
 			id: 3,
-			genName: "Phasor",
-			variantName: "default",
-			className: "Phasor_default_hz_scalar_offset_audio_trig_audio",
-			paramNames: [
-				"hz",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"scalar",
-				"audio",
-				"audio"
-			],
-			emitNames: ["phase"],
-			usesInput: false
+			genName: "Biquad",
+			variantName: "lp",
+			className: "Biquad_lp_cutoff_audio_q_audio",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: true
 		},
 		{
 			id: 4,
-			genName: "Phasor",
-			variantName: "default",
-			className: "Phasor_default_hz_audio_offset_scalar_trig_scalar",
-			paramNames: [
-				"hz",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"audio",
-				"scalar",
-				"scalar"
-			],
-			emitNames: ["phase"],
-			usesInput: false
+			genName: "Biquad",
+			variantName: "hp",
+			className: "Biquad_hp_cutoff_scalar_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: true
 		},
 		{
 			id: 5,
-			genName: "Phasor",
-			variantName: "default",
-			className: "Phasor_default_hz_audio_offset_scalar_trig_audio",
-			paramNames: [
-				"hz",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"audio",
-				"scalar",
-				"audio"
-			],
-			emitNames: ["phase"],
-			usesInput: false
+			genName: "Biquad",
+			variantName: "hp",
+			className: "Biquad_hp_cutoff_scalar_q_audio",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: true
 		},
 		{
 			id: 6,
-			genName: "Phasor",
-			variantName: "default",
-			className: "Phasor_default_hz_audio_offset_audio_trig_scalar",
-			paramNames: [
-				"hz",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"audio",
-				"audio",
-				"scalar"
-			],
-			emitNames: ["phase"],
-			usesInput: false
+			genName: "Biquad",
+			variantName: "hp",
+			className: "Biquad_hp_cutoff_audio_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: true
 		},
 		{
 			id: 7,
-			genName: "Phasor",
-			variantName: "default",
-			className: "Phasor_default_hz_audio_offset_audio_trig_audio",
-			paramNames: [
-				"hz",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"audio",
-				"audio",
-				"audio"
-			],
-			emitNames: ["phase"],
-			usesInput: false
+			genName: "Biquad",
+			variantName: "hp",
+			className: "Biquad_hp_cutoff_audio_q_audio",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: true
 		},
 		{
 			id: 8,
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			genName: "Every",
 			variantName: "default",
 			className: "Every_default_bars_scalar",
@@ -404,21 +486,116 @@
 			variantName: "default",
 			className: "White_default_seed_scalar_trig_scalar",
 			paramNames: ["seed", "trig"],
+========
+			genName: "Biquad",
+			variantName: "bp",
+			className: "Biquad_bp_cutoff_scalar_q_scalar",
+			paramNames: ["cutoff", "q"],
 			paramModes: ["scalar", "scalar"],
 			emitNames: [],
-			usesInput: false
+			usesInput: true
 		},
 		{
+			id: 9,
+			genName: "Biquad",
+			variantName: "bp",
+			className: "Biquad_bp_cutoff_scalar_q_audio",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 10,
+			genName: "Biquad",
+			variantName: "bp",
+			className: "Biquad_bp_cutoff_audio_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 11,
+			genName: "Biquad",
+			variantName: "bp",
+			className: "Biquad_bp_cutoff_audio_q_audio",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 12,
+			genName: "Biquad",
+			variantName: "bs",
+			className: "Biquad_bs_cutoff_scalar_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 13,
+			genName: "Biquad",
+			variantName: "bs",
+			className: "Biquad_bs_cutoff_scalar_q_audio",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 14,
+			genName: "Biquad",
+			variantName: "bs",
+			className: "Biquad_bs_cutoff_audio_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 15,
+			genName: "Biquad",
+			variantName: "bs",
+			className: "Biquad_bs_cutoff_audio_q_audio",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 16,
+			genName: "Biquad",
+			variantName: "ap",
+			className: "Biquad_ap_cutoff_scalar_q_scalar",
+			paramNames: ["cutoff", "q"],
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 11,
 			genName: "White",
 			variantName: "default",
 			className: "White_default_seed_scalar_trig_audio",
 			paramNames: ["seed", "trig"],
+========
+			id: 17,
+			genName: "Biquad",
+			variantName: "ap",
+			className: "Biquad_ap_cutoff_scalar_q_audio",
+			paramNames: ["cutoff", "q"],
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			paramModes: ["scalar", "audio"],
 			emitNames: [],
-			usesInput: false
+			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 12,
 			genName: "Lfosqr",
 			variantName: "default",
@@ -457,352 +634,402 @@
 		{
 			id: 14,
 			genName: "Lfosqr",
+========
+			id: 18,
+			genName: "Biquad",
+			variantName: "ap",
+			className: "Biquad_ap_cutoff_audio_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 19,
+			genName: "Biquad",
+			variantName: "ap",
+			className: "Biquad_ap_cutoff_audio_q_audio",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 20,
+			genName: "Emit",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosqr_default_bar_scalar_offset_audio_trig_scalar",
-			paramNames: [
-				"bar",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"scalar",
-				"audio",
-				"scalar"
-			],
-			emitNames: ["phase"],
+			className: "Emit_default_value_scalar",
+			paramNames: ["value"],
+			paramModes: ["scalar"],
+			emitNames: [],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 15,
 			genName: "Lfosqr",
+========
+			id: 21,
+			genName: "Emit",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosqr_default_bar_scalar_offset_audio_trig_audio",
-			paramNames: [
-				"bar",
-				"offset",
-				"trig"
-			],
-			paramModes: [
-				"scalar",
-				"audio",
-				"audio"
-			],
-			emitNames: ["phase"],
+			className: "Emit_default_value_audio",
+			paramNames: ["value"],
+			paramModes: ["audio"],
+			emitNames: [],
 			usesInput: false
 		},
 		{
 			id: 16,
 			genName: "Lfosqr",
 			variantName: "default",
-			className: "Lfosqr_default_bar_audio_offset_scalar_trig_scalar",
+			className: "Lfosqr_default_bar_scalar_phase_scalar_trig_scalar",
 			paramNames: [
 				"bar",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
-				"audio",
+				"scalar",
 				"scalar",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
 			id: 17,
 			genName: "Lfosqr",
 			variantName: "default",
-			className: "Lfosqr_default_bar_audio_offset_scalar_trig_audio",
+			className: "Lfosqr_default_bar_scalar_phase_scalar_trig_audio",
 			paramNames: [
 				"bar",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
-				"audio",
+				"scalar",
 				"scalar",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
 			id: 18,
 			genName: "Lfosqr",
 			variantName: "default",
-			className: "Lfosqr_default_bar_audio_offset_audio_trig_scalar",
+			className: "Lfosqr_default_bar_scalar_phase_audio_trig_scalar",
 			paramNames: [
 				"bar",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
-				"audio",
+				"scalar",
 				"audio",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
 			id: 19,
 			genName: "Lfosqr",
 			variantName: "default",
-			className: "Lfosqr_default_bar_audio_offset_audio_trig_audio",
+			className: "Lfosqr_default_bar_scalar_phase_audio_trig_audio",
 			paramNames: [
 				"bar",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
-				"audio",
+				"scalar",
 				"audio",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 20,
 			genName: "Lfosah",
+========
+			id: 26,
+			genName: "Lfosqr",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_scalar_offset_scalar_seed_scalar_trig_scalar",
+			className: "Lfosqr_default_bar_audio_phase_scalar_trig_scalar",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
-				"scalar",
-				"scalar",
+				"audio",
 				"scalar",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 21,
 			genName: "Lfosah",
+========
+			id: 27,
+			genName: "Lfosqr",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_scalar_offset_scalar_seed_scalar_trig_audio",
+			className: "Lfosqr_default_bar_audio_phase_scalar_trig_audio",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
-				"scalar",
-				"scalar",
+				"audio",
 				"scalar",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 22,
 			genName: "Lfosah",
+========
+			id: 28,
+			genName: "Lfosqr",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_scalar_offset_scalar_seed_audio_trig_scalar",
+			className: "Lfosqr_default_bar_audio_phase_audio_trig_scalar",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
-				"scalar",
-				"scalar",
+				"audio",
 				"audio",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 23,
 			genName: "Lfosah",
+========
+			id: 29,
+			genName: "Lfosqr",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_scalar_offset_scalar_seed_audio_trig_audio",
+			className: "Lfosqr_default_bar_audio_phase_audio_trig_audio",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
-				"scalar",
-				"scalar",
+				"audio",
 				"audio",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 24,
 			genName: "Lfosah",
+========
+			id: 30,
+			genName: "Lfotri",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_scalar_offset_audio_seed_scalar_trig_scalar",
+			className: "Lfotri_default_bar_scalar_phase_scalar_trig_scalar",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
 				"scalar",
-				"audio",
 				"scalar",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 25,
 			genName: "Lfosah",
+========
+			id: 31,
+			genName: "Lfotri",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_scalar_offset_audio_seed_scalar_trig_audio",
+			className: "Lfotri_default_bar_scalar_phase_scalar_trig_audio",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
 				"scalar",
-				"audio",
 				"scalar",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 26,
 			genName: "Lfosah",
+========
+			id: 32,
+			genName: "Lfotri",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_scalar_offset_audio_seed_audio_trig_scalar",
+			className: "Lfotri_default_bar_scalar_phase_audio_trig_scalar",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
 				"scalar",
 				"audio",
-				"audio",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 27,
 			genName: "Lfosah",
+========
+			id: 33,
+			genName: "Lfotri",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_scalar_offset_audio_seed_audio_trig_audio",
+			className: "Lfotri_default_bar_scalar_phase_audio_trig_audio",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
 				"scalar",
 				"audio",
-				"audio",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 28,
 			genName: "Lfosah",
+========
+			id: 34,
+			genName: "Lfotri",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_audio_offset_scalar_seed_scalar_trig_scalar",
+			className: "Lfotri_default_bar_audio_phase_scalar_trig_scalar",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
 				"audio",
 				"scalar",
-				"scalar",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 29,
 			genName: "Lfosah",
+========
+			id: 35,
+			genName: "Lfotri",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_audio_offset_scalar_seed_scalar_trig_audio",
+			className: "Lfotri_default_bar_audio_phase_scalar_trig_audio",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
 				"audio",
-				"scalar",
 				"scalar",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 30,
 			genName: "Lfosah",
+========
+			id: 36,
+			genName: "Lfotri",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_audio_offset_scalar_seed_audio_trig_scalar",
+			className: "Lfotri_default_bar_audio_phase_audio_trig_scalar",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
 				"audio",
-				"scalar",
 				"audio",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 31,
 			genName: "Lfosah",
+========
+			id: 37,
+			genName: "Lfotri",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfosah_default_bar_audio_offset_scalar_seed_audio_trig_audio",
+			className: "Lfotri_default_bar_audio_phase_audio_trig_audio",
 			paramNames: [
 				"bar",
-				"offset",
-				"seed",
+				"phase",
 				"trig"
 			],
 			paramModes: [
 				"audio",
-				"scalar",
 				"audio",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 32,
 			genName: "Lfosah",
 			variantName: "default",
@@ -4868,6 +5095,9 @@
 		},
 		{
 			id: 220,
+========
+			id: 38,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_scalar_ratio_scalar_knee_scalar_key_scalar",
@@ -4891,7 +5121,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 221,
+========
+			id: 39,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_scalar_ratio_scalar_knee_scalar_key_audio",
@@ -4915,7 +5149,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 222,
+========
+			id: 40,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_scalar_ratio_scalar_knee_audio_key_scalar",
@@ -4939,7 +5177,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 223,
+========
+			id: 41,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_scalar_ratio_scalar_knee_audio_key_audio",
@@ -4963,7 +5205,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 224,
+========
+			id: 42,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_scalar_ratio_audio_knee_scalar_key_scalar",
@@ -4987,7 +5233,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 225,
+========
+			id: 43,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_scalar_ratio_audio_knee_scalar_key_audio",
@@ -5011,7 +5261,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 226,
+========
+			id: 44,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_scalar_ratio_audio_knee_audio_key_scalar",
@@ -5035,7 +5289,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 227,
+========
+			id: 45,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_scalar_ratio_audio_knee_audio_key_audio",
@@ -5059,7 +5317,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 228,
+========
+			id: 46,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_audio_ratio_scalar_knee_scalar_key_scalar",
@@ -5083,7 +5345,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 229,
+========
+			id: 47,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_audio_ratio_scalar_knee_scalar_key_audio",
@@ -5107,7 +5373,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 230,
+========
+			id: 48,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_audio_ratio_scalar_knee_audio_key_scalar",
@@ -5131,7 +5401,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 231,
+========
+			id: 49,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_audio_ratio_scalar_knee_audio_key_audio",
@@ -5155,7 +5429,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 232,
+========
+			id: 50,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_audio_ratio_audio_knee_scalar_key_scalar",
@@ -5179,7 +5457,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 233,
+========
+			id: 51,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_audio_ratio_audio_knee_scalar_key_audio",
@@ -5203,7 +5485,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 234,
+========
+			id: 52,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_audio_ratio_audio_knee_audio_key_scalar",
@@ -5227,7 +5513,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 235,
+========
+			id: 53,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_scalar_threshold_audio_ratio_audio_knee_audio_key_audio",
@@ -5251,7 +5541,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 236,
+========
+			id: 54,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_scalar_ratio_scalar_knee_scalar_key_scalar",
@@ -5275,7 +5569,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 237,
+========
+			id: 55,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_scalar_ratio_scalar_knee_scalar_key_audio",
@@ -5299,7 +5597,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 238,
+========
+			id: 56,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_scalar_ratio_scalar_knee_audio_key_scalar",
@@ -5323,7 +5625,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 239,
+========
+			id: 57,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_scalar_ratio_scalar_knee_audio_key_audio",
@@ -5347,7 +5653,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 240,
+========
+			id: 58,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_scalar_ratio_audio_knee_scalar_key_scalar",
@@ -5371,7 +5681,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 241,
+========
+			id: 59,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_scalar_ratio_audio_knee_scalar_key_audio",
@@ -5395,7 +5709,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 242,
+========
+			id: 60,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_scalar_ratio_audio_knee_audio_key_scalar",
@@ -5419,7 +5737,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 243,
+========
+			id: 61,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_scalar_ratio_audio_knee_audio_key_audio",
@@ -5443,7 +5765,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 244,
+========
+			id: 62,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_audio_ratio_scalar_knee_scalar_key_scalar",
@@ -5467,7 +5793,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 245,
+========
+			id: 63,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_audio_ratio_scalar_knee_scalar_key_audio",
@@ -5491,7 +5821,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 246,
+========
+			id: 64,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_audio_ratio_scalar_knee_audio_key_scalar",
@@ -5515,7 +5849,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 247,
+========
+			id: 65,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_audio_ratio_scalar_knee_audio_key_audio",
@@ -5539,7 +5877,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 248,
+========
+			id: 66,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_audio_ratio_audio_knee_scalar_key_scalar",
@@ -5563,7 +5905,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 249,
+========
+			id: 67,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_audio_ratio_audio_knee_scalar_key_audio",
@@ -5587,7 +5933,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 250,
+========
+			id: 68,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_audio_ratio_audio_knee_audio_key_scalar",
@@ -5611,7 +5961,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 251,
+========
+			id: 69,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_scalar_release_audio_threshold_audio_ratio_audio_knee_audio_key_audio",
@@ -5635,7 +5989,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 252,
+========
+			id: 70,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_scalar_ratio_scalar_knee_scalar_key_scalar",
@@ -5659,7 +6017,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 253,
+========
+			id: 71,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_scalar_ratio_scalar_knee_scalar_key_audio",
@@ -5683,7 +6045,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 254,
+========
+			id: 72,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_scalar_ratio_scalar_knee_audio_key_scalar",
@@ -5707,7 +6073,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 255,
+========
+			id: 73,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_scalar_ratio_scalar_knee_audio_key_audio",
@@ -5731,7 +6101,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 256,
+========
+			id: 74,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_scalar_ratio_audio_knee_scalar_key_scalar",
@@ -5755,7 +6129,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 257,
+========
+			id: 75,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_scalar_ratio_audio_knee_scalar_key_audio",
@@ -5779,7 +6157,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 258,
+========
+			id: 76,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_scalar_ratio_audio_knee_audio_key_scalar",
@@ -5803,7 +6185,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 259,
+========
+			id: 77,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_scalar_ratio_audio_knee_audio_key_audio",
@@ -5827,7 +6213,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 260,
+========
+			id: 78,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_audio_ratio_scalar_knee_scalar_key_scalar",
@@ -5851,7 +6241,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 261,
+========
+			id: 79,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_audio_ratio_scalar_knee_scalar_key_audio",
@@ -5875,7 +6269,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 262,
+========
+			id: 80,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_audio_ratio_scalar_knee_audio_key_scalar",
@@ -5899,7 +6297,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 263,
+========
+			id: 81,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_audio_ratio_scalar_knee_audio_key_audio",
@@ -5923,7 +6325,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 264,
+========
+			id: 82,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_audio_ratio_audio_knee_scalar_key_scalar",
@@ -5947,7 +6353,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 265,
+========
+			id: 83,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_audio_ratio_audio_knee_scalar_key_audio",
@@ -5971,7 +6381,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 266,
+========
+			id: 84,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_audio_ratio_audio_knee_audio_key_scalar",
@@ -5995,7 +6409,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 267,
+========
+			id: 85,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_scalar_threshold_audio_ratio_audio_knee_audio_key_audio",
@@ -6019,7 +6437,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 268,
+========
+			id: 86,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_scalar_ratio_scalar_knee_scalar_key_scalar",
@@ -6043,7 +6465,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 269,
+========
+			id: 87,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_scalar_ratio_scalar_knee_scalar_key_audio",
@@ -6067,7 +6493,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 270,
+========
+			id: 88,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_scalar_ratio_scalar_knee_audio_key_scalar",
@@ -6091,7 +6521,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 271,
+========
+			id: 89,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_scalar_ratio_scalar_knee_audio_key_audio",
@@ -6115,7 +6549,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 272,
+========
+			id: 90,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_scalar_ratio_audio_knee_scalar_key_scalar",
@@ -6139,7 +6577,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 273,
+========
+			id: 91,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_scalar_ratio_audio_knee_scalar_key_audio",
@@ -6163,7 +6605,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 274,
+========
+			id: 92,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_scalar_ratio_audio_knee_audio_key_scalar",
@@ -6187,7 +6633,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 275,
+========
+			id: 93,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_scalar_ratio_audio_knee_audio_key_audio",
@@ -6211,7 +6661,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 276,
+========
+			id: 94,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_audio_ratio_scalar_knee_scalar_key_scalar",
@@ -6235,7 +6689,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 277,
+========
+			id: 95,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_audio_ratio_scalar_knee_scalar_key_audio",
@@ -6259,7 +6717,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 278,
+========
+			id: 96,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_audio_ratio_scalar_knee_audio_key_scalar",
@@ -6283,7 +6745,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 279,
+========
+			id: 97,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_audio_ratio_scalar_knee_audio_key_audio",
@@ -6307,7 +6773,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 280,
+========
+			id: 98,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_audio_ratio_audio_knee_scalar_key_scalar",
@@ -6331,7 +6801,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 281,
+========
+			id: 99,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_audio_ratio_audio_knee_scalar_key_audio",
@@ -6355,7 +6829,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 282,
+========
+			id: 100,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_audio_ratio_audio_knee_audio_key_scalar",
@@ -6379,7 +6857,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 283,
+========
+			id: 101,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Compressor",
 			variantName: "default",
 			className: "Compressor_default_attack_audio_release_audio_threshold_audio_ratio_audio_knee_audio_key_audio",
@@ -6403,6 +6885,7 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 284,
 			genName: "Emit",
 			variantName: "default",
@@ -7108,11 +7591,29 @@
 			variantName: "default",
 			className: "Limiter_default_threshold_scalar_release_audio",
 			paramNames: ["threshold", "release"],
-			paramModes: ["scalar", "audio"],
+========
+			id: 102,
+			genName: "Gauss",
+			variantName: "default",
+			className: "Gauss_default_seed_scalar_trig_scalar",
+			paramNames: ["seed", "trig"],
+			paramModes: ["scalar", "scalar"],
 			emitNames: [],
-			usesInput: true
+			usesInput: false
 		},
 		{
+			id: 103,
+			genName: "Gauss",
+			variantName: "default",
+			className: "Gauss_default_seed_scalar_trig_audio",
+			paramNames: ["seed", "trig"],
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 323,
 			genName: "Limiter",
 			variantName: "default",
@@ -7142,6 +7643,17 @@
 				"every",
 				"prob",
 				"seed"
+========
+			id: 104,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_scalar_steps_scalar_offset_scalar_bar_scalar",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			],
 			paramModes: [
 				"scalar",
@@ -7153,6 +7665,7 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 326,
 			genName: "At",
 			variantName: "default",
@@ -7162,6 +7675,37 @@
 				"every",
 				"prob",
 				"seed"
+========
+			id: 105,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_scalar_steps_scalar_offset_scalar_bar_audio",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 106,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_scalar_steps_scalar_offset_audio_bar_scalar",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			],
 			paramModes: [
 				"scalar",
@@ -7173,6 +7717,7 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 327,
 			genName: "At",
 			variantName: "default",
@@ -7182,6 +7727,37 @@
 				"every",
 				"prob",
 				"seed"
+========
+			id: 107,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_scalar_steps_scalar_offset_audio_bar_audio",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 108,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_scalar_steps_audio_offset_scalar_bar_scalar",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			],
 			paramModes: [
 				"scalar",
@@ -7193,6 +7769,7 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 328,
 			genName: "At",
 			variantName: "default",
@@ -7202,6 +7779,37 @@
 				"every",
 				"prob",
 				"seed"
+========
+			id: 109,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_scalar_steps_audio_offset_scalar_bar_audio",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 110,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_scalar_steps_audio_offset_audio_bar_scalar",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			],
 			paramModes: [
 				"scalar",
@@ -7213,6 +7821,7 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 329,
 			genName: "At",
 			variantName: "default",
@@ -7222,6 +7831,37 @@
 				"every",
 				"prob",
 				"seed"
+========
+			id: 111,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_scalar_steps_audio_offset_audio_bar_audio",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 112,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_audio_steps_scalar_offset_scalar_bar_scalar",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			],
 			paramModes: [
 				"audio",
@@ -7233,6 +7873,7 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 330,
 			genName: "At",
 			variantName: "default",
@@ -7242,6 +7883,37 @@
 				"every",
 				"prob",
 				"seed"
+========
+			id: 113,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_audio_steps_scalar_offset_scalar_bar_audio",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 114,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_audio_steps_scalar_offset_audio_bar_scalar",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			],
 			paramModes: [
 				"audio",
@@ -7253,6 +7925,7 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 331,
 			genName: "At",
 			variantName: "default",
@@ -7262,6 +7935,37 @@
 				"every",
 				"prob",
 				"seed"
+========
+			id: 115,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_audio_steps_scalar_offset_audio_bar_audio",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 116,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_audio_steps_audio_offset_scalar_bar_scalar",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			],
 			paramModes: [
 				"audio",
@@ -7273,6 +7977,7 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 332,
 			genName: "At",
 			variantName: "default",
@@ -7282,6 +7987,37 @@
 				"every",
 				"prob",
 				"seed"
+========
+			id: 117,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_audio_steps_audio_offset_scalar_bar_audio",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 118,
+			genName: "Euclid",
+			variantName: "default",
+			className: "Euclid_default_pulses_audio_steps_audio_offset_audio_bar_scalar",
+			paramNames: [
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			],
 			paramModes: [
 				"audio",
@@ -7293,11 +8029,17 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 333,
 			genName: "Diodeladder",
+========
+			id: 119,
+			genName: "Euclid",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Diodeladder_default_cutoff_scalar_q_scalar_k_scalar_sat_scalar",
+			className: "Euclid_default_pulses_audio_steps_audio_offset_audio_bar_audio",
 			paramNames: [
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 				"cutoff",
 				"q",
 				"k",
@@ -7602,6 +8344,12 @@
 				"q",
 				"k",
 				"sat"
+========
+				"pulses",
+				"steps",
+				"offset",
+				"bar"
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			],
 			paramModes: [
 				"audio",
@@ -7609,17 +8357,342 @@
 				"audio",
 				"audio"
 			],
-			emitNames: [],
-			usesInput: true
+			emitNames: ["fired"],
+			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 349,
 			genName: "Ramp",
+========
+			id: 120,
+			genName: "Ad",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Ramp_default_hz_scalar_offset_scalar_trig_scalar",
+			className: "Ad_default_attack_scalar_decay_scalar_exponent_scalar_trig_scalar",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 121,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_scalar_decay_scalar_exponent_scalar_trig_audio",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 122,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_scalar_decay_scalar_exponent_audio_trig_scalar",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 123,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_scalar_decay_scalar_exponent_audio_trig_audio",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 124,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_scalar_decay_audio_exponent_scalar_trig_scalar",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 125,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_scalar_decay_audio_exponent_scalar_trig_audio",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 126,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_scalar_decay_audio_exponent_audio_trig_scalar",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 127,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_scalar_decay_audio_exponent_audio_trig_audio",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 128,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_audio_decay_scalar_exponent_scalar_trig_scalar",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 129,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_audio_decay_scalar_exponent_scalar_trig_audio",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 130,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_audio_decay_scalar_exponent_audio_trig_scalar",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 131,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_audio_decay_scalar_exponent_audio_trig_audio",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 132,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_audio_decay_audio_exponent_scalar_trig_scalar",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 133,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_audio_decay_audio_exponent_scalar_trig_audio",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 134,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_audio_decay_audio_exponent_audio_trig_scalar",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 135,
+			genName: "Ad",
+			variantName: "default",
+			className: "Ad_default_attack_audio_decay_audio_exponent_audio_trig_audio",
+			paramNames: [
+				"attack",
+				"decay",
+				"exponent",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["stage", "env"],
+			usesInput: false
+		},
+		{
+			id: 136,
+			genName: "Sine",
+			variantName: "default",
+			className: "Sine_default_hz_scalar_phase_scalar_trig_scalar",
 			paramNames: [
 				"hz",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7631,13 +8704,18 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 350,
 			genName: "Ramp",
+========
+			id: 137,
+			genName: "Sine",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Ramp_default_hz_scalar_offset_scalar_trig_audio",
+			className: "Sine_default_hz_scalar_phase_scalar_trig_audio",
 			paramNames: [
 				"hz",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7649,13 +8727,18 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 351,
 			genName: "Ramp",
+========
+			id: 138,
+			genName: "Sine",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Ramp_default_hz_scalar_offset_audio_trig_scalar",
+			className: "Sine_default_hz_scalar_phase_audio_trig_scalar",
 			paramNames: [
 				"hz",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7667,13 +8750,18 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 352,
 			genName: "Ramp",
+========
+			id: 139,
+			genName: "Sine",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Ramp_default_hz_scalar_offset_audio_trig_audio",
+			className: "Sine_default_hz_scalar_phase_audio_trig_audio",
 			paramNames: [
 				"hz",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7685,13 +8773,18 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 353,
 			genName: "Ramp",
+========
+			id: 140,
+			genName: "Sine",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Ramp_default_hz_audio_offset_scalar_trig_scalar",
+			className: "Sine_default_hz_audio_phase_scalar_trig_scalar",
 			paramNames: [
 				"hz",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7703,13 +8796,18 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 354,
 			genName: "Ramp",
+========
+			id: 141,
+			genName: "Sine",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Ramp_default_hz_audio_offset_scalar_trig_audio",
+			className: "Sine_default_hz_audio_phase_scalar_trig_audio",
 			paramNames: [
 				"hz",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7721,13 +8819,18 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 355,
 			genName: "Ramp",
+========
+			id: 142,
+			genName: "Sine",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Ramp_default_hz_audio_offset_audio_trig_scalar",
+			className: "Sine_default_hz_audio_phase_audio_trig_scalar",
 			paramNames: [
 				"hz",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7739,13 +8842,18 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 356,
 			genName: "Ramp",
+========
+			id: 143,
+			genName: "Sine",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Ramp_default_hz_audio_offset_audio_trig_audio",
+			className: "Sine_default_hz_audio_phase_audio_trig_audio",
 			paramNames: [
 				"hz",
-				"offset",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7757,11 +8865,17 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 357,
 			genName: "Smooth",
+========
+			id: 144,
+			genName: "Phasor",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Smooth_default_seed_scalar_rate_scalar_curve_scalar_trig_scalar",
+			className: "Phasor_default_hz_scalar_phase_scalar_trig_scalar",
 			paramNames: [
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 				"seed",
 				"rate",
 				"curve",
@@ -7924,6 +9038,10 @@
 			paramNames: [
 				"bar",
 				"offset",
+========
+				"hz",
+				"phase",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 				"trig"
 			],
 			paramModes: [
@@ -7931,17 +9049,22 @@
 				"scalar",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 366,
 			genName: "Lfotri",
+========
+			id: 145,
+			genName: "Phasor",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfotri_default_bar_scalar_offset_scalar_trig_audio",
+			className: "Phasor_default_hz_scalar_phase_scalar_trig_audio",
 			paramNames: [
-				"bar",
-				"offset",
+				"hz",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7949,17 +9072,22 @@
 				"scalar",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 367,
 			genName: "Lfotri",
+========
+			id: 146,
+			genName: "Phasor",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfotri_default_bar_scalar_offset_audio_trig_scalar",
+			className: "Phasor_default_hz_scalar_phase_audio_trig_scalar",
 			paramNames: [
-				"bar",
-				"offset",
+				"hz",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7967,17 +9095,22 @@
 				"audio",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 368,
 			genName: "Lfotri",
+========
+			id: 147,
+			genName: "Phasor",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfotri_default_bar_scalar_offset_audio_trig_audio",
+			className: "Phasor_default_hz_scalar_phase_audio_trig_audio",
 			paramNames: [
-				"bar",
-				"offset",
+				"hz",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -7985,17 +9118,22 @@
 				"audio",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 369,
 			genName: "Lfotri",
+========
+			id: 148,
+			genName: "Phasor",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfotri_default_bar_audio_offset_scalar_trig_scalar",
+			className: "Phasor_default_hz_audio_phase_scalar_trig_scalar",
 			paramNames: [
-				"bar",
-				"offset",
+				"hz",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -8003,17 +9141,22 @@
 				"scalar",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 370,
 			genName: "Lfotri",
+========
+			id: 149,
+			genName: "Phasor",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfotri_default_bar_audio_offset_scalar_trig_audio",
+			className: "Phasor_default_hz_audio_phase_scalar_trig_audio",
 			paramNames: [
-				"bar",
-				"offset",
+				"hz",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -8021,17 +9164,22 @@
 				"scalar",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 371,
 			genName: "Lfotri",
+========
+			id: 150,
+			genName: "Phasor",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfotri_default_bar_audio_offset_audio_trig_scalar",
+			className: "Phasor_default_hz_audio_phase_audio_trig_scalar",
 			paramNames: [
-				"bar",
-				"offset",
+				"hz",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -8039,17 +9187,22 @@
 				"audio",
 				"scalar"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 372,
 			genName: "Lfotri",
+========
+			id: 151,
+			genName: "Phasor",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			variantName: "default",
-			className: "Lfotri_default_bar_audio_offset_audio_trig_audio",
+			className: "Phasor_default_hz_audio_phase_audio_trig_audio",
 			paramNames: [
-				"bar",
-				"offset",
+				"hz",
+				"phase",
 				"trig"
 			],
 			paramModes: [
@@ -8057,11 +9210,179 @@
 				"audio",
 				"audio"
 			],
-			emitNames: ["phase"],
+			emitNames: ["angle"],
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 373,
+========
+			id: 152,
+			genName: "Ramp",
+			variantName: "default",
+			className: "Ramp_default_hz_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 153,
+			genName: "Ramp",
+			variantName: "default",
+			className: "Ramp_default_hz_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 154,
+			genName: "Ramp",
+			variantName: "default",
+			className: "Ramp_default_hz_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 155,
+			genName: "Ramp",
+			variantName: "default",
+			className: "Ramp_default_hz_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 156,
+			genName: "Ramp",
+			variantName: "default",
+			className: "Ramp_default_hz_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 157,
+			genName: "Ramp",
+			variantName: "default",
+			className: "Ramp_default_hz_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 158,
+			genName: "Ramp",
+			variantName: "default",
+			className: "Ramp_default_hz_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 159,
+			genName: "Ramp",
+			variantName: "default",
+			className: "Ramp_default_hz_audio_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 160,
+			genName: "Brown",
+			variantName: "default",
+			className: "Brown_default_seed_scalar_trig_scalar",
+			paramNames: ["seed", "trig"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 161,
+			genName: "Brown",
+			variantName: "default",
+			className: "Brown_default_seed_scalar_trig_audio",
+			paramNames: ["seed", "trig"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 162,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_scalar_release_scalar_exponent_scalar_trig_scalar",
@@ -8085,7 +9406,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 374,
+========
+			id: 163,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_scalar_release_scalar_exponent_scalar_trig_audio",
@@ -8109,7 +9434,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 375,
+========
+			id: 164,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_scalar_release_scalar_exponent_audio_trig_scalar",
@@ -8133,7 +9462,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 376,
+========
+			id: 165,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_scalar_release_scalar_exponent_audio_trig_audio",
@@ -8157,7 +9490,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 377,
+========
+			id: 166,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_scalar_release_audio_exponent_scalar_trig_scalar",
@@ -8181,7 +9518,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 378,
+========
+			id: 167,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_scalar_release_audio_exponent_scalar_trig_audio",
@@ -8205,7 +9546,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 379,
+========
+			id: 168,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_scalar_release_audio_exponent_audio_trig_scalar",
@@ -8229,7 +9574,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 380,
+========
+			id: 169,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_scalar_release_audio_exponent_audio_trig_audio",
@@ -8253,7 +9602,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 381,
+========
+			id: 170,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_audio_release_scalar_exponent_scalar_trig_scalar",
@@ -8277,7 +9630,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 382,
+========
+			id: 171,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_audio_release_scalar_exponent_scalar_trig_audio",
@@ -8301,7 +9658,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 383,
+========
+			id: 172,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_audio_release_scalar_exponent_audio_trig_scalar",
@@ -8325,7 +9686,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 384,
+========
+			id: 173,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_audio_release_scalar_exponent_audio_trig_audio",
@@ -8349,7 +9714,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 385,
+========
+			id: 174,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_audio_release_audio_exponent_scalar_trig_scalar",
@@ -8373,7 +9742,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 386,
+========
+			id: 175,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_audio_release_audio_exponent_scalar_trig_audio",
@@ -8397,7 +9770,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 387,
+========
+			id: 176,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_audio_release_audio_exponent_audio_trig_scalar",
@@ -8421,7 +9798,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 388,
+========
+			id: 177,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_scalar_sustain_audio_release_audio_exponent_audio_trig_audio",
@@ -8445,7 +9826,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 389,
+========
+			id: 178,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_scalar_release_scalar_exponent_scalar_trig_scalar",
@@ -8469,7 +9854,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 390,
+========
+			id: 179,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_scalar_release_scalar_exponent_scalar_trig_audio",
@@ -8493,7 +9882,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 391,
+========
+			id: 180,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_scalar_release_scalar_exponent_audio_trig_scalar",
@@ -8517,7 +9910,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 392,
+========
+			id: 181,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_scalar_release_scalar_exponent_audio_trig_audio",
@@ -8541,7 +9938,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 393,
+========
+			id: 182,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_scalar_release_audio_exponent_scalar_trig_scalar",
@@ -8565,7 +9966,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 394,
+========
+			id: 183,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_scalar_release_audio_exponent_scalar_trig_audio",
@@ -8589,7 +9994,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 395,
+========
+			id: 184,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_scalar_release_audio_exponent_audio_trig_scalar",
@@ -8613,7 +10022,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 396,
+========
+			id: 185,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_scalar_release_audio_exponent_audio_trig_audio",
@@ -8637,7 +10050,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 397,
+========
+			id: 186,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_audio_release_scalar_exponent_scalar_trig_scalar",
@@ -8661,7 +10078,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 398,
+========
+			id: 187,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_audio_release_scalar_exponent_scalar_trig_audio",
@@ -8685,7 +10106,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 399,
+========
+			id: 188,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_audio_release_scalar_exponent_audio_trig_scalar",
@@ -8709,7 +10134,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 400,
+========
+			id: 189,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_audio_release_scalar_exponent_audio_trig_audio",
@@ -8733,7 +10162,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 401,
+========
+			id: 190,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_audio_release_audio_exponent_scalar_trig_scalar",
@@ -8757,7 +10190,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 402,
+========
+			id: 191,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_audio_release_audio_exponent_scalar_trig_audio",
@@ -8781,7 +10218,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 403,
+========
+			id: 192,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_audio_release_audio_exponent_audio_trig_scalar",
@@ -8805,7 +10246,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 404,
+========
+			id: 193,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_scalar_decay_audio_sustain_audio_release_audio_exponent_audio_trig_audio",
@@ -8829,7 +10274,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 405,
+========
+			id: 194,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_scalar_release_scalar_exponent_scalar_trig_scalar",
@@ -8853,7 +10302,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 406,
+========
+			id: 195,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_scalar_release_scalar_exponent_scalar_trig_audio",
@@ -8877,7 +10330,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 407,
+========
+			id: 196,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_scalar_release_scalar_exponent_audio_trig_scalar",
@@ -8901,7 +10358,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 408,
+========
+			id: 197,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_scalar_release_scalar_exponent_audio_trig_audio",
@@ -8925,7 +10386,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 409,
+========
+			id: 198,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_scalar_release_audio_exponent_scalar_trig_scalar",
@@ -8949,7 +10414,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 410,
+========
+			id: 199,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_scalar_release_audio_exponent_scalar_trig_audio",
@@ -8973,7 +10442,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 411,
+========
+			id: 200,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_scalar_release_audio_exponent_audio_trig_scalar",
@@ -8997,7 +10470,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 412,
+========
+			id: 201,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_scalar_release_audio_exponent_audio_trig_audio",
@@ -9021,7 +10498,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 413,
+========
+			id: 202,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_audio_release_scalar_exponent_scalar_trig_scalar",
@@ -9045,7 +10526,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 414,
+========
+			id: 203,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_audio_release_scalar_exponent_scalar_trig_audio",
@@ -9069,7 +10554,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 415,
+========
+			id: 204,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_audio_release_scalar_exponent_audio_trig_scalar",
@@ -9093,7 +10582,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 416,
+========
+			id: 205,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_audio_release_scalar_exponent_audio_trig_audio",
@@ -9117,7 +10610,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 417,
+========
+			id: 206,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_audio_release_audio_exponent_scalar_trig_scalar",
@@ -9141,7 +10638,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 418,
+========
+			id: 207,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_audio_release_audio_exponent_scalar_trig_audio",
@@ -9165,7 +10666,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 419,
+========
+			id: 208,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_audio_release_audio_exponent_audio_trig_scalar",
@@ -9189,7 +10694,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 420,
+========
+			id: 209,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_scalar_sustain_audio_release_audio_exponent_audio_trig_audio",
@@ -9213,7 +10722,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 421,
+========
+			id: 210,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_scalar_release_scalar_exponent_scalar_trig_scalar",
@@ -9237,7 +10750,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 422,
+========
+			id: 211,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_scalar_release_scalar_exponent_scalar_trig_audio",
@@ -9261,7 +10778,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 423,
+========
+			id: 212,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_scalar_release_scalar_exponent_audio_trig_scalar",
@@ -9285,7 +10806,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 424,
+========
+			id: 213,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_scalar_release_scalar_exponent_audio_trig_audio",
@@ -9309,7 +10834,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 425,
+========
+			id: 214,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_scalar_release_audio_exponent_scalar_trig_scalar",
@@ -9333,7 +10862,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 426,
+========
+			id: 215,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_scalar_release_audio_exponent_scalar_trig_audio",
@@ -9357,7 +10890,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 427,
+========
+			id: 216,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_scalar_release_audio_exponent_audio_trig_scalar",
@@ -9381,7 +10918,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 428,
+========
+			id: 217,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_scalar_release_audio_exponent_audio_trig_audio",
@@ -9405,7 +10946,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 429,
+========
+			id: 218,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_audio_release_scalar_exponent_scalar_trig_scalar",
@@ -9429,7 +10974,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 430,
+========
+			id: 219,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_audio_release_scalar_exponent_scalar_trig_audio",
@@ -9453,7 +11002,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 431,
+========
+			id: 220,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_audio_release_scalar_exponent_audio_trig_scalar",
@@ -9477,7 +11030,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 432,
+========
+			id: 221,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_audio_release_scalar_exponent_audio_trig_audio",
@@ -9501,7 +11058,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 433,
+========
+			id: 222,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_audio_release_audio_exponent_scalar_trig_scalar",
@@ -9525,7 +11086,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 434,
+========
+			id: 223,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_audio_release_audio_exponent_scalar_trig_audio",
@@ -9549,7 +11114,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 435,
+========
+			id: 224,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_audio_release_audio_exponent_audio_trig_scalar",
@@ -9573,7 +11142,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 436,
+========
+			id: 225,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Adsr",
 			variantName: "default",
 			className: "Adsr_default_attack_audio_decay_audio_sustain_audio_release_audio_exponent_audio_trig_audio",
@@ -9597,6 +11170,7 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 437,
 			genName: "Analyser",
 			variantName: "default",
@@ -10816,6 +12390,9 @@
 		},
 		{
 			id: 514,
+========
+			id: 226,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_scalar_damping_scalar_bandwidth_scalar_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar",
@@ -10847,7 +12424,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 515,
+========
+			id: 227,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_scalar_damping_scalar_bandwidth_audio_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar",
@@ -10879,7 +12460,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 516,
+========
+			id: 228,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_scalar_damping_audio_bandwidth_scalar_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar",
@@ -10911,7 +12496,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 517,
+========
+			id: 229,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_scalar_damping_audio_bandwidth_audio_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar",
@@ -10943,7 +12532,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 518,
+========
+			id: 230,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_audio_damping_scalar_bandwidth_scalar_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar",
@@ -10975,7 +12568,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 519,
+========
+			id: 231,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_audio_damping_scalar_bandwidth_audio_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar",
@@ -11007,7 +12604,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 520,
+========
+			id: 232,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_audio_damping_audio_bandwidth_scalar_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar",
@@ -11039,7 +12640,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 521,
+========
+			id: 233,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_audio_damping_audio_bandwidth_audio_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar",
@@ -11071,7 +12676,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 522,
+========
+			id: 234,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_scalar_damping_scalar_bandwidth_scalar_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar_stereo",
@@ -11103,7 +12712,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 523,
+========
+			id: 235,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_scalar_damping_scalar_bandwidth_audio_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar_stereo",
@@ -11135,7 +12748,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 524,
+========
+			id: 236,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_scalar_damping_audio_bandwidth_scalar_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar_stereo",
@@ -11167,7 +12784,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 525,
+========
+			id: 237,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_scalar_damping_audio_bandwidth_audio_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar_stereo",
@@ -11199,7 +12820,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 526,
+========
+			id: 238,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_audio_damping_scalar_bandwidth_scalar_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar_stereo",
@@ -11231,7 +12856,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 527,
+========
+			id: 239,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_audio_damping_scalar_bandwidth_audio_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar_stereo",
@@ -11263,7 +12892,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 528,
+========
+			id: 240,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_audio_damping_audio_bandwidth_scalar_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar_stereo",
@@ -11295,7 +12928,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 529,
+========
+			id: 241,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Dattorro",
 			variantName: "default",
 			className: "Dattorro_default_room_audio_damping_audio_bandwidth_audio_indiff1_scalar_indiff2_scalar_decdiff1_scalar_decdiff2_scalar_excrate_scalar_excdepth_scalar_predelay_scalar_stereo",
@@ -11327,24 +12964,829 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 530,
-			genName: "Random",
+========
+			id: 242,
+			genName: "Lforamp",
 			variantName: "default",
-			className: "Random_default_seed_scalar",
-			paramNames: ["seed"],
-			paramModes: ["scalar"],
+			className: "Lforamp_default_bar_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 243,
+			genName: "Lforamp",
+			variantName: "default",
+			className: "Lforamp_default_bar_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 244,
+			genName: "Lforamp",
+			variantName: "default",
+			className: "Lforamp_default_bar_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 245,
+			genName: "Lforamp",
+			variantName: "default",
+			className: "Lforamp_default_bar_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 246,
+			genName: "Lforamp",
+			variantName: "default",
+			className: "Lforamp_default_bar_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 247,
+			genName: "Lforamp",
+			variantName: "default",
+			className: "Lforamp_default_bar_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 248,
+			genName: "Lforamp",
+			variantName: "default",
+			className: "Lforamp_default_bar_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 249,
+			genName: "Lforamp",
+			variantName: "default",
+			className: "Lforamp_default_bar_audio_phase_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 250,
+			genName: "Envfollow",
+			variantName: "default",
+			className: "Envfollow_default_attack_scalar_release_scalar",
+			paramNames: ["attack", "release"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 251,
+			genName: "Envfollow",
+			variantName: "default",
+			className: "Envfollow_default_attack_scalar_release_audio",
+			paramNames: ["attack", "release"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 252,
+			genName: "Envfollow",
+			variantName: "default",
+			className: "Envfollow_default_attack_audio_release_scalar",
+			paramNames: ["attack", "release"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 253,
+			genName: "Envfollow",
+			variantName: "default",
+			className: "Envfollow_default_attack_audio_release_audio",
+			paramNames: ["attack", "release"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 254,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_scalar_ceil_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 255,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_scalar_ceil_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 256,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_scalar_ceil_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 257,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_scalar_ceil_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 258,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_scalar_ceil_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 259,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_scalar_ceil_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 260,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_scalar_ceil_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 261,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_scalar_ceil_audio_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 262,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_audio_ceil_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 263,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_audio_ceil_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 264,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_audio_ceil_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 265,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_audio_ceil_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 266,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_audio_ceil_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 267,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_audio_ceil_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 268,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_audio_ceil_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 269,
+			genName: "Inc",
+			variantName: "default",
+			className: "Inc_default_hz_audio_ceil_audio_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"ceil",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 270,
+			genName: "Impulse",
+			variantName: "default",
+			className: "Impulse_default_hz_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
 			emitNames: [],
 			usesInput: false
 		},
 		{
-			id: 531,
-			genName: "Slew",
+			id: 271,
+			genName: "Impulse",
 			variantName: "default",
-			className: "Slew_default_up_scalar_down_scalar_exp_scalar",
+			className: "Impulse_default_hz_scalar_phase_scalar_trig_audio",
 			paramNames: [
-				"up",
-				"down",
-				"exp"
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 272,
+			genName: "Impulse",
+			variantName: "default",
+			className: "Impulse_default_hz_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 273,
+			genName: "Impulse",
+			variantName: "default",
+			className: "Impulse_default_hz_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 274,
+			genName: "Impulse",
+			variantName: "default",
+			className: "Impulse_default_hz_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 275,
+			genName: "Impulse",
+			variantName: "default",
+			className: "Impulse_default_hz_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 276,
+			genName: "Impulse",
+			variantName: "default",
+			className: "Impulse_default_hz_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 277,
+			genName: "Impulse",
+			variantName: "default",
+			className: "Impulse_default_hz_audio_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 278,
+			genName: "Every",
+			variantName: "default",
+			className: "Every_default_bars_scalar_offset_scalar_length_scalar",
+			paramNames: [
+				"bars",
+				"offset",
+				"length"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 279,
+			genName: "Every",
+			variantName: "default",
+			className: "Every_default_bars_scalar_offset_scalar_length_audio",
+			paramNames: [
+				"bars",
+				"offset",
+				"length"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 280,
+			genName: "Every",
+			variantName: "default",
+			className: "Every_default_bars_scalar_offset_audio_length_scalar",
+			paramNames: [
+				"bars",
+				"offset",
+				"length"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 281,
+			genName: "Every",
+			variantName: "default",
+			className: "Every_default_bars_scalar_offset_audio_length_audio",
+			paramNames: [
+				"bars",
+				"offset",
+				"length"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 282,
+			genName: "Every",
+			variantName: "default",
+			className: "Every_default_bars_audio_offset_scalar_length_scalar",
+			paramNames: [
+				"bars",
+				"offset",
+				"length"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 283,
+			genName: "Every",
+			variantName: "default",
+			className: "Every_default_bars_audio_offset_scalar_length_audio",
+			paramNames: [
+				"bars",
+				"offset",
+				"length"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 284,
+			genName: "Every",
+			variantName: "default",
+			className: "Every_default_bars_audio_offset_audio_length_scalar",
+			paramNames: [
+				"bars",
+				"offset",
+				"length"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 285,
+			genName: "Every",
+			variantName: "default",
+			className: "Every_default_bars_audio_offset_audio_length_audio",
+			paramNames: [
+				"bars",
+				"offset",
+				"length"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 286,
+			genName: "TestOversample",
+			variantName: "default",
+			className: "TestOversample_default_",
+			paramNames: [],
+			paramModes: [],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 287,
+			genName: "TestOversample",
+			variantName: "default",
+			className: "TestOversample_default__stereo",
+			paramNames: [],
+			paramModes: [],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 288,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_scalar_damping_scalar_decay_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
 			],
 			paramModes: [
 				"scalar",
@@ -11355,14 +13797,14 @@
 			usesInput: true
 		},
 		{
-			id: 532,
-			genName: "Slew",
+			id: 289,
+			genName: "Velvet",
 			variantName: "default",
-			className: "Slew_default_up_scalar_down_scalar_exp_audio",
+			className: "Velvet_default_room_scalar_damping_scalar_decay_audio",
 			paramNames: [
-				"up",
-				"down",
-				"exp"
+				"room",
+				"damping",
+				"decay"
 			],
 			paramModes: [
 				"scalar",
@@ -11373,6 +13815,3772 @@
 			usesInput: true
 		},
 		{
+			id: 290,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_scalar_damping_audio_decay_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 291,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_scalar_damping_audio_decay_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 292,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_audio_damping_scalar_decay_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 293,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_audio_damping_scalar_decay_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 294,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_audio_damping_audio_decay_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 295,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_audio_damping_audio_decay_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 296,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_scalar_damping_scalar_decay_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 297,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_scalar_damping_scalar_decay_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 298,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_scalar_damping_audio_decay_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 299,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_scalar_damping_audio_decay_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 300,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_audio_damping_scalar_decay_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 301,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_audio_damping_scalar_decay_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 302,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_audio_damping_audio_decay_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 303,
+			genName: "Velvet",
+			variantName: "default",
+			className: "Velvet_default_room_audio_damping_audio_decay_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 304,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_scalar_q_scalar_k_scalar_sat_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 305,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_scalar_q_scalar_k_scalar_sat_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 306,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_scalar_q_scalar_k_audio_sat_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 307,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_scalar_q_scalar_k_audio_sat_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 308,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_scalar_q_audio_k_scalar_sat_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 309,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_scalar_q_audio_k_scalar_sat_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 310,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_scalar_q_audio_k_audio_sat_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 311,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_scalar_q_audio_k_audio_sat_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 312,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_audio_q_scalar_k_scalar_sat_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 313,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_audio_q_scalar_k_scalar_sat_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 314,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_audio_q_scalar_k_audio_sat_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 315,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_audio_q_scalar_k_audio_sat_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 316,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_audio_q_audio_k_scalar_sat_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 317,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_audio_q_audio_k_scalar_sat_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 318,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_audio_q_audio_k_audio_sat_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 319,
+			genName: "Diodeladder",
+			variantName: "default",
+			className: "Diodeladder_default_cutoff_audio_q_audio_k_audio_sat_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"k",
+				"sat"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 320,
+			genName: "Pitchshift",
+			variantName: "default",
+			className: "Pitchshift_default_ratio_scalar",
+			paramNames: ["ratio"],
+			paramModes: ["scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 321,
+			genName: "Pitchshift",
+			variantName: "default",
+			className: "Pitchshift_default_ratio_audio",
+			paramNames: ["ratio"],
+			paramModes: ["audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 322,
+			genName: "Sqr",
+			variantName: "default",
+			className: "Sqr_default_hz_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 323,
+			genName: "Sqr",
+			variantName: "default",
+			className: "Sqr_default_hz_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 324,
+			genName: "Sqr",
+			variantName: "default",
+			className: "Sqr_default_hz_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 325,
+			genName: "Sqr",
+			variantName: "default",
+			className: "Sqr_default_hz_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 326,
+			genName: "Sqr",
+			variantName: "default",
+			className: "Sqr_default_hz_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 327,
+			genName: "Sqr",
+			variantName: "default",
+			className: "Sqr_default_hz_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 328,
+			genName: "Sqr",
+			variantName: "default",
+			className: "Sqr_default_hz_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 329,
+			genName: "Sqr",
+			variantName: "default",
+			className: "Sqr_default_hz_audio_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 330,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_scalar_decay_scalar_depth_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 331,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_scalar_decay_scalar_depth_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 332,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_scalar_decay_audio_depth_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 333,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_scalar_decay_audio_depth_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 334,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_audio_decay_scalar_depth_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 335,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_audio_decay_scalar_depth_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 336,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_audio_decay_audio_depth_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 337,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_audio_decay_audio_depth_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 338,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_scalar_decay_scalar_depth_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 339,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_scalar_decay_scalar_depth_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 340,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_scalar_decay_audio_depth_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 341,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_scalar_decay_audio_depth_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 342,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_audio_decay_scalar_depth_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 343,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_audio_decay_scalar_depth_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 344,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_audio_decay_audio_depth_scalar",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 345,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_audio_decay_audio_depth_audio",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 346,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_scalar_decay_scalar_depth_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 347,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_scalar_decay_scalar_depth_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 348,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_scalar_decay_audio_depth_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 349,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_scalar_decay_audio_depth_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 350,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_audio_decay_scalar_depth_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 351,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_audio_decay_scalar_depth_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 352,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_audio_decay_audio_depth_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 353,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_scalar_damping_audio_decay_audio_depth_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 354,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_scalar_decay_scalar_depth_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 355,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_scalar_decay_scalar_depth_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 356,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_scalar_decay_audio_depth_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 357,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_scalar_decay_audio_depth_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 358,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_audio_decay_scalar_depth_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 359,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_audio_decay_scalar_depth_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 360,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_audio_decay_audio_depth_scalar_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 361,
+			genName: "Fdn",
+			variantName: "default",
+			className: "Fdn_default_room_audio_damping_audio_decay_audio_depth_audio_stereo",
+			paramNames: [
+				"room",
+				"damping",
+				"decay",
+				"depth"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 362,
+			genName: "Tri",
+			variantName: "default",
+			className: "Tri_default_hz_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 363,
+			genName: "Tri",
+			variantName: "default",
+			className: "Tri_default_hz_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 364,
+			genName: "Tri",
+			variantName: "default",
+			className: "Tri_default_hz_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 365,
+			genName: "Tri",
+			variantName: "default",
+			className: "Tri_default_hz_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 366,
+			genName: "Tri",
+			variantName: "default",
+			className: "Tri_default_hz_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 367,
+			genName: "Tri",
+			variantName: "default",
+			className: "Tri_default_hz_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 368,
+			genName: "Tri",
+			variantName: "default",
+			className: "Tri_default_hz_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 369,
+			genName: "Tri",
+			variantName: "default",
+			className: "Tri_default_hz_audio_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 370,
+			genName: "Lfosaw",
+			variantName: "default",
+			className: "Lfosaw_default_bar_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 371,
+			genName: "Lfosaw",
+			variantName: "default",
+			className: "Lfosaw_default_bar_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 372,
+			genName: "Lfosaw",
+			variantName: "default",
+			className: "Lfosaw_default_bar_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 373,
+			genName: "Lfosaw",
+			variantName: "default",
+			className: "Lfosaw_default_bar_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 374,
+			genName: "Lfosaw",
+			variantName: "default",
+			className: "Lfosaw_default_bar_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 375,
+			genName: "Lfosaw",
+			variantName: "default",
+			className: "Lfosaw_default_bar_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 376,
+			genName: "Lfosaw",
+			variantName: "default",
+			className: "Lfosaw_default_bar_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 377,
+			genName: "Lfosaw",
+			variantName: "default",
+			className: "Lfosaw_default_bar_audio_phase_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 378,
+			genName: "Acc",
+			variantName: "default",
+			className: "Acc_default_trig_scalar_amount_scalar",
+			paramNames: ["trig", "amount"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 379,
+			genName: "Acc",
+			variantName: "default",
+			className: "Acc_default_trig_audio_amount_scalar",
+			paramNames: ["trig", "amount"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 380,
+			genName: "TestGain",
+			variantName: "default",
+			className: "TestGain_default_amount_scalar",
+			paramNames: ["amount"],
+			paramModes: ["scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 381,
+			genName: "TestGain",
+			variantName: "default",
+			className: "TestGain_default_amount_audio",
+			paramNames: ["amount"],
+			paramModes: ["audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 382,
+			genName: "TestGain",
+			variantName: "default",
+			className: "TestGain_default_amount_scalar_stereo",
+			paramNames: ["amount"],
+			paramModes: ["scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 383,
+			genName: "TestGain",
+			variantName: "default",
+			className: "TestGain_default_amount_audio_stereo",
+			paramNames: ["amount"],
+			paramModes: ["audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 384,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_scalar_threshold_scalar_repeat_scalar_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 385,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_scalar_threshold_scalar_repeat_scalar_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 386,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_scalar_threshold_scalar_repeat_audio_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 387,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_scalar_threshold_scalar_repeat_audio_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 388,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_audio_threshold_scalar_repeat_scalar_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 389,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_audio_threshold_scalar_repeat_scalar_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 390,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_audio_threshold_scalar_repeat_audio_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 391,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_audio_threshold_scalar_repeat_audio_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 392,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_scalar_threshold_scalar_repeat_scalar_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 393,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_scalar_threshold_scalar_repeat_scalar_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 394,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_scalar_threshold_scalar_repeat_audio_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 395,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_scalar_threshold_scalar_repeat_audio_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 396,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_audio_threshold_scalar_repeat_scalar_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 397,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_audio_threshold_scalar_repeat_scalar_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 398,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_audio_threshold_scalar_repeat_audio_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 399,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_audio_threshold_scalar_repeat_audio_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 400,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_scalar_threshold_scalar_repeat_scalar_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 401,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_scalar_threshold_scalar_repeat_scalar_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 402,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_scalar_threshold_scalar_repeat_audio_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 403,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_scalar_threshold_scalar_repeat_audio_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 404,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_audio_threshold_scalar_repeat_scalar_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 405,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_audio_threshold_scalar_repeat_scalar_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 406,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_audio_threshold_scalar_repeat_audio_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 407,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_audio_threshold_scalar_repeat_audio_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 408,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_scalar_threshold_scalar_repeat_scalar_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 409,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_scalar_threshold_scalar_repeat_scalar_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 410,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_scalar_threshold_scalar_repeat_audio_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 411,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_scalar_threshold_scalar_repeat_audio_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 412,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_audio_threshold_scalar_repeat_scalar_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 413,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_audio_threshold_scalar_repeat_scalar_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 414,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_audio_threshold_scalar_repeat_audio_trig_scalar",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 415,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_audio_threshold_scalar_repeat_audio_trig_audio",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 416,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_scalar_threshold_scalar_repeat_scalar_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 417,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_scalar_threshold_scalar_repeat_scalar_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 418,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_scalar_threshold_scalar_repeat_audio_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 419,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_scalar_threshold_scalar_repeat_audio_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 420,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_audio_threshold_scalar_repeat_scalar_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 421,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_audio_threshold_scalar_repeat_scalar_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 422,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_audio_threshold_scalar_repeat_audio_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 423,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_scalar_slice_audio_threshold_scalar_repeat_audio_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 424,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_scalar_threshold_scalar_repeat_scalar_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 425,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_scalar_threshold_scalar_repeat_scalar_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 426,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_scalar_threshold_scalar_repeat_audio_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 427,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_scalar_threshold_scalar_repeat_audio_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 428,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_audio_threshold_scalar_repeat_scalar_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 429,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_audio_threshold_scalar_repeat_scalar_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 430,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_audio_threshold_scalar_repeat_audio_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 431,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_scalar_offset_audio_slice_audio_threshold_scalar_repeat_audio_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 432,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_scalar_threshold_scalar_repeat_scalar_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 433,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_scalar_threshold_scalar_repeat_scalar_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 434,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_scalar_threshold_scalar_repeat_audio_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 435,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_scalar_threshold_scalar_repeat_audio_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 436,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_audio_threshold_scalar_repeat_scalar_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 437,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_audio_threshold_scalar_repeat_scalar_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 438,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_audio_threshold_scalar_repeat_audio_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 439,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_scalar_slice_audio_threshold_scalar_repeat_audio_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 440,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_scalar_threshold_scalar_repeat_scalar_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 441,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_scalar_threshold_scalar_repeat_scalar_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 442,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_scalar_threshold_scalar_repeat_audio_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 443,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_scalar_threshold_scalar_repeat_audio_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 444,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_audio_threshold_scalar_repeat_scalar_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 445,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_audio_threshold_scalar_repeat_scalar_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 446,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_audio_threshold_scalar_repeat_audio_trig_scalar_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 447,
+			genName: "Slicer",
+			variantName: "default",
+			className: "Slicer_default_sample_scalar_speed_audio_offset_audio_slice_audio_threshold_scalar_repeat_audio_trig_audio_stereo",
+			paramNames: [
+				"sample",
+				"speed",
+				"offset",
+				"slice",
+				"threshold",
+				"repeat",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [
+				"slicePosition",
+				"slicePlaying",
+				"currentSlice"
+			],
+			usesInput: false
+		},
+		{
+			id: 448,
+			genName: "Sustain",
+			variantName: "default",
+			className: "Sustain_default_seconds_scalar_trig_scalar",
+			paramNames: ["seconds", "trig"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 449,
+			genName: "Sustain",
+			variantName: "default",
+			className: "Sustain_default_seconds_scalar_trig_audio",
+			paramNames: ["seconds", "trig"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 450,
+			genName: "Sustain",
+			variantName: "default",
+			className: "Sustain_default_seconds_audio_trig_scalar",
+			paramNames: ["seconds", "trig"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 451,
+			genName: "Sustain",
+			variantName: "default",
+			className: "Sustain_default_seconds_audio_trig_audio",
+			paramNames: ["seconds", "trig"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 452,
+			genName: "Moog",
+			variantName: "lpm",
+			className: "Moog_lpm_cutoff_scalar_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 453,
+			genName: "Moog",
+			variantName: "lpm",
+			className: "Moog_lpm_cutoff_audio_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 454,
+			genName: "Moog",
+			variantName: "hpm",
+			className: "Moog_hpm_cutoff_scalar_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 455,
+			genName: "Moog",
+			variantName: "hpm",
+			className: "Moog_hpm_cutoff_audio_q_scalar",
+			paramNames: ["cutoff", "q"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 456,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
+			genName: "Random",
+			variantName: "default",
+			className: "Random_default_seed_scalar",
+			paramNames: ["seed"],
+			paramModes: ["scalar"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
+			id: 531,
+			genName: "Slew",
+========
+			id: 457,
+			genName: "Sah",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
+			variantName: "default",
+			className: "Sah_default_trig_scalar",
+			paramNames: ["trig"],
+			paramModes: ["scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
+			id: 532,
+			genName: "Slew",
+========
+			id: 458,
+			genName: "Sah",
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
+			variantName: "default",
+			className: "Sah_default_trig_audio",
+			paramNames: ["trig"],
+			paramModes: ["audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 533,
 			genName: "Slew",
 			variantName: "default",
@@ -12234,6 +18442,9 @@
 		},
 		{
 			id: 579,
+========
+			id: 459,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Sampler",
 			variantName: "default",
 			className: "Sampler_default_sample_scalar_speed_scalar_offset_scalar_repeat_scalar_trig_scalar",
@@ -12255,7 +18466,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 580,
+========
+			id: 460,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Sampler",
 			variantName: "default",
 			className: "Sampler_default_sample_scalar_speed_scalar_offset_scalar_repeat_scalar_trig_audio",
@@ -12277,7 +18492,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 581,
+========
+			id: 461,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Sampler",
 			variantName: "default",
 			className: "Sampler_default_sample_scalar_speed_scalar_offset_audio_repeat_scalar_trig_scalar",
@@ -12299,7 +18518,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 582,
+========
+			id: 462,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Sampler",
 			variantName: "default",
 			className: "Sampler_default_sample_scalar_speed_scalar_offset_audio_repeat_scalar_trig_audio",
@@ -12321,7 +18544,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 583,
+========
+			id: 463,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Sampler",
 			variantName: "default",
 			className: "Sampler_default_sample_scalar_speed_scalar_offset_scalar_repeat_scalar_trig_scalar_stereo",
@@ -12343,7 +18570,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 584,
+========
+			id: 464,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Sampler",
 			variantName: "default",
 			className: "Sampler_default_sample_scalar_speed_scalar_offset_scalar_repeat_scalar_trig_audio_stereo",
@@ -12365,7 +18596,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 585,
+========
+			id: 465,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Sampler",
 			variantName: "default",
 			className: "Sampler_default_sample_scalar_speed_scalar_offset_audio_repeat_scalar_trig_scalar_stereo",
@@ -12387,7 +18622,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 586,
+========
+			id: 466,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Sampler",
 			variantName: "default",
 			className: "Sampler_default_sample_scalar_speed_scalar_offset_audio_repeat_scalar_trig_audio_stereo",
@@ -12409,47 +18648,3289 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 587,
 			genName: "Moog",
 			variantName: "lpm",
 			className: "Moog_lpm_cutoff_scalar_q_scalar",
 			paramNames: ["cutoff", "q"],
+========
+			id: 467,
+			genName: "At",
+			variantName: "default",
+			className: "At_default_bar_scalar_every_scalar",
+			paramNames: ["bar", "every"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 468,
+			genName: "At",
+			variantName: "default",
+			className: "At_default_bar_scalar_every_audio",
+			paramNames: ["bar", "every"],
+			paramModes: ["scalar", "audio"],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 469,
+			genName: "At",
+			variantName: "default",
+			className: "At_default_bar_audio_every_scalar",
+			paramNames: ["bar", "every"],
+			paramModes: ["audio", "scalar"],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 470,
+			genName: "At",
+			variantName: "default",
+			className: "At_default_bar_audio_every_audio",
+			paramNames: ["bar", "every"],
+			paramModes: ["audio", "audio"],
+			emitNames: ["fired"],
+			usesInput: false
+		},
+		{
+			id: 471,
+			genName: "Limiter",
+			variantName: "default",
+			className: "Limiter_default_threshold_scalar_release_scalar",
+			paramNames: ["threshold", "release"],
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			paramModes: ["scalar", "scalar"],
 			emitNames: [],
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 588,
 			genName: "Moog",
 			variantName: "lpm",
 			className: "Moog_lpm_cutoff_audio_q_scalar",
 			paramNames: ["cutoff", "q"],
+========
+			id: 472,
+			genName: "Limiter",
+			variantName: "default",
+			className: "Limiter_default_threshold_scalar_release_audio",
+			paramNames: ["threshold", "release"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 473,
+			genName: "Limiter",
+			variantName: "default",
+			className: "Limiter_default_threshold_audio_release_scalar",
+			paramNames: ["threshold", "release"],
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			paramModes: ["audio", "scalar"],
 			emitNames: [],
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 589,
 			genName: "Moog",
 			variantName: "hpm",
 			className: "Moog_hpm_cutoff_scalar_q_scalar",
 			paramNames: ["cutoff", "q"],
+========
+			id: 474,
+			genName: "Limiter",
+			variantName: "default",
+			className: "Limiter_default_threshold_audio_release_audio",
+			paramNames: ["threshold", "release"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 475,
+			genName: "Smooth",
+			variantName: "default",
+			className: "Smooth_default_seed_scalar_rate_scalar_curve_scalar_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"curve",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 476,
+			genName: "Smooth",
+			variantName: "default",
+			className: "Smooth_default_seed_scalar_rate_scalar_curve_scalar_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"curve",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 477,
+			genName: "Smooth",
+			variantName: "default",
+			className: "Smooth_default_seed_scalar_rate_scalar_curve_audio_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"curve",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 478,
+			genName: "Smooth",
+			variantName: "default",
+			className: "Smooth_default_seed_scalar_rate_scalar_curve_audio_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"curve",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 479,
+			genName: "Smooth",
+			variantName: "default",
+			className: "Smooth_default_seed_scalar_rate_audio_curve_scalar_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"curve",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 480,
+			genName: "Smooth",
+			variantName: "default",
+			className: "Smooth_default_seed_scalar_rate_audio_curve_scalar_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"curve",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 481,
+			genName: "Smooth",
+			variantName: "default",
+			className: "Smooth_default_seed_scalar_rate_audio_curve_audio_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"curve",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 482,
+			genName: "Smooth",
+			variantName: "default",
+			className: "Smooth_default_seed_scalar_rate_audio_curve_audio_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"curve",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 483,
+			genName: "White",
+			variantName: "default",
+			className: "White_default_seed_scalar_trig_scalar",
+			paramNames: ["seed", "trig"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 484,
+			genName: "White",
+			variantName: "default",
+			className: "White_default_seed_scalar_trig_audio",
+			paramNames: ["seed", "trig"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 485,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_scalar_bias_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 486,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_scalar_bias_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 487,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_scalar_bias_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 488,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_scalar_bias_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 489,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_scalar_bias_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 490,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_scalar_bias_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 491,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_scalar_bias_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 492,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_scalar_bias_audio_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 493,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_audio_bias_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 494,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_audio_bias_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 495,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_audio_bias_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 496,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_audio_bias_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 497,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_audio_bias_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 498,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_audio_bias_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 499,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_audio_bias_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 500,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_scalar_step_audio_bias_audio_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 501,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_scalar_bias_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 502,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_scalar_bias_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 503,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_scalar_bias_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 504,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_scalar_bias_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 505,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_scalar_bias_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 506,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_scalar_bias_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 507,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_scalar_bias_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 508,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_scalar_bias_audio_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 509,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_audio_bias_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 510,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_audio_bias_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 511,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_audio_bias_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 512,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_audio_bias_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 513,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_audio_bias_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 514,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_audio_bias_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 515,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_audio_bias_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 516,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_scalar_stay_audio_step_audio_bias_audio_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 517,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_scalar_bias_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 518,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_scalar_bias_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 519,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_scalar_bias_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 520,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_scalar_bias_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 521,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_scalar_bias_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 522,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_scalar_bias_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 523,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_scalar_bias_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 524,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_scalar_bias_audio_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 525,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_audio_bias_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 526,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_audio_bias_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 527,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_audio_bias_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 528,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_audio_bias_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 529,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_audio_bias_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 530,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_audio_bias_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 531,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_audio_bias_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 532,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_scalar_step_audio_bias_audio_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 533,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_scalar_bias_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 534,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_scalar_bias_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 535,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_scalar_bias_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 536,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_scalar_bias_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 537,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_scalar_bias_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 538,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_scalar_bias_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 539,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_scalar_bias_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 540,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_scalar_bias_audio_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 541,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_audio_bias_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 542,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_audio_bias_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 543,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_audio_bias_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 544,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_audio_bias_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 545,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_audio_bias_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 546,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_audio_bias_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 547,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_audio_bias_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 548,
+			genName: "Markov",
+			variantName: "default",
+			className: "Markov_default_states_audio_stay_audio_step_audio_bias_audio_seed_audio_trig_audio",
+			paramNames: [
+				"states",
+				"stay",
+				"step",
+				"bias",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["state", "fired"],
+			usesInput: false
+		},
+		{
+			id: 549,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_scalar_octaves_scalar_gain_scalar_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 550,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_scalar_octaves_scalar_gain_scalar_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 551,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_scalar_octaves_scalar_gain_audio_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 552,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_scalar_octaves_scalar_gain_audio_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 553,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_scalar_octaves_audio_gain_scalar_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 554,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_scalar_octaves_audio_gain_scalar_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 555,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_scalar_octaves_audio_gain_audio_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 556,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_scalar_octaves_audio_gain_audio_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 557,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_audio_octaves_scalar_gain_scalar_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 558,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_audio_octaves_scalar_gain_scalar_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 559,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_audio_octaves_scalar_gain_audio_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 560,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_audio_octaves_scalar_gain_audio_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 561,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_audio_octaves_audio_gain_scalar_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 562,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_audio_octaves_audio_gain_scalar_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 563,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_audio_octaves_audio_gain_audio_trig_scalar",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 564,
+			genName: "Fractal",
+			variantName: "default",
+			className: "Fractal_default_seed_scalar_rate_audio_octaves_audio_gain_audio_trig_audio",
+			paramNames: [
+				"seed",
+				"rate",
+				"octaves",
+				"gain",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 565,
+			genName: "Saw",
+			variantName: "default",
+			className: "Saw_default_hz_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 566,
+			genName: "Saw",
+			variantName: "default",
+			className: "Saw_default_hz_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 567,
+			genName: "Saw",
+			variantName: "default",
+			className: "Saw_default_hz_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 568,
+			genName: "Saw",
+			variantName: "default",
+			className: "Saw_default_hz_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 569,
+			genName: "Saw",
+			variantName: "default",
+			className: "Saw_default_hz_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 570,
+			genName: "Saw",
+			variantName: "default",
+			className: "Saw_default_hz_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 571,
+			genName: "Saw",
+			variantName: "default",
+			className: "Saw_default_hz_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 572,
+			genName: "Saw",
+			variantName: "default",
+			className: "Saw_default_hz_audio_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 573,
+			genName: "Audio",
+			variantName: "default",
+			className: "Audio_default_",
+			paramNames: [],
+			paramModes: [],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 574,
+			genName: "Onepole",
+			variantName: "lp1",
+			className: "Onepole_lp1_cutoff_scalar",
+			paramNames: ["cutoff"],
+			paramModes: ["scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 575,
+			genName: "Onepole",
+			variantName: "lp1",
+			className: "Onepole_lp1_cutoff_audio",
+			paramNames: ["cutoff"],
+			paramModes: ["audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 576,
+			genName: "Onepole",
+			variantName: "hp1",
+			className: "Onepole_hp1_cutoff_scalar",
+			paramNames: ["cutoff"],
+			paramModes: ["scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 577,
+			genName: "Onepole",
+			variantName: "hp1",
+			className: "Onepole_hp1_cutoff_audio",
+			paramNames: ["cutoff"],
+			paramModes: ["audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 578,
+			genName: "Zerox",
+			variantName: "default",
+			className: "Zerox_default_",
+			paramNames: [],
+			paramModes: [],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 579,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_scalar_width_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 580,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_scalar_width_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 581,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_scalar_width_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 582,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_scalar_width_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 583,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_scalar_width_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 584,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_scalar_width_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 585,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_scalar_width_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 586,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_scalar_width_audio_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 587,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_audio_width_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 588,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_audio_width_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 589,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_audio_width_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 590,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_audio_width_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 591,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_audio_width_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 592,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_audio_width_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 593,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_audio_width_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 594,
+			genName: "Pwm",
+			variantName: "default",
+			className: "Pwm_default_hz_audio_width_audio_phase_audio_trig_audio",
+			paramNames: [
+				"hz",
+				"width",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 595,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_scalar_phase_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 596,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_scalar_phase_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 597,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_scalar_phase_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 598,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_scalar_phase_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 599,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_scalar_phase_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 600,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_scalar_phase_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 601,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_scalar_phase_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 602,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_scalar_phase_audio_seed_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 603,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_audio_phase_scalar_seed_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 604,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_audio_phase_scalar_seed_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 605,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_audio_phase_scalar_seed_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 606,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_audio_phase_scalar_seed_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 607,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_audio_phase_audio_seed_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 608,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_audio_phase_audio_seed_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 609,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_audio_phase_audio_seed_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 610,
+			genName: "Lfosah",
+			variantName: "default",
+			className: "Lfosah_default_bar_audio_phase_audio_seed_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"seed",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 611,
+			genName: "Slew",
+			variantName: "default",
+			className: "Slew_default_up_scalar_down_scalar_exp_scalar",
+			paramNames: [
+				"up",
+				"down",
+				"exp"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 612,
+			genName: "Slew",
+			variantName: "default",
+			className: "Slew_default_up_scalar_down_scalar_exp_audio",
+			paramNames: [
+				"up",
+				"down",
+				"exp"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 613,
+			genName: "Slew",
+			variantName: "default",
+			className: "Slew_default_up_scalar_down_audio_exp_scalar",
+			paramNames: [
+				"up",
+				"down",
+				"exp"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 614,
+			genName: "Slew",
+			variantName: "default",
+			className: "Slew_default_up_scalar_down_audio_exp_audio",
+			paramNames: [
+				"up",
+				"down",
+				"exp"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 615,
+			genName: "Slew",
+			variantName: "default",
+			className: "Slew_default_up_audio_down_scalar_exp_scalar",
+			paramNames: [
+				"up",
+				"down",
+				"exp"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 616,
+			genName: "Slew",
+			variantName: "default",
+			className: "Slew_default_up_audio_down_scalar_exp_audio",
+			paramNames: [
+				"up",
+				"down",
+				"exp"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 617,
+			genName: "Slew",
+			variantName: "default",
+			className: "Slew_default_up_audio_down_audio_exp_scalar",
+			paramNames: [
+				"up",
+				"down",
+				"exp"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 618,
+			genName: "Slew",
+			variantName: "default",
+			className: "Slew_default_up_audio_down_audio_exp_audio",
+			paramNames: [
+				"up",
+				"down",
+				"exp"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 619,
+			genName: "Analyser",
+			variantName: "default",
+			className: "Analyser_default_",
+			paramNames: [],
+			paramModes: [],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 620,
+			genName: "Freeverb",
+			variantName: "default",
+			className: "Freeverb_default_room_scalar_damping_scalar",
+			paramNames: ["room", "damping"],
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			paramModes: ["scalar", "scalar"],
 			emitNames: [],
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 590,
 			genName: "Moog",
 			variantName: "hpm",
 			className: "Moog_hpm_cutoff_audio_q_scalar",
 			paramNames: ["cutoff", "q"],
+========
+			id: 621,
+			genName: "Freeverb",
+			variantName: "default",
+			className: "Freeverb_default_room_scalar_damping_audio",
+			paramNames: ["room", "damping"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 622,
+			genName: "Freeverb",
+			variantName: "default",
+			className: "Freeverb_default_room_audio_damping_scalar",
+			paramNames: ["room", "damping"],
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			paramModes: ["audio", "scalar"],
 			emitNames: [],
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 591,
+========
+			id: 623,
+			genName: "Freeverb",
+			variantName: "default",
+			className: "Freeverb_default_room_audio_damping_audio",
+			paramNames: ["room", "damping"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 624,
+			genName: "Freeverb",
+			variantName: "default",
+			className: "Freeverb_default_room_scalar_damping_scalar_stereo",
+			paramNames: ["room", "damping"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 625,
+			genName: "Freeverb",
+			variantName: "default",
+			className: "Freeverb_default_room_scalar_damping_audio_stereo",
+			paramNames: ["room", "damping"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 626,
+			genName: "Freeverb",
+			variantName: "default",
+			className: "Freeverb_default_room_audio_damping_scalar_stereo",
+			paramNames: ["room", "damping"],
+			paramModes: ["audio", "scalar"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 627,
+			genName: "Freeverb",
+			variantName: "default",
+			className: "Freeverb_default_room_audio_damping_audio_stereo",
+			paramNames: ["room", "damping"],
+			paramModes: ["audio", "audio"],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 628,
+			genName: "Pink",
+			variantName: "default",
+			className: "Pink_default_seed_scalar_trig_scalar",
+			paramNames: ["seed", "trig"],
+			paramModes: ["scalar", "scalar"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 629,
+			genName: "Pink",
+			variantName: "default",
+			className: "Pink_default_seed_scalar_trig_audio",
+			paramNames: ["seed", "trig"],
+			paramModes: ["scalar", "audio"],
+			emitNames: [],
+			usesInput: false
+		},
+		{
+			id: 630,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "lps",
 			className: "Svf_lps_cutoff_scalar_q_scalar",
@@ -12459,7 +21940,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 592,
+========
+			id: 631,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "lps",
 			className: "Svf_lps_cutoff_scalar_q_audio",
@@ -12469,7 +21954,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 593,
+========
+			id: 632,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "lps",
 			className: "Svf_lps_cutoff_audio_q_scalar",
@@ -12479,7 +21968,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 594,
+========
+			id: 633,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "lps",
 			className: "Svf_lps_cutoff_audio_q_audio",
@@ -12489,7 +21982,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 595,
+========
+			id: 634,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "hps",
 			className: "Svf_hps_cutoff_scalar_q_scalar",
@@ -12499,7 +21996,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 596,
+========
+			id: 635,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "hps",
 			className: "Svf_hps_cutoff_scalar_q_audio",
@@ -12509,7 +22010,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 597,
+========
+			id: 636,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "hps",
 			className: "Svf_hps_cutoff_audio_q_scalar",
@@ -12519,7 +22024,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 598,
+========
+			id: 637,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "hps",
 			className: "Svf_hps_cutoff_audio_q_audio",
@@ -12529,7 +22038,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 599,
+========
+			id: 638,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "bps",
 			className: "Svf_bps_cutoff_scalar_q_scalar",
@@ -12539,7 +22052,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 600,
+========
+			id: 639,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "bps",
 			className: "Svf_bps_cutoff_scalar_q_audio",
@@ -12549,7 +22066,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 601,
+========
+			id: 640,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "bps",
 			className: "Svf_bps_cutoff_audio_q_scalar",
@@ -12559,7 +22080,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 602,
+========
+			id: 641,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "bps",
 			className: "Svf_bps_cutoff_audio_q_audio",
@@ -12569,7 +22094,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 603,
+========
+			id: 642,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "bss",
 			className: "Svf_bss_cutoff_scalar_q_scalar",
@@ -12579,7 +22108,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 604,
+========
+			id: 643,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "bss",
 			className: "Svf_bss_cutoff_scalar_q_audio",
@@ -12589,7 +22122,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 605,
+========
+			id: 644,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "bss",
 			className: "Svf_bss_cutoff_audio_q_scalar",
@@ -12599,7 +22136,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 606,
+========
+			id: 645,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "bss",
 			className: "Svf_bss_cutoff_audio_q_audio",
@@ -12609,7 +22150,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 607,
+========
+			id: 646,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "peaks",
 			className: "Svf_peaks_cutoff_scalar_q_scalar",
@@ -12619,7 +22164,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 608,
+========
+			id: 647,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "peaks",
 			className: "Svf_peaks_cutoff_scalar_q_audio",
@@ -12629,7 +22178,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 609,
+========
+			id: 648,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "peaks",
 			className: "Svf_peaks_cutoff_audio_q_scalar",
@@ -12639,7 +22192,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 610,
+========
+			id: 649,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "peaks",
 			className: "Svf_peaks_cutoff_audio_q_audio",
@@ -12649,7 +22206,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 611,
+========
+			id: 650,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "aps",
 			className: "Svf_aps_cutoff_scalar_q_scalar",
@@ -12659,7 +22220,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 612,
+========
+			id: 651,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "aps",
 			className: "Svf_aps_cutoff_scalar_q_audio",
@@ -12669,7 +22234,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 613,
+========
+			id: 652,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "aps",
 			className: "Svf_aps_cutoff_audio_q_scalar",
@@ -12679,7 +22248,11 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 614,
+========
+			id: 653,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Svf",
 			variantName: "aps",
 			className: "Svf_aps_cutoff_audio_q_audio",
@@ -12689,7 +22262,607 @@
 			usesInput: true
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 615,
+========
+			id: 654,
+			genName: "Hold",
+			variantName: "default",
+			className: "Hold_default_",
+			paramNames: [],
+			paramModes: [],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 655,
+			genName: "Dc",
+			variantName: "default",
+			className: "Dc_default_",
+			paramNames: [],
+			paramModes: [],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 656,
+			genName: "Lfosine",
+			variantName: "default",
+			className: "Lfosine_default_bar_scalar_phase_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 657,
+			genName: "Lfosine",
+			variantName: "default",
+			className: "Lfosine_default_bar_scalar_phase_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 658,
+			genName: "Lfosine",
+			variantName: "default",
+			className: "Lfosine_default_bar_scalar_phase_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 659,
+			genName: "Lfosine",
+			variantName: "default",
+			className: "Lfosine_default_bar_scalar_phase_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 660,
+			genName: "Lfosine",
+			variantName: "default",
+			className: "Lfosine_default_bar_audio_phase_scalar_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 661,
+			genName: "Lfosine",
+			variantName: "default",
+			className: "Lfosine_default_bar_audio_phase_scalar_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 662,
+			genName: "Lfosine",
+			variantName: "default",
+			className: "Lfosine_default_bar_audio_phase_audio_trig_scalar",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 663,
+			genName: "Lfosine",
+			variantName: "default",
+			className: "Lfosine_default_bar_audio_phase_audio_trig_audio",
+			paramNames: [
+				"bar",
+				"phase",
+				"trig"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: ["angle"],
+			usesInput: false
+		},
+		{
+			id: 664,
+			genName: "Biquadshelf",
+			variantName: "ls",
+			className: "Biquadshelf_ls_cutoff_scalar_q_scalar_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 665,
+			genName: "Biquadshelf",
+			variantName: "ls",
+			className: "Biquadshelf_ls_cutoff_scalar_q_scalar_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 666,
+			genName: "Biquadshelf",
+			variantName: "ls",
+			className: "Biquadshelf_ls_cutoff_scalar_q_audio_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 667,
+			genName: "Biquadshelf",
+			variantName: "ls",
+			className: "Biquadshelf_ls_cutoff_scalar_q_audio_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 668,
+			genName: "Biquadshelf",
+			variantName: "ls",
+			className: "Biquadshelf_ls_cutoff_audio_q_scalar_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 669,
+			genName: "Biquadshelf",
+			variantName: "ls",
+			className: "Biquadshelf_ls_cutoff_audio_q_scalar_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 670,
+			genName: "Biquadshelf",
+			variantName: "ls",
+			className: "Biquadshelf_ls_cutoff_audio_q_audio_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 671,
+			genName: "Biquadshelf",
+			variantName: "ls",
+			className: "Biquadshelf_ls_cutoff_audio_q_audio_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 672,
+			genName: "Biquadshelf",
+			variantName: "hs",
+			className: "Biquadshelf_hs_cutoff_scalar_q_scalar_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 673,
+			genName: "Biquadshelf",
+			variantName: "hs",
+			className: "Biquadshelf_hs_cutoff_scalar_q_scalar_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 674,
+			genName: "Biquadshelf",
+			variantName: "hs",
+			className: "Biquadshelf_hs_cutoff_scalar_q_audio_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 675,
+			genName: "Biquadshelf",
+			variantName: "hs",
+			className: "Biquadshelf_hs_cutoff_scalar_q_audio_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 676,
+			genName: "Biquadshelf",
+			variantName: "hs",
+			className: "Biquadshelf_hs_cutoff_audio_q_scalar_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 677,
+			genName: "Biquadshelf",
+			variantName: "hs",
+			className: "Biquadshelf_hs_cutoff_audio_q_scalar_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 678,
+			genName: "Biquadshelf",
+			variantName: "hs",
+			className: "Biquadshelf_hs_cutoff_audio_q_audio_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 679,
+			genName: "Biquadshelf",
+			variantName: "hs",
+			className: "Biquadshelf_hs_cutoff_audio_q_audio_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 680,
+			genName: "Biquadshelf",
+			variantName: "peak",
+			className: "Biquadshelf_peak_cutoff_scalar_q_scalar_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 681,
+			genName: "Biquadshelf",
+			variantName: "peak",
+			className: "Biquadshelf_peak_cutoff_scalar_q_scalar_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 682,
+			genName: "Biquadshelf",
+			variantName: "peak",
+			className: "Biquadshelf_peak_cutoff_scalar_q_audio_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 683,
+			genName: "Biquadshelf",
+			variantName: "peak",
+			className: "Biquadshelf_peak_cutoff_scalar_q_audio_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"scalar",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 684,
+			genName: "Biquadshelf",
+			variantName: "peak",
+			className: "Biquadshelf_peak_cutoff_audio_q_scalar_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 685,
+			genName: "Biquadshelf",
+			variantName: "peak",
+			className: "Biquadshelf_peak_cutoff_audio_q_scalar_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"scalar",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 686,
+			genName: "Biquadshelf",
+			variantName: "peak",
+			className: "Biquadshelf_peak_cutoff_audio_q_audio_gain_scalar",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"scalar"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 687,
+			genName: "Biquadshelf",
+			variantName: "peak",
+			className: "Biquadshelf_peak_cutoff_audio_q_audio_gain_audio",
+			paramNames: [
+				"cutoff",
+				"q",
+				"gain"
+			],
+			paramModes: [
+				"audio",
+				"audio",
+				"audio"
+			],
+			emitNames: [],
+			usesInput: true
+		},
+		{
+			id: 688,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Table",
 			variantName: "lookup",
 			className: "Table_lookup",
@@ -12699,7 +22872,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 616,
+========
+			id: 689,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Tram",
 			variantName: "default",
 			className: "TramKernel",
@@ -12709,7 +22886,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 617,
+========
+			id: 690,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Mini",
 			variantName: "default",
 			className: "MiniKernel",
@@ -12719,7 +22900,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 618,
+========
+			id: 691,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Timeline",
 			variantName: "default",
 			className: "TimelineKernel",
@@ -12729,7 +22914,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 619,
+========
+			id: 692,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Out",
 			variantName: "default",
 			className: "Out",
@@ -12739,7 +22928,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 620,
+========
+			id: 693,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Mix",
 			variantName: "default",
 			className: "Mix",
@@ -12749,7 +22942,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 621,
+========
+			id: 694,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "ArrayGet",
 			variantName: "default",
 			className: "ArrayGet",
@@ -12759,7 +22956,11 @@
 			usesInput: false
 		},
 		{
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 			id: 622,
+========
+			id: 695,
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 			genName: "Solo",
 			variantName: "default",
 			className: "Solo",
@@ -16935,6 +27136,1473 @@
 		}, this.wav = (H$2, A) => R(this.buf8(H$2, A));
 	}
 	H.buf8 = Z, H.buf32 = P, H.convert = F;
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
+========
+	const gens = {
+		Biquad: {
+			name: "Biquad",
+			description: "Biquad filter",
+			category: "filters",
+			variants: {
+				lp: "Lowpass filter (Biquad)",
+				hp: "Highpass filter (Biquad)",
+				bp: "Bandpass filter (Biquad)",
+				bs: "Bandstop filter (Biquad)",
+				ap: "Allpass filter (Biquad)"
+			},
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "cutoff",
+					default: 1e3,
+					min: 20,
+					max: 2e4,
+					unit: "hz",
+					description: "Cutoff frequency"
+				},
+				{
+					name: "q",
+					default: .70710678,
+					min: .01,
+					max: 20,
+					description: "Q factor"
+				}
+			]
+		},
+		Emit: {
+			name: "Emit",
+			description: "Emits a value",
+			category: "test",
+			parameters: [{
+				name: "value",
+				description: "Value to emit"
+			}]
+		},
+		Lfosqr: {
+			name: "Lfosqr",
+			description: "Tempo-synced LFO square 0..1",
+			category: "generators",
+			parameters: [
+				{
+					name: "bar",
+					default: 1,
+					min: 0,
+					unit: "bars",
+					description: "Cycle length in bars"
+				},
+				{
+					name: "phase",
+					default: 0,
+					min: 0,
+					unit: "phase",
+					description: "Phase offset in beats"
+				},
+				{
+					name: "trig",
+					description: "Trigger reset"
+				}
+			]
+		},
+		Lfotri: {
+			name: "Lfotri",
+			description: "Tempo-synced LFO triangle 0..1",
+			category: "generators",
+			parameters: [
+				{
+					name: "bar",
+					default: 1,
+					min: 0,
+					unit: "bars",
+					description: "Cycle length in bars"
+				},
+				{
+					name: "phase",
+					default: 0,
+					min: 0,
+					unit: "phase",
+					description: "Phase offset in beats"
+				},
+				{
+					name: "trig",
+					description: "Trigger reset"
+				}
+			]
+		},
+		Compressor: {
+			name: "Compressor",
+			description: "Dynamic range compressor with soft knee",
+			category: "mixing",
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "attack",
+					default: .003,
+					min: 1e-4,
+					max: 1,
+					unit: "s",
+					description: "Attack time"
+				},
+				{
+					name: "release",
+					default: .1,
+					min: 1e-4,
+					max: 5,
+					unit: "s",
+					description: "Release time"
+				},
+				{
+					name: "threshold",
+					default: -12,
+					min: -80,
+					max: 0,
+					unit: "dB",
+					description: "Threshold in dB"
+				},
+				{
+					name: "ratio",
+					default: 4,
+					min: 1,
+					max: 20,
+					description: "Compression ratio"
+				},
+				{
+					name: "knee",
+					default: 6,
+					min: 0,
+					max: 40,
+					unit: "dB",
+					description: "Knee width in dB"
+				},
+				{
+					name: "key",
+					description: "Key/sidechain input (unpatched = use input as key)"
+				}
+			]
+		},
+		Gauss: {
+			name: "Gauss",
+			description: "Gaussian (normal-ish) noise via CLT from 6 uniforms, trigger reset",
+			category: "generators",
+			parameters: [{
+				name: "seed",
+				default: 0,
+				description: "Seed (any value, float bits used)"
+			}, {
+				name: "trig",
+				description: "Trigger resets phase"
+			}]
+		},
+		Euclid: {
+			name: "Euclid",
+			description: "Euclidean rhythm trigger (pulses over steps with offset)",
+			category: "sequencers",
+			parameters: [
+				{
+					name: "pulses",
+					default: 4,
+					min: 0,
+					description: "Number of hits"
+				},
+				{
+					name: "steps",
+					default: 8,
+					min: 1,
+					description: "Number of steps"
+				},
+				{
+					name: "offset",
+					default: 0,
+					min: 0,
+					description: "Rotation offset"
+				},
+				{
+					name: "bar",
+					default: 1,
+					min: 1e-4,
+					unit: "bars",
+					description: "Pattern length in bars"
+				}
+			]
+		},
+		Ad: {
+			name: "Ad",
+			description: "Attack/Decay envelope",
+			category: "generators",
+			parameters: [
+				{
+					name: "attack",
+					default: .005,
+					min: 1e-5,
+					unit: "s",
+					description: "Attack time"
+				},
+				{
+					name: "decay",
+					default: .2,
+					min: 1e-5,
+					unit: "s",
+					description: "Decay time"
+				},
+				{
+					name: "exponent",
+					default: 1,
+					description: "Curve (0=linear, >0=power, <0=mirrored)"
+				},
+				{
+					name: "trig",
+					description: "Trigger impulse"
+				}
+			]
+		},
+		Sine: {
+			name: "Sine",
+			description: "Sine wave generator",
+			category: "generators",
+			parameters: [
+				{
+					name: "hz",
+					default: 440,
+					min: 0,
+					unit: "hz",
+					description: "Frequency"
+				},
+				{
+					name: "phase",
+					min: 0,
+					max: 1,
+					unit: "phase",
+					description: "Phase"
+				},
+				{
+					name: "trig",
+					unit: "impulse",
+					description: "Trigger impulse, resets to phase"
+				}
+			]
+		},
+		Phasor: {
+			name: "Phasor",
+			description: "Phase ramp 0..1",
+			category: "generators",
+			parameters: [
+				{
+					name: "hz",
+					default: 440,
+					min: 0,
+					unit: "hz",
+					description: "Frequency"
+				},
+				{
+					name: "phase",
+					min: 0,
+					max: 1,
+					unit: "phase",
+					description: "Phase"
+				},
+				{
+					name: "trig",
+					description: "Trigger impulse, resets to phase"
+				}
+			]
+		},
+		Ramp: {
+			name: "Ramp",
+			description: "Band-limited ramp (inverse saw) oscillator",
+			category: "generators",
+			parameters: [
+				{
+					name: "hz",
+					default: 440,
+					min: 0,
+					unit: "hz",
+					description: "Frequency"
+				},
+				{
+					name: "phase",
+					min: 0,
+					max: 1,
+					unit: "phase",
+					description: "Phase"
+				},
+				{
+					name: "trig",
+					description: "Trigger impulse, resets to phase"
+				}
+			]
+		},
+		Brown: {
+			name: "Brown",
+			description: "Brownian (random walk) noise",
+			category: "generators",
+			parameters: [{
+				name: "seed",
+				default: 0,
+				description: "Seed"
+			}, {
+				name: "trig",
+				description: "Trigger resets walk"
+			}]
+		},
+		Adsr: {
+			name: "Adsr",
+			description: "Attack/Decay/Sustain/Release envelope",
+			category: "generators",
+			parameters: [
+				{
+					name: "attack",
+					default: .005,
+					min: 1e-5,
+					unit: "s",
+					description: "Attack time"
+				},
+				{
+					name: "decay",
+					default: .2,
+					min: 1e-5,
+					unit: "s",
+					description: "Decay time"
+				},
+				{
+					name: "sustain",
+					default: .7,
+					min: 0,
+					max: 1,
+					description: "Sustain level (0..1)"
+				},
+				{
+					name: "release",
+					default: .3,
+					min: 1e-5,
+					unit: "s",
+					description: "Release time"
+				},
+				{
+					name: "exponent",
+					default: 1,
+					description: "Curve (0=linear, >0=power, <0=mirrored)"
+				},
+				{
+					name: "trig",
+					description: "Trigger (gate): high = hold sustain, low = release"
+				}
+			]
+		},
+		Dattorro: {
+			name: "Dattorro",
+			description: "Dattorro-style stereo reverb (modulated tank)",
+			category: "effects",
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "room",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Room size / decay"
+				},
+				{
+					name: "damping",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "High-frequency damping"
+				},
+				{
+					name: "bandwidth",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Input bandwidth"
+				},
+				{
+					name: "indiff1",
+					default: .75,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Input diffusion 1"
+				},
+				{
+					name: "indiff2",
+					default: .625,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Input diffusion 2"
+				},
+				{
+					name: "decdiff1",
+					default: .7,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Decay diffusion 1"
+				},
+				{
+					name: "decdiff2",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Decay diffusion 2"
+				},
+				{
+					name: "excrate",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Modulation rate"
+				},
+				{
+					name: "excdepth",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Modulation depth"
+				},
+				{
+					name: "predelay",
+					default: 0,
+					min: 0,
+					max: 1,
+					unit: "s",
+					description: "Pre-delay"
+				}
+			]
+		},
+		Lforamp: {
+			name: "Lforamp",
+			description: "Tempo-synced LFO ramp 0..1",
+			category: "generators",
+			parameters: [
+				{
+					name: "bar",
+					default: 1,
+					min: 0,
+					unit: "bars",
+					description: "Cycle length in bars"
+				},
+				{
+					name: "phase",
+					default: 0,
+					min: 0,
+					unit: "phase",
+					description: "Phase offset in beats"
+				},
+				{
+					name: "trig",
+					description: "Trigger reset"
+				}
+			]
+		},
+		Envfollow: {
+			name: "Envfollow",
+			description: "Envelope follower with attack and release time",
+			category: "utilities",
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "attack",
+					default: .01,
+					min: 1e-4,
+					max: 10,
+					unit: "s",
+					description: "Attack time"
+				},
+				{
+					name: "release",
+					default: .1,
+					min: 1e-4,
+					max: 10,
+					unit: "s",
+					description: "Release time"
+				}
+			]
+		},
+		Inc: {
+			name: "Inc",
+			description: "Ramp from phase to ceil at hz rate",
+			category: "generators",
+			parameters: [
+				{
+					name: "hz",
+					default: 1,
+					min: 0,
+					unit: "hz",
+					description: "Rate"
+				},
+				{
+					name: "ceil",
+					default: 1,
+					min: 0,
+					description: "Ceiling value"
+				},
+				{
+					name: "phase",
+					default: 0,
+					min: 0,
+					unit: "phase",
+					description: "Phase on trigger"
+				},
+				{
+					name: "trig",
+					description: "Trigger impulse, resets to phase value"
+				}
+			]
+		},
+		Impulse: {
+			name: "Impulse",
+			description: "Impulse train (1 at phase 0, 0 elsewhere)",
+			category: "sequencers",
+			parameters: [
+				{
+					name: "hz",
+					default: 440,
+					min: 0,
+					unit: "hz",
+					description: "Frequency"
+				},
+				{
+					name: "phase",
+					min: 0,
+					max: 1,
+					unit: "phase",
+					description: "Phase"
+				},
+				{
+					name: "trig",
+					description: "Trigger impulse, resets to phase"
+				}
+			]
+		},
+		Every: {
+			name: "Every",
+			description: "Generates an impulse on a regular period in bars",
+			category: "sequencers",
+			parameters: [
+				{
+					name: "bars",
+					default: .25,
+					min: 1e-4,
+					unit: "bars",
+					description: "Number of bars per impulse"
+				},
+				{
+					name: "offset",
+					default: 0,
+					min: 0,
+					unit: "bars",
+					description: "Start offset in bars"
+				},
+				{
+					name: "length",
+					default: 1,
+					min: 1e-4,
+					unit: "bars",
+					description: "Bar length multiplier"
+				}
+			]
+		},
+		TestOversample: {
+			name: "TestOversample",
+			description: "Test generator that outputs sample rate dependent signal",
+			category: "test",
+			parameters: []
+		},
+		Velvet: {
+			name: "Velvet",
+			description: "Velvet noise stereo reverb (prime-based delay lines)",
+			category: "effects",
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "room",
+					default: .5,
+					min: .05,
+					max: 1,
+					unit: "normal",
+					description: "Room size"
+				},
+				{
+					name: "damping",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "High-frequency damping"
+				},
+				{
+					name: "decay",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Decay / feedback"
+				}
+			]
+		},
+		Diodeladder: {
+			name: "Diodeladder",
+			description: "Diode ladder filter (4-pole, with HPF and soft saturation)",
+			category: "filters",
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "cutoff",
+					default: 1e3,
+					min: 20,
+					max: 2e4,
+					unit: "hz",
+					description: "Cutoff frequency"
+				},
+				{
+					name: "q",
+					default: .5,
+					min: 0,
+					max: 1,
+					description: "Resonance"
+				},
+				{
+					name: "k",
+					default: 0,
+					min: 0,
+					max: 1,
+					description: "HPF amount"
+				},
+				{
+					name: "sat",
+					default: 1,
+					min: .1,
+					max: 10,
+					description: "Input saturation"
+				}
+			]
+		},
+		Pitchshift: {
+			name: "Pitchshift",
+			description: "Grain-based pitch shifter (overlap-add)",
+			category: "effects",
+			parameters: [{
+				name: "input",
+				description: "Input signal"
+			}, {
+				name: "ratio",
+				default: 1,
+				min: .01,
+				max: 10,
+				unit: "multiplier",
+				description: "Pitch ratio (e.g. 2 = one octave up)"
+			}]
+		},
+		Sqr: {
+			name: "Sqr",
+			description: "Band-limited square oscillator",
+			category: "generators",
+			parameters: [
+				{
+					name: "hz",
+					default: 440,
+					min: 0,
+					unit: "hz",
+					description: "Frequency"
+				},
+				{
+					name: "phase",
+					min: 0,
+					max: 1,
+					unit: "phase",
+					description: "Phase"
+				},
+				{
+					name: "trig",
+					description: "Trigger impulse, resets to phase"
+				}
+			]
+		},
+		Fdn: {
+			name: "Fdn",
+			description: "Feedback delay network reverb (8-line Hadamard, modulated)",
+			category: "effects",
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "room",
+					default: .5,
+					min: .05,
+					max: 1,
+					unit: "normal",
+					description: "Room size"
+				},
+				{
+					name: "damping",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "High-frequency damping"
+				},
+				{
+					name: "decay",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Decay / feedback"
+				},
+				{
+					name: "depth",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Delay modulation depth"
+				}
+			]
+		},
+		Tri: {
+			name: "Tri",
+			description: "Band-limited triangle oscillator",
+			category: "generators",
+			parameters: [
+				{
+					name: "hz",
+					default: 440,
+					min: 0,
+					unit: "hz",
+					description: "Frequency"
+				},
+				{
+					name: "phase",
+					min: 0,
+					max: 1,
+					unit: "phase",
+					description: "Phase"
+				},
+				{
+					name: "trig",
+					description: "Trigger impulse, resets to phase"
+				}
+			]
+		},
+		Lfosaw: {
+			name: "Lfosaw",
+			description: "Tempo-synced LFO saw 0..1",
+			category: "generators",
+			parameters: [
+				{
+					name: "bar",
+					default: 1,
+					min: 0,
+					unit: "bars",
+					description: "Cycle length in bars"
+				},
+				{
+					name: "phase",
+					default: 0,
+					min: 0,
+					unit: "phase",
+					description: "Phase offset in beats"
+				},
+				{
+					name: "trig",
+					description: "Trigger reset"
+				}
+			]
+		},
+		Acc: {
+			name: "Acc",
+			description: "Accumulates (adds) a value on trigger",
+			category: "utilities",
+			parameters: [{
+				name: "trig",
+				description: "Trigger impulse"
+			}, {
+				name: "amount",
+				default: 1,
+				description: "Amount to accumulate"
+			}]
+		},
+		TestGain: {
+			name: "TestGain",
+			description: "Simple gain/amplifier",
+			category: "test",
+			parameters: [{
+				name: "input",
+				description: "Input signal"
+			}, {
+				name: "amount",
+				default: 1,
+				min: 0,
+				max: 2,
+				description: "Gain amount"
+			}]
+		},
+		Slicer: {
+			name: "Slicer",
+			description: "Slice-based sample player",
+			category: "samplers",
+			parameters: [
+				{
+					name: "sample",
+					unit: "handle",
+					description: "Sample handle from freesound() or record()"
+				},
+				{
+					name: "speed",
+					default: 1,
+					unit: "multiplier",
+					description: "Playback speed (negative for reverse)"
+				},
+				{
+					name: "offset",
+					default: 0,
+					min: 0,
+					max: 1,
+					unit: "phase",
+					description: "Offset phase within slice"
+				},
+				{
+					name: "slice",
+					default: 0,
+					min: 0,
+					max: 1,
+					unit: "fraction",
+					description: "Slice index (0..1)"
+				},
+				{
+					name: "threshold",
+					default: 0,
+					min: 0,
+					max: 1,
+					unit: "fraction",
+					description: "Slice detection threshold"
+				},
+				{
+					name: "repeat",
+					default: 0,
+					unit: "boolean",
+					description: "Loop slice when not 0"
+				},
+				{
+					name: "trig",
+					description: "Trigger to restart playback"
+				}
+			]
+		},
+		Sustain: {
+			name: "Sustain",
+			description: "Sustain an impulse for a fixed duration",
+			category: "sequencers",
+			parameters: [{
+				name: "seconds",
+				default: .1,
+				min: 1e-5,
+				unit: "s",
+				description: "Sustain duration in seconds"
+			}, {
+				name: "trig",
+				description: "Trigger impulse"
+			}]
+		},
+		Moog: {
+			name: "Moog",
+			description: "Moog ladder filter (4-pole, nonlinear)",
+			category: "filters",
+			variants: {
+				lpm: "Lowpass filter (Moog)",
+				hpm: "Highpass filter (Moog)"
+			},
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "cutoff",
+					default: 1e3,
+					min: 50,
+					max: 22040,
+					unit: "hz",
+					description: "Cutoff frequency"
+				},
+				{
+					name: "q",
+					default: .70710678,
+					min: .01,
+					max: .985,
+					description: "Q factor"
+				}
+			]
+		},
+		Random: {
+			name: "Random",
+			description: "Deterministic uniform [0,1] per sample from seed",
+			category: "math",
+			parameters: [{
+				name: "seed",
+				default: 0,
+				description: "Seed"
+			}]
+		},
+		Sah: {
+			name: "Sah",
+			description: "Sample-and-hold: capture input on trigger rising edge",
+			category: "utilities",
+			parameters: [{
+				name: "input",
+				description: "Input signal"
+			}, {
+				name: "trig",
+				description: "Trigger: on rising edge, hold current input"
+			}]
+		},
+		Sampler: {
+			name: "Sampler",
+			description: "Sample player",
+			category: "samplers",
+			parameters: [
+				{
+					name: "sample",
+					description: "Sample handle from freesound() or record()"
+				},
+				{
+					name: "speed",
+					default: 1,
+					description: "Playback speed (negative for reverse)"
+				},
+				{
+					name: "offset",
+					default: 0,
+					min: 0,
+					max: 1,
+					description: "Normalized start offset"
+				},
+				{
+					name: "repeat",
+					default: 0,
+					description: "Loop sample when > 0"
+				},
+				{
+					name: "trig",
+					description: "Trigger to restart playback"
+				}
+			]
+		},
+		At: {
+			name: "At",
+			description: "Trigger at specific bar once or every N bars",
+			category: "sequencers",
+			parameters: [{
+				name: "bar",
+				default: 0,
+				min: 0,
+				unit: "bars",
+				description: "Start time in bars"
+			}, {
+				name: "every",
+				default: 0,
+				min: 0,
+				unit: "bars",
+				description: "Interval in bars (0 = single trigger at start)"
+			}]
+		},
+		Limiter: {
+			name: "Limiter",
+			description: "Peak limiter with release smoothing",
+			category: "mixing",
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "threshold",
+					default: 0,
+					min: -80,
+					max: 0,
+					unit: "dB",
+					description: "Limit threshold in dB"
+				},
+				{
+					name: "release",
+					default: .1,
+					min: 1e-4,
+					max: 5,
+					unit: "s",
+					description: "Release time"
+				}
+			]
+		},
+		Smooth: {
+			name: "Smooth",
+			description: "Smooth interpolated random steps with rate and curve",
+			category: "generators",
+			parameters: [
+				{
+					name: "seed",
+					default: 0,
+					description: "Seed"
+				},
+				{
+					name: "rate",
+					default: 2,
+					min: 0,
+					unit: "hz",
+					description: "Step rate"
+				},
+				{
+					name: "curve",
+					default: 1,
+					description: "Interpolation curve (0=linear, 1=smooth5)"
+				},
+				{
+					name: "trig",
+					description: "Trigger resets acc"
+				}
+			]
+		},
+		White: {
+			name: "White",
+			description: "Uniform white noise with trigger reset",
+			category: "generators",
+			parameters: [{
+				name: "seed",
+				default: 0,
+				description: "Seed (any value, float bits used)"
+			}, {
+				name: "trig",
+				description: "Trigger resets phase"
+			}]
+		},
+		Markov: {
+			name: "Markov",
+			description: "Markov chain state sequencer with weighted transition probabilities",
+			category: "sequencers",
+			parameters: [
+				{
+					name: "states",
+					default: 4,
+					min: 2,
+					max: 16,
+					description: "Number of states"
+				},
+				{
+					name: "stay",
+					default: .3,
+					min: 0,
+					max: 1,
+					description: "Probability of staying on current state"
+				},
+				{
+					name: "step",
+					default: .5,
+					min: 0,
+					max: 1,
+					description: "Probability of stepping to an adjacent state (remainder is random jump)"
+				},
+				{
+					name: "bias",
+					default: .5,
+					min: 0,
+					max: 1,
+					description: "Step direction bias (0=always down, 0.5=equal, 1=always up)"
+				},
+				{
+					name: "seed",
+					default: 1,
+					description: "Random seed"
+				},
+				{
+					name: "trig",
+					description: "Advance trigger"
+				}
+			]
+		},
+		Fractal: {
+			name: "Fractal",
+			description: "Fractal (octave-sum) noise with rate, octaves, gain",
+			category: "generators",
+			parameters: [
+				{
+					name: "seed",
+					default: 0,
+					description: "Seed"
+				},
+				{
+					name: "rate",
+					default: 2,
+					min: 0,
+					unit: "hz",
+					description: "Base rate"
+				},
+				{
+					name: "octaves",
+					default: 4,
+					min: 1,
+					max: 16,
+					description: "Number of octaves"
+				},
+				{
+					name: "gain",
+					default: .5,
+					min: 0,
+					max: 1,
+					description: "Octave amplitude decay"
+				},
+				{
+					name: "trig",
+					description: "Trigger resets phase"
+				}
+			]
+		},
+		Saw: {
+			name: "Saw",
+			description: "Band-limited sawtooth oscillator",
+			category: "generators",
+			parameters: [
+				{
+					name: "hz",
+					default: 440,
+					min: 0,
+					unit: "hz",
+					description: "Frequency"
+				},
+				{
+					name: "phase",
+					min: 0,
+					max: 1,
+					unit: "phase",
+					description: "Phase"
+				},
+				{
+					name: "trig",
+					description: "Trigger impulse, resets to phase"
+				}
+			]
+		},
+		Audio: {
+			name: "Audio",
+			description: "Creates an audio signal of a single value",
+			category: "utilities",
+			parameters: [{
+				name: "input",
+				description: "Input signal"
+			}]
+		},
+		Onepole: {
+			name: "Onepole",
+			description: "One-pole filter (lowpass / highpass)",
+			category: "filters",
+			variants: {
+				lp1: "Lowpass filter (One-pole)",
+				hp1: "Highpass filter (One-pole)"
+			},
+			parameters: [{
+				name: "input",
+				description: "Input signal"
+			}, {
+				name: "cutoff",
+				default: 1e3,
+				min: 20,
+				max: 2e4,
+				unit: "hz",
+				description: "Cutoff frequency"
+			}]
+		},
+		Zerox: {
+			name: "Zerox",
+			description: "Positive zero-crossing detector (1 when input crosses from ≤0 to >0)",
+			category: "utilities",
+			parameters: [{
+				name: "input",
+				description: "Input signal"
+			}]
+		},
+		Pwm: {
+			name: "Pwm",
+			description: "Band-limited PWM oscillator",
+			category: "generators",
+			parameters: [
+				{
+					name: "hz",
+					default: 440,
+					min: 0,
+					unit: "hz",
+					description: "Frequency"
+				},
+				{
+					name: "width",
+					default: .5,
+					min: 0,
+					max: 1,
+					description: "Pulse width"
+				},
+				{
+					name: "phase",
+					min: 0,
+					max: 1,
+					unit: "phase",
+					description: "Phase"
+				},
+				{
+					name: "trig",
+					description: "Trigger impulse, resets to phase"
+				}
+			]
+		},
+		Lfosah: {
+			name: "Lfosah",
+			description: "Tempo-synced LFO sample-and-hold (random 0..1 per cycle)",
+			category: "generators",
+			parameters: [
+				{
+					name: "bar",
+					default: 1,
+					min: 0,
+					unit: "bars",
+					description: "Cycle length in bars"
+				},
+				{
+					name: "phase",
+					default: 0,
+					min: 0,
+					unit: "phase",
+					description: "Phase offset in beats"
+				},
+				{
+					name: "seed",
+					default: 0,
+					description: "Seed (any value, float bits used)"
+				},
+				{
+					name: "trig",
+					description: "Trigger reset"
+				}
+			]
+		},
+		Slew: {
+			name: "Slew",
+			description: "Slew rate limiter with separate rise/fall and curve",
+			category: "utilities",
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "up",
+					default: .0015,
+					min: 0,
+					max: 1,
+					description: "Rise coefficient (0=slow, 1=instant)"
+				},
+				{
+					name: "down",
+					default: 0,
+					min: 0,
+					max: 1,
+					description: "Fall coefficient (0=slow, 1=instant); ≤0 uses up"
+				},
+				{
+					name: "exp",
+					default: 1,
+					description: "Curve exponent (0=linear, >0=power, <0=mirrored)"
+				}
+			]
+		},
+		Analyser: {
+			name: "Analyser",
+			description: "Analyze the signal",
+			category: "utilities",
+			parameters: [{
+				name: "input",
+				description: "Input signal"
+			}]
+		},
+		Freeverb: {
+			name: "Freeverb",
+			description: "Freeverb reverb",
+			category: "effects",
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "room",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Room size"
+				},
+				{
+					name: "damping",
+					default: .5,
+					min: 0,
+					max: 1,
+					unit: "normal",
+					description: "Damping"
+				}
+			]
+		},
+		Pink: {
+			name: "Pink",
+			description: "1/f pink noise (Voss-McCartney 8 rows)",
+			category: "generators",
+			parameters: [{
+				name: "seed",
+				default: 0,
+				description: "Seed"
+			}, {
+				name: "trig",
+				description: "Trigger resets"
+			}]
+		},
+		Svf: {
+			name: "Svf",
+			description: "State variable filter (SVF)",
+			category: "filters",
+			variants: {
+				lps: "Lowpass filter (SVF)",
+				hps: "Highpass filter (SVF)",
+				bps: "Bandpass filter (SVF)",
+				bss: "Bandstop filter (SVF)",
+				peaks: "Peak (notch) filter (SVF)",
+				aps: "Allpass filter (SVF)"
+			},
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "cutoff",
+					default: 1e3,
+					min: 50,
+					max: 2e4,
+					unit: "hz",
+					description: "Cutoff frequency"
+				},
+				{
+					name: "q",
+					default: .70710678,
+					min: .01,
+					max: .985,
+					description: "Q factor"
+				}
+			]
+		},
+		Hold: {
+			name: "Hold",
+			description: "Holds its input if zero is received",
+			category: "utilities",
+			parameters: [{
+				name: "input",
+				description: "Input signal"
+			}]
+		},
+		Dc: {
+			name: "Dc",
+			description: "DC blocker (~8 Hz highpass, removes offset)",
+			category: "filters",
+			parameters: [{
+				name: "input",
+				description: "Input signal"
+			}]
+		},
+		Lfosine: {
+			name: "Lfosine",
+			description: "Tempo-synced LFO sine 0..1",
+			category: "generators",
+			parameters: [
+				{
+					name: "bar",
+					default: 1,
+					min: 0,
+					unit: "bars",
+					description: "Cycle length in bars"
+				},
+				{
+					name: "phase",
+					default: 0,
+					min: 0,
+					unit: "phase",
+					description: "Phase offset in beats"
+				},
+				{
+					name: "trig",
+					description: "Trigger reset"
+				}
+			]
+		},
+		Biquadshelf: {
+			name: "Biquadshelf",
+			description: "Biquad shelf and peak filters (gain-based)",
+			category: "filters",
+			variants: {
+				ls: "Low shelf (Biquad)",
+				hs: "High shelf (Biquad)",
+				peak: "Peak (notch) (Biquad)"
+			},
+			parameters: [
+				{
+					name: "input",
+					description: "Input signal"
+				},
+				{
+					name: "cutoff",
+					default: 1e3,
+					min: 20,
+					max: 2e4,
+					unit: "hz",
+					description: "Cutoff frequency"
+				},
+				{
+					name: "q",
+					default: .70710678,
+					min: .01,
+					max: 20,
+					description: "Q factor (peak only)"
+				},
+				{
+					name: "gain",
+					default: 0,
+					min: -40,
+					max: 40,
+					unit: "dB",
+					description: "Gain in dB"
+				}
+			]
+		}
+	};
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js
 	const SCALE_INTERVALS = {
 		major: [
 			0,
@@ -17717,6 +29385,12 @@
 		const opCode = AudioVmOp[`Gen${s$1.genName}_${s$1.variantName}`];
 		if (opCode !== void 0) opCodeByGenKey[key] = opCode;
 	}
+	const BUILTIN_SPEC_BY_VARIANT = /* @__PURE__ */ new Map();
+	const BUILTIN_DEFAULT_SPEC_BY_GEN_NAME = /* @__PURE__ */ new Map();
+	for (const spec of genSpecs) {
+		if (!BUILTIN_SPEC_BY_VARIANT.has(spec.variantName)) BUILTIN_SPEC_BY_VARIANT.set(spec.variantName, spec);
+		if (spec.variantName === "default" && !BUILTIN_DEFAULT_SPEC_BY_GEN_NAME.has(spec.genName)) BUILTIN_DEFAULT_SPEC_BY_GEN_NAME.set(spec.genName, spec);
+	}
 	function disassembleBytecode(bytecode, indent = 0) {
 		const lines = [];
 		const u32 = new Uint32Array(bytecode.buffer, bytecode.byteOffset, bytecode.length);
@@ -18267,4 +29941,8 @@
 	};
 })();
 
+<<<<<<<< HEAD:dist/assets/record-worker-DuCzxijb.js
 //# sourceMappingURL=record-worker-DuCzxijb.js.map
+========
+//# sourceMappingURL=record-worker-d_-uuz3E.js.map
+>>>>>>>> origin/main:dist/assets/record-worker-d_-uuz3E.js

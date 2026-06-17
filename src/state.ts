@@ -26,7 +26,7 @@ import { computeDocErrors } from './lib/format-errors.ts'
 import { persist, persistKeyed } from './lib/persist.ts'
 import { safeJsonParse } from './lib/safe-json-parse.ts'
 import { signalify } from './lib/signalify.ts'
-import { tokenize } from './lib/tokenizer.ts'
+import { tokenizer } from './lib/tokenizer.ts'
 import { settings } from './settings.ts'
 import themes from './themes/_all.json' with { type: 'json' }
 import { BEATS_PER_BAR, FILL_ALPHA } from './widgets/constants.ts'
@@ -298,8 +298,8 @@ export function createProject(data: Partial<Project> = {}): Project {
     userId: data.userId ?? session.value?.userId ?? null,
     id,
     name: data.name ?? getNextUntitledName(),
-    doc: createPersistedDoc(id, tokenize, data.doc),
-    scratch: createPersistedDoc(`${id}-scratch`, tokenize, data.scratch),
+    doc: createPersistedDoc(id, tokenizer, data.doc),
+    scratch: createPersistedDoc(`${id}-scratch`, tokenizer, data.scratch),
     arrangement,
     savedArrangement: data.savedArrangement ? cloneArrangement(data.savedArrangement) : data.isSaved ? cloneArrangement(arrangement) : null,
     sampleCount: data.sampleCount ?? 0,
@@ -549,9 +549,14 @@ effect(() => {
   const workletError = ctx.value?.dsp.state.workletError
   if (!programCtx?.doc) return
   const result = programCtx.result.value
+  const shaderErrors = [...programCtx.shaderDirectiveDiagnostics.value]
+  const shaderRuntimeError = programCtx.shaderRuntimeDiagnostic.value
+  if (shaderRuntimeError) shaderErrors.push(shaderRuntimeError)
+  const resultForErrors = programCtx.shaderDirectiveDiagnostics.value.length ? null : result
   programCtx.doc.errors = computeDocErrors(
-    result,
+    resultForErrors,
     workletError ?? null,
+    shaderErrors,
   )
 })
 
@@ -1134,8 +1139,8 @@ effect(() => {
   )
 })
 
-export const djDocA = signal(createPersistedDoc('dj-doc-a', tokenize))
-export const djDocB = signal(createPersistedDoc('dj-doc-b', tokenize))
+export const djDocA = signal(createPersistedDoc('dj-doc-a', tokenizer))
+export const djDocB = signal(createPersistedDoc('dj-doc-b', tokenizer))
 export const djProgramA = signal<DspProgramContext | null>(null)
 export const djProgramB = signal<DspProgramContext | null>(null)
 export const djHeaderA = signal<Header | null>(null)

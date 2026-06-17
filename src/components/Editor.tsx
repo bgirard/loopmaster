@@ -30,6 +30,8 @@ export const Editor = (
       paddingBottom: !header ? !gutter ? 15 : 15.5 : 17,
       ...editorSettings,
       showGutter: gutter,
+      showMinimap: settings.showMinimap,
+      overscroll: settings.overscroll,
     }), [])
 
   useEffect(() => {
@@ -53,7 +55,7 @@ export const Editor = (
     if (transparent) {
       editor.settings.colors.black = 'transparent'
     }
-  }, [editor])
+  }, [editor, transparent])
 
   useReactiveEffect(() => {
     createEditorOnHover(editor)
@@ -61,6 +63,14 @@ export const Editor = (
 
   useReactiveEffect(() => {
     editor.settings.wordWrap = settings.wordWrap
+  }, [editor])
+
+  useReactiveEffect(() => {
+    editor.settings.showMinimap = settings.showMinimap
+  }, [editor])
+
+  useReactiveEffect(() => {
+    editor.settings.overscroll = settings.overscroll
   }, [editor])
 
   useEffect(() => {

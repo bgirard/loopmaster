@@ -8,9 +8,11 @@ import {
 import { useComputed, useSignal } from '@preact/signals'
 import { useEffect, useRef } from 'preact/hooks'
 import { isMobile } from 'utils/is-mobile'
+import whopLogo from '../assets/whop.svg'
 import { useAsyncMemo } from '../hooks/useAsyncMemo.ts'
 import { useReactiveEffect } from '../hooks/useReactiveEffect.ts'
 import { pathname, subsection } from '../router.tsx'
+import { Link as RouterLink } from '../router.tsx'
 import { primaryColor, widgetOptions } from '../state.ts'
 import { Grid } from './Grid.tsx'
 import { GridItem } from './GridItem.tsx'
@@ -543,6 +545,17 @@ export const TutorialsMain = () => {
             <div ref={containerRef} class="flex gap-8 min-h-0">
               <div class="flex-1 min-w-0">
                 {parsed.value.slice(1).map(compile)}
+                <div class="flex flex-row gap-4 items-center">
+                  <Heading level={3} children={[{ type: 'text', value: 'Support this project' }]} />
+                  <RouterLink to="https://buymeacoffee.com/stagas" title="Buy me a coffee" target="_blank">
+                    <img src="/bmc-button.png" alt="Buy me a coffee" class="w-48 h-auto" />
+                  </RouterLink>
+                  <RouterLink to="https://whop.com/loopmaster" title="Support me on Whop" target="_blank"
+                    class="p-4 flex items-center justify-center hover:bg-white/5 focus:bg-white/5 outline-none text-neutral-400 text-sm"
+                  >
+                    <img src={whopLogo} alt="Support me on Whop" width={48} height={48} />
+                  </RouterLink>
+                </div>
                 <Grid cols={isMobile() ? 1 : 3}>
                   {tutorials.filter(tutorial => tutorial.href !== pathname.value).sort(() => Math.random() - 0.5).slice(
                     0,

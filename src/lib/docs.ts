@@ -134,7 +134,7 @@ trig:=euclid(5,8,bar:1);[#1,#3,#5,#7,#9].random(trig)*[o1,o2,o3][t]
   'min': '\nntof(30) |> min(sine($),saw($)) |> out($)',
   'flanger': '\nsaw(ntof(30)) |> flanger($) |> out($)',
   'rhodes': 'trig=every(1/16)\n\nrhodes([60,63,65,70][t*2]|>ntof($),.7,trig)*ad(.0001,.36,4,trig) |> out($)',
-  'at': `trig=at(1/16,1/4)+at(3/16,1/4)+at(4/16,1/4,prob:.6)
+  'at': `trig=at(1/16,1/4)+at(3/16,1/4)+at(4/16,1/4)
 
 tri([60,67,62,63][t]|>ntof($)|>$/2+sine($/3)*$/2)*ad(.0003,.11,e:.5,trig)*.3+drums() |> out($)`,
   'moddelay': '\nsaw(ntof(30)) |> moddelay($,.3,.3,.11,.20) |> out($)',
@@ -212,4 +212,7 @@ play(mini('o5 <octave -1 octave 0>/2
 sampler(sam('hello world'),trig:every(1)) |> out($)`,
   'espeak': `
 sampler(espeak('hello world'),trig:every(1)) |> out($)`,
+  'bongo': `trig=(euclid(3,8,0,1/2)+euclid(3,4,4,1))**.3
+
+poly(4,trig,trig->(#scale*[o2,o3,o4].random(trig)).markov(trig),bongo) |> atan($*2) |> out($)`,
 }

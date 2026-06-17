@@ -390,6 +390,25 @@ export function Landing() {
           </div>
         </section>
 
+        <section class="py-20 relative">
+          <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-white mb-4">Support this project</h2>
+            <p class="text-xl text-neutral-400 mb-8 max-w-2xl mx-auto">
+              Help me continue to develop this project.<br />Your support matters a lot.
+            </p>
+            <div class="flex flex-row items-center justify-center">
+              <Link to="https://buymeacoffee.com/stagas" title="Buy me a coffee" target="_blank">
+                <img src="/bmc-button.png" alt="Buy me a coffee" class="w-48 h-auto" />
+              </Link>
+              <Link to="https://whop.com/loopmaster" title="Support me on Whop" target="_blank"
+                class="p-4 flex items-center justify-center hover:bg-white/5 focus:bg-white/5 outline-none text-neutral-400 text-sm"
+              >
+                <img src={whopLogo} alt="Support me on Whop" width={48} height={48} />
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Footer */}
         <footer class="py-12">
           <div class="max-w-7xl mx-auto px-6">
@@ -440,7 +459,7 @@ export function Landing() {
                 >
                   <img src={whopLogo} alt="Support me on Whop" width={24} height={24} />
                 </Link>
-                <Link to="https://www.buymeacoffee.com/loopmaster" title="Buy Me a Coffee" target="_blank"
+                <Link to="https://www.buymeacoffee.com/stagas" title="Buy Me a Coffee" target="_blank"
                   class="text-sm border-none rounded-md cursor-pointer font-semibold text-white hover:text-[#4c6dee] flex items-center gap-2"
                 >
                   <img src={bmcLogo} alt="Buy Me a Coffee" width={24} height={24} />
