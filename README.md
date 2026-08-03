@@ -13,7 +13,7 @@ bun dev
 
 Import this repository in [Vercel](https://vercel.com/new). The included `vercel.json` configures:
 
-- Bun install + Vite build (`dist` output)
+- npm install + Vite build (`dist` output)
 - SPA rewrites for client-side routes
 - COOP/COEP/CORP headers required for SharedArrayBuffer / WASM
 
