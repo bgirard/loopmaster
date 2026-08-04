@@ -116,6 +116,7 @@ export const Daw = () => {
   const selectedBlockId = useSignal<string | null>(null)
   const selectedLibraryId = useSignal<string>('drums-four-on-floor')
   const libraryOpen = useSignal(!compactLayout.value)
+  const libraryDragging = useSignal(false)
   const auditionRequest = useSignal(0)
   const seekPreviewSeconds = useSignal<number | null>(null)
   const dropPreview = useSignal<DropPreview | null>(null)
@@ -131,6 +132,7 @@ export const Daw = () => {
   const loopSeekInFlightRef = useRef(false)
   const temporaryTrackStatesRef = useRef<Map<string, Pick<ArrangementTrack, 'muted' | 'soloed'>> | null>(null)
   const mobile = compactLayout.value
+  const libraryDrawerVisible = !mobile || (libraryOpen.value && !libraryDragging.value)
 
   const closeLibrary = () => {
     if (compactLayout.value) libraryOpen.value = false
@@ -562,6 +564,31 @@ export const Daw = () => {
     event.dataTransfer?.setData('application/x-loopmaster-library-item', itemId)
     event.dataTransfer?.setData('text/plain', getLibraryTitle(item))
     if (event.dataTransfer) event.dataTransfer.effectAllowed = 'copy'
+
+    const source = event.currentTarget as HTMLElement | null
+    if (source && event.dataTransfer) {
+      try {
+        event.dataTransfer.setDragImage(source, Math.min(48, source.offsetWidth / 2), 24)
+      }
+      catch {
+        // Some browsers reject setDragImage for detached/hidden nodes.
+      }
+    }
+
+    // On compact layouts the drawer covers the timeline; get it out of the way
+    // after the drag image is captured so drop targets are visible and hittable.
+    if (compactLayout.value) {
+      requestAnimationFrame(() => {
+        libraryDragging.value = true
+        libraryOpen.value = false
+      })
+      const endDrag = () => {
+        libraryDragging.value = false
+        dropPreview.value = null
+        window.removeEventListener('dragend', endDrag)
+      }
+      window.addEventListener('dragend', endDrag)
+    }
   }
 
   const updateDropPreview = (event: DragEvent) => {
@@ -655,7 +682,7 @@ export const Daw = () => {
       </div>
 
       <div class="relative flex-1 min-h-0 flex overflow-hidden">
-        {mobile && libraryOpen.value && (
+        {mobile && libraryDrawerVisible && (
           <button
             type="button"
             class="absolute inset-0 z-40 bg-black/55"
@@ -668,14 +695,15 @@ export const Daw = () => {
             'border-r border-white/10 min-h-0 flex-col',
             mobile
               ? cn(
-                'absolute z-50 top-0 bottom-0 left-0 w-[min(300px,82vw)] shadow-[8px_0_24px_rgba(0,0,0,.45)] transition-transform duration-200 ease-out',
-                libraryOpen.value ? 'flex translate-x-0' : 'flex -translate-x-full pointer-events-none',
+                'absolute z-50 top-0 bottom-0 left-0 w-[min(300px,82vw)] shadow-[8px_0_24px_rgba(0,0,0,.45)]',
+                libraryDragging.value ? 'transition-none' : 'transition-transform duration-200 ease-out',
+                libraryDrawerVisible ? 'flex translate-x-0' : 'flex -translate-x-full pointer-events-none',
               )
               : 'relative flex w-[300px] shrink-0',
           )}
           style={{ backgroundColor: theme.value.black }}
-          aria-hidden={mobile && !libraryOpen.value}
-          inert={mobile && !libraryOpen.value ? true : undefined}
+          aria-hidden={mobile && !libraryDrawerVisible}
+          inert={mobile && !libraryOpen.value && !libraryDragging.value ? true : undefined}
         >
           <div class="h-11 px-3 flex items-center justify-between border-b border-white/10">
             <span class="text-sm font-semibold text-white/80">Templates</span>
