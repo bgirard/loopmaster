@@ -1,0 +1,14 @@
+.agents
+.claude
+.codex
+.cursor
+.env*
+!.env.example
+deno
+storage
+test
+*.md
+!README.md
+bun.lock
+tmp-*.mjs
+skills-lock.json

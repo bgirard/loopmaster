@@ -13,9 +13,9 @@ bun dev
 
 Import this repository in [Vercel](https://vercel.com/new) with the GitHub integration. The included `vercel.json` configures:
 
-- npm install + Vite build (`dist` output)
+- `npm ci` + Vite build (`dist` output)
 - SPA rewrites for client-side routes
-- COOP/COEP/CORP headers required for SharedArrayBuffer / WASM
+- COOP / COEP `credentialless` / CORP headers for SharedArrayBuffer / WASM without blocking CDN fonts and scripts
 
 With Git connected, every pull request gets a preview deployment and Vercel posts the URL on the PR. Pushes to `main` deploy production.
 
