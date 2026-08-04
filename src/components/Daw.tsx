@@ -1,6 +1,7 @@
 import {
   CopyIcon,
   FloppyDiskBackIcon,
+  ListIcon,
   MagnifyingGlassMinusIcon,
   MagnifyingGlassPlusIcon,
   PlusIcon,
@@ -8,14 +9,17 @@ import {
   SpeakerHighIcon,
   SpeakerSlashIcon,
   TrashIcon,
+  XIcon,
 } from '@phosphor-icons/react'
 import { useSignal } from '@preact/signals'
 import { createDoc, createEditor, type Doc, type Widget, type Widgets } from 'editor'
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks'
+import { isMobile } from 'utils/is-mobile'
 import type { Arrangement, ArrangementBlock, ArrangementTrack, OneLiner } from '../../deno/types.ts'
 import { api } from '../api.ts'
 import type { DspProgramContext } from '../dsp.ts'
 import { useReactiveEffect } from '../hooks/useReactiveEffect.ts'
+import { cn } from '../lib/cn.ts'
 import { settings } from '../settings.ts'
 import {
   DEFAULT_LANE_HEIGHT,
@@ -104,9 +108,15 @@ type TrackGeometry = {
   height: number
 }
 
+const isCompactDawLayout = () =>
+  isMobile() || (typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches)
+
 export const Daw = () => {
+  const compactLayout = useSignal(isCompactDawLayout())
   const selectedBlockId = useSignal<string | null>(null)
   const selectedLibraryId = useSignal<string>('drums-four-on-floor')
+  const libraryOpen = useSignal(!compactLayout.value)
+  const libraryDragging = useSignal(false)
   const auditionRequest = useSignal(0)
   const seekPreviewSeconds = useSignal<number | null>(null)
   const dropPreview = useSignal<DropPreview | null>(null)
@@ -121,6 +131,26 @@ export const Daw = () => {
   const previousLoopRef = useRef<{ begin: number; end: number } | null>(null)
   const loopSeekInFlightRef = useRef(false)
   const temporaryTrackStatesRef = useRef<Map<string, Pick<ArrangementTrack, 'muted' | 'soloed'>> | null>(null)
+  const mobile = compactLayout.value
+  const libraryDrawerVisible = !mobile || (libraryOpen.value && !libraryDragging.value)
+
+  const closeLibrary = () => {
+    if (compactLayout.value) libraryOpen.value = false
+  }
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)')
+    const syncLayout = () => {
+      const next = isMobile() || media.matches
+      const wasCompact = compactLayout.value
+      compactLayout.value = next
+      if (!next) libraryOpen.value = true
+      else if (!wasCompact) libraryOpen.value = false
+    }
+    syncLayout()
+    media.addEventListener('change', syncLayout)
+    return () => media.removeEventListener('change', syncLayout)
+  }, [])
 
   useEffect(() => {
     loadingOneLiners.value = true
@@ -138,6 +168,12 @@ export const Daw = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && compactLayout.value && libraryOpen.value) {
+        event.preventDefault()
+        libraryOpen.value = false
+        return
+      }
+
       if (event.defaultPrevented || event.altKey || event.shiftKey) return
       if (isEditableShortcutTarget(event.target)) return
 
@@ -487,6 +523,7 @@ export const Daw = () => {
       next.blocks.push(block)
     })
     selectedBlockId.value = createdId
+    closeLibrary()
   }
 
   const addDraggedLibraryItem = (item: LibraryItem, preview: DropPreview) => {
@@ -512,6 +549,7 @@ export const Daw = () => {
       next.blocks.push(block)
     })
     selectedBlockId.value = createdId
+    closeLibrary()
   }
 
   const selectLibraryItem = (itemId: string) => {
@@ -526,6 +564,31 @@ export const Daw = () => {
     event.dataTransfer?.setData('application/x-loopmaster-library-item', itemId)
     event.dataTransfer?.setData('text/plain', getLibraryTitle(item))
     if (event.dataTransfer) event.dataTransfer.effectAllowed = 'copy'
+
+    const source = event.currentTarget as HTMLElement | null
+    if (source && event.dataTransfer) {
+      try {
+        event.dataTransfer.setDragImage(source, Math.min(48, source.offsetWidth / 2), 24)
+      }
+      catch {
+        // Some browsers reject setDragImage for detached/hidden nodes.
+      }
+    }
+
+    // On compact layouts the drawer covers the timeline; get it out of the way
+    // after the drag image is captured so drop targets are visible and hittable.
+    if (compactLayout.value) {
+      requestAnimationFrame(() => {
+        libraryDragging.value = true
+        libraryOpen.value = false
+      })
+      const endDrag = () => {
+        libraryDragging.value = false
+        dropPreview.value = null
+        window.removeEventListener('dragend', endDrag)
+      }
+      window.addEventListener('dragend', endDrag)
+    }
   }
 
   const updateDropPreview = (event: DragEvent) => {
@@ -584,19 +647,19 @@ export const Daw = () => {
     <div class="h-full min-h-0 flex flex-col text-white" style={{ backgroundColor: theme.value.black }}>
       <div class="relative h-[50px] shrink-0">
         <Nav ready={transportReady.value} />
-        <div class="absolute left-[150px] right-4 top-0 h-[48px] flex items-center justify-between pointer-events-none">
-          <div class="pointer-events-auto flex items-center gap-3 min-w-0">
+        <div class="absolute left-[140px] sm:left-[150px] right-2 sm:right-4 top-0 h-[48px] flex items-center justify-between gap-2 pointer-events-none">
+          <div class="pointer-events-auto flex items-center gap-2 sm:gap-3 min-w-0">
             <input
-              class="bg-transparent text-lg font-bold outline-none text-white min-w-0 w-64"
+              class="bg-transparent text-base sm:text-lg font-bold outline-none text-white min-w-0 w-28 sm:w-64"
               value={project.name}
               onInput={e => {
                 project.name = (e.target as HTMLInputElement).value
               }}
             />
-            <label class="text-xs text-white/50 flex items-center gap-2">
+            <label class="text-xs text-white/50 flex items-center gap-1.5 sm:gap-2 shrink-0">
               BPM
               <input
-                class="w-16 bg-white/5 border border-white/10 px-2 py-1 text-white outline-none"
+                class="w-12 sm:w-16 bg-white/5 border border-white/10 px-1.5 sm:px-2 py-1 text-white outline-none"
                 type="number"
                 value={arrangement.bpm}
                 onInput={e => {
@@ -609,22 +672,56 @@ export const Daw = () => {
             </label>
           </div>
           <button
-            class="pointer-events-auto flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5"
+            class="pointer-events-auto flex items-center gap-2 px-2 sm:px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 shrink-0"
             onClick={() => saveProject(project)}
           >
             <FloppyDiskBackIcon size={16} />
-            Save
+            <span class="hidden sm:inline">Save</span>
           </button>
         </div>
       </div>
 
-      <div class="flex-1 min-h-0 flex">
-        <aside class="w-[300px] shrink-0 border-r border-white/10 min-h-0 flex flex-col">
+      <div class="relative flex-1 min-h-0 flex overflow-hidden">
+        {mobile && libraryDrawerVisible && (
+          <button
+            type="button"
+            class="absolute inset-0 z-40 bg-black/55"
+            aria-label="Dismiss templates"
+            onClick={closeLibrary}
+          />
+        )}
+        <aside
+          class={cn(
+            'border-r border-white/10 min-h-0 flex-col',
+            mobile
+              ? cn(
+                'absolute z-50 top-0 bottom-0 left-0 w-[min(300px,82vw)] shadow-[8px_0_24px_rgba(0,0,0,.45)]',
+                libraryDragging.value ? 'transition-none' : 'transition-transform duration-200 ease-out',
+                libraryDrawerVisible ? 'flex translate-x-0' : 'flex -translate-x-full pointer-events-none',
+              )
+              : 'relative flex w-[300px] shrink-0',
+          )}
+          style={{ backgroundColor: theme.value.black }}
+          aria-hidden={mobile && !libraryDrawerVisible}
+          inert={mobile && !libraryOpen.value && !libraryDragging.value ? true : undefined}
+        >
           <div class="h-11 px-3 flex items-center justify-between border-b border-white/10">
             <span class="text-sm font-semibold text-white/80">Templates</span>
-            {loadingOneLiners.value && <span class="text-xs text-white/35">Loading</span>}
+            <div class="flex items-center gap-2">
+              {loadingOneLiners.value && <span class="text-xs text-white/35">Loading</span>}
+              {mobile && (
+                <button
+                  type="button"
+                  class="grid size-10 place-items-center -mr-2 text-white/70 hover:text-white hover:bg-white/5"
+                  aria-label="Close templates"
+                  onClick={closeLibrary}
+                >
+                  <XIcon size={22} />
+                </button>
+              )}
+            </div>
           </div>
-          <div class="flex-1 min-h-0 overflow-y-auto p-3 space-y-4">
+          <div class="flex-1 min-h-0 overflow-y-auto p-3 space-y-4 overscroll-contain">
             {groupTemplates().map(group => (
               <section key={group.category}>
                 <h3 class="text-[11px] uppercase tracking-[0.12em] text-white/35 mb-2">{group.category}</h3>
@@ -691,10 +788,25 @@ export const Daw = () => {
         <main class="flex-1 min-w-0 min-h-0 flex flex-col">
           <div class="flex-1 min-h-0 overflow-auto">
             <div class="sticky top-0 z-20 flex h-9 border-b border-white/10" style={{ width: timelineContentWidth, backgroundColor: theme.value.black }}>
-              <div class="shrink-0 border-r border-white/10 px-3 flex items-center justify-between"
+              <div class="shrink-0 border-r border-white/10 px-2 sm:px-3 flex items-center justify-between gap-1"
                 style={{ width: laneHeaderWidth }}
               >
-                <span class="text-xs uppercase tracking-[0.12em] text-white/35">Lanes</span>
+                {mobile
+                  ? (
+                    <button
+                      type="button"
+                      class="flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-white/60 hover:text-white shrink-0"
+                      aria-label="Open templates"
+                      aria-expanded={libraryOpen.value}
+                      onClick={() => {
+                        libraryOpen.value = true
+                      }}
+                    >
+                      <ListIcon size={14} />
+                      Templates
+                    </button>
+                  )
+                  : <span class="text-xs uppercase tracking-[0.12em] text-white/35">Lanes</span>}
                 <div class="flex items-center gap-1">
                   <button
                     class="p-1 text-white/45 hover:text-white disabled:opacity-30"
@@ -1352,7 +1464,7 @@ const BlockEditor = (
 ) => {
   if (!block) {
     return (
-      <div class="h-[270px] shrink-0 border-t border-white/10 p-4 text-white/40">
+      <div class="h-[180px] sm:h-[270px] shrink-0 border-t border-white/10 p-4 text-white/40">
         Select or add a block.
       </div>
     )
@@ -1361,8 +1473,8 @@ const BlockEditor = (
   const template = getTemplate(block.templateId)
 
   return (
-    <div class="h-[300px] shrink-0 border-t border-white/10 flex min-h-0">
-      <div class="w-[330px] shrink-0 border-r border-white/10 p-3 overflow-y-auto">
+    <div class="h-[42vh] max-h-[360px] sm:h-[300px] sm:max-h-none shrink-0 border-t border-white/10 flex flex-col sm:flex-row min-h-0">
+      <div class="w-full sm:w-[330px] shrink-0 border-b sm:border-b-0 sm:border-r border-white/10 p-3 overflow-y-auto max-h-[48%] sm:max-h-none">
         <div class="flex items-center gap-2 mb-3">
           <input
             class="bg-transparent text-white font-semibold outline-none min-w-0 flex-1"

@@ -208,7 +208,7 @@ export const App = () => {
               style={{ backgroundColor: settings.showShaders ? 'transparent' : theme.value.black }}
             >
               {!isMobile() && (
-                <div class="flex w-auto h-full flex-shrink-0">
+                <div class="hidden md:flex w-auto h-full flex-shrink-0">
                   <Sidebar />
                 </div>
               )}
