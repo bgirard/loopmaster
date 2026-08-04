@@ -29,6 +29,7 @@ import {
   saveProject,
   session,
   transport,
+  unlockAudio,
 } from '../state.ts'
 import { AuthForm } from './AuthForm.tsx'
 import { PauseGradientIcon, PlayGradientIcon } from './Icons.tsx'
@@ -153,6 +154,7 @@ const ProjectItem = ({ project }: { project: Project }) => {
         { 'bg-white/5 text-white': isCurrentProject },
       )}
       onMouseDown={e => {
+        unlockAudio()
         currentProjectId.value = project.id
         if ((e.ctrlKey || e.metaKey) || e.button === MouseButton.Right) {
           transport.restart()
@@ -161,7 +163,8 @@ const ProjectItem = ({ project }: { project: Project }) => {
     >
       <button
         class="group relative text-neutral-700 p-1 pr-0.5"
-        onMouseDown={e => {
+        onPointerDown={e => {
+          unlockAudio()
           if (playingProject.value?.id === project.id) {
             if ((e.ctrlKey || e.metaKey) || e.button === MouseButton.Right) {
               transport.restart()

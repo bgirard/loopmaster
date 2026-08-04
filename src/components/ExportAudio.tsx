@@ -15,6 +15,7 @@ import {
   currentProject,
   primaryColor,
   session,
+  unlockAudio,
 } from '../state.ts'
 import { BEATS_PER_BAR } from '../widgets/constants.ts'
 import { PauseGradientIcon, PlayGradientIcon } from './Icons.tsx'
@@ -210,6 +211,7 @@ export const ExportAudio = () => {
   }
 
   const handlePlayStop = () => {
+    unlockAudio()
     const ac = audioContext.value
     const buf = audioBuffer.value
     if (!ac || !buf) return
@@ -247,7 +249,8 @@ export const ExportAudio = () => {
       return
     }
 
-    ac.resume()
+    // Synchronous resume keeps iOS user-gesture unlock intact.
+    void ac.resume()
     playing.value = true
     startSource(position.value, position.value > 0)
   }

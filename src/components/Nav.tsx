@@ -1,5 +1,5 @@
 import { MouseButton } from 'utils/mouse-buttons'
-import { editor, primaryColor, transport } from '../state.ts'
+import { editor, primaryColor, transport, unlockAudio } from '../state.ts'
 import { PauseGradientIcon, PlayGradientIcon, StopGradientIcon } from './Icons.tsx'
 
 export type NavTransport = Pick<typeof transport, 'start' | 'pause' | 'stop' | 'restart'>
@@ -21,7 +21,9 @@ export const Nav = (
       aria-label="Play"
       title={ready ? 'Play' : 'Loading audio'}
       disabled={!ready}
-      onMouseDown={e => {
+      onPointerDown={e => {
+        // Unlock before preventDefault/async work — required for iOS Safari.
+        unlockAudio()
         e.preventDefault()
         if (!ready) return
         editor.value?.focus()
@@ -40,7 +42,8 @@ export const Nav = (
       aria-label="Pause"
       title={ready ? 'Pause' : 'Loading audio'}
       disabled={!ready}
-      onMouseDown={e => {
+      onPointerDown={e => {
+        unlockAudio()
         e.preventDefault()
         if (!ready) return
         editor.value?.focus()
@@ -59,7 +62,8 @@ export const Nav = (
       aria-label="Stop"
       title={ready ? 'Stop' : 'Loading audio'}
       disabled={!ready}
-      onMouseDown={e => {
+      onPointerDown={e => {
+        unlockAudio()
         e.preventDefault()
         if (!ready) return
         editor.value?.focus()

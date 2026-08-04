@@ -221,9 +221,49 @@ export const isActuallyPaused = signal(false)
 export const isActuallyStopped = signal(false)
 
 export const ctx = signal<DspContext | null>(null)
+
+/**
+ * Resume the shared AudioContext inside the current call stack.
+ * iOS Safari requires resume() during a user gesture; any await before it
+ * breaks the gesture token and playback stays silent.
+ */
+export function unlockAudio() {
+  const ac = ctx.value?.dsp.state.audioContext
+  if (!ac) return
+  const state = ac.state as AudioContextState | 'interrupted'
+  if (state === 'running') return
+  // Intentionally not awaited — the synchronous call is what unlocks iOS.
+  void ac.resume()
+}
+
+let audioUnlockInstalled = false
+function installAudioUnlockListeners() {
+  if (audioUnlockInstalled || typeof document === 'undefined') return
+  audioUnlockInstalled = true
+  const opts: AddEventListenerOptions = { capture: true, passive: true }
+  const unlock = () => unlockAudio()
+  document.addEventListener('pointerdown', unlock, opts)
+  document.addEventListener('touchstart', unlock, opts)
+  document.addEventListener('keydown', unlock, opts)
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') unlockAudio()
+  })
+}
+
 const ctxReady = createDspContext().then(c => {
   ctx.value = c
+  installAudioUnlockListeners()
+  c.dsp.state.audioContext.addEventListener('statechange', () => {
+    const state = c.dsp.state.audioContext.state as AudioContextState | 'interrupted'
+    // iOS moves the context to "interrupted" during calls / backgrounding.
+    if (state === 'interrupted' && document.visibilityState === 'visible') {
+      unlockAudio()
+    }
+  })
   return c
+}).catch(error => {
+  console.error('Failed to initialize audio engine', error)
+  throw error
 })
 
 async function getReadyDspContext() {
@@ -586,6 +626,7 @@ effect(() => {
 
 export const transport = {
   start: async () => {
+    unlockAudio()
     const c = await getReadyDspContext()
     const dsp = c.dsp
     await dsp.state.audioContext.resume()
@@ -616,6 +657,7 @@ export const transport = {
     }
   },
   pause: async () => {
+    unlockAudio()
     const c = await getReadyDspContext()
     const dsp = c.dsp
     const contexts = await ensureProgramContexts()
@@ -641,6 +683,7 @@ export const transport = {
     await dsp.stop([playingProgramContext.program])
   },
   restart: async () => {
+    unlockAudio()
     const c = await getReadyDspContext()
     const dsp = c.dsp
     await dsp.state.audioContext.resume()
@@ -749,6 +792,7 @@ export const inlineTransport = {
     if (inlineStartInFlight) return
     inlineStartInFlight = true
     try {
+      unlockAudio()
       const c = await getReadyDspContext()
       const dsp = c.dsp
       await dsp.state.audioContext.resume()
@@ -786,6 +830,7 @@ export const inlineTransport = {
   },
   restart: async () => {
     if (!playingInlineContext.value) return
+    unlockAudio()
     const c = await getReadyDspContext()
     const dsp = c.dsp
     await dsp.state.audioContext.resume()
@@ -1174,6 +1219,7 @@ async function ensureDjProgramContexts() {
 
 const createDjTransport = (deck: DjDeck) => ({
   start: async () => {
+    unlockAudio()
     if (!ctx.value) return
     const dsp = ctx.value.dsp
     await dsp.state.audioContext.resume()
@@ -1205,6 +1251,7 @@ const createDjTransport = (deck: DjDeck) => ({
     deferDraw.value = true
   },
   pause: async () => {
+    unlockAudio()
     const contexts = await ensureDjProgramContexts()
     if (!contexts || !ctx.value) return
     const p = deck === 'a' ? contexts.a : contexts.b
@@ -1228,6 +1275,7 @@ const createDjTransport = (deck: DjDeck) => ({
     await ctx.value.dsp.stop([p.program])
   },
   restart: async () => {
+    unlockAudio()
     const contexts = await ensureDjProgramContexts()
     if (!contexts || !ctx.value) return
     await ctx.value.dsp.state.audioContext.resume()
@@ -1311,6 +1359,7 @@ export const djTransportB = createDjTransport('b')
 
 export const wallTransport = {
   start: async (id: string, doc: Doc) => {
+    unlockAudio()
     if (!ctx.value) return
     const dsp = ctx.value.dsp
     await dsp.state.audioContext.resume()
@@ -1335,6 +1384,7 @@ export const wallTransport = {
     await dsp.stop([programCtx.program])
   },
   toggle: async (id: string, doc: Doc) => {
+    unlockAudio()
     if (!ctx.value) return
     const programCtx = await getProgramContext(ctx.value, id, { doc })
     if (wallPlayingContexts.value.has(programCtx)) {
