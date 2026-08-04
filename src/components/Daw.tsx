@@ -140,8 +140,10 @@ export const Daw = () => {
     const media = window.matchMedia('(max-width: 767px)')
     const syncLayout = () => {
       const next = isMobile() || media.matches
+      const wasCompact = compactLayout.value
       compactLayout.value = next
       if (!next) libraryOpen.value = true
+      else if (!wasCompact) libraryOpen.value = false
     }
     syncLayout()
     media.addEventListener('change', syncLayout)
@@ -653,20 +655,6 @@ export const Daw = () => {
       </div>
 
       <div class="relative flex-1 min-h-0 flex overflow-hidden">
-        {mobile && !libraryOpen.value && (
-          <button
-            type="button"
-            class="absolute z-30 top-2 left-2 flex items-center gap-1.5 px-2.5 py-1.5 text-xs border border-white/15 bg-black/80 text-white/75 hover:text-white"
-            aria-label="Open templates"
-            aria-expanded={false}
-            onClick={() => {
-              libraryOpen.value = true
-            }}
-          >
-            <ListIcon size={14} />
-            Templates
-          </button>
-        )}
         {mobile && libraryOpen.value && (
           <button
             type="button"
@@ -680,13 +668,14 @@ export const Daw = () => {
             'border-r border-white/10 min-h-0 flex-col',
             mobile
               ? cn(
-                'absolute z-50 top-0 bottom-0 left-0 w-[min(300px,86vw)] shadow-[8px_0_24px_rgba(0,0,0,.45)] transition-transform duration-200 ease-out',
+                'absolute z-50 top-0 bottom-0 left-0 w-[min(300px,82vw)] shadow-[8px_0_24px_rgba(0,0,0,.45)] transition-transform duration-200 ease-out',
                 libraryOpen.value ? 'flex translate-x-0' : 'flex -translate-x-full pointer-events-none',
               )
               : 'relative flex w-[300px] shrink-0',
           )}
           style={{ backgroundColor: theme.value.black }}
           aria-hidden={mobile && !libraryOpen.value}
+          inert={mobile && !libraryOpen.value ? true : undefined}
         >
           <div class="h-11 px-3 flex items-center justify-between border-b border-white/10">
             <span class="text-sm font-semibold text-white/80">Templates</span>
@@ -695,11 +684,11 @@ export const Daw = () => {
               {mobile && (
                 <button
                   type="button"
-                  class="p-1.5 -mr-1 text-white/55 hover:text-white"
+                  class="grid size-10 place-items-center -mr-2 text-white/70 hover:text-white hover:bg-white/5"
                   aria-label="Close templates"
                   onClick={closeLibrary}
                 >
-                  <XIcon size={18} />
+                  <XIcon size={22} />
                 </button>
               )}
             </div>
@@ -771,10 +760,25 @@ export const Daw = () => {
         <main class="flex-1 min-w-0 min-h-0 flex flex-col">
           <div class="flex-1 min-h-0 overflow-auto">
             <div class="sticky top-0 z-20 flex h-9 border-b border-white/10" style={{ width: timelineContentWidth, backgroundColor: theme.value.black }}>
-              <div class="shrink-0 border-r border-white/10 px-3 flex items-center justify-between"
+              <div class="shrink-0 border-r border-white/10 px-2 sm:px-3 flex items-center justify-between gap-1"
                 style={{ width: laneHeaderWidth }}
               >
-                <span class="text-xs uppercase tracking-[0.12em] text-white/35">Lanes</span>
+                {mobile
+                  ? (
+                    <button
+                      type="button"
+                      class="flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-white/60 hover:text-white shrink-0"
+                      aria-label="Open templates"
+                      aria-expanded={libraryOpen.value}
+                      onClick={() => {
+                        libraryOpen.value = true
+                      }}
+                    >
+                      <ListIcon size={14} />
+                      Templates
+                    </button>
+                  )
+                  : <span class="text-xs uppercase tracking-[0.12em] text-white/35">Lanes</span>}
                 <div class="flex items-center gap-1">
                   <button
                     class="p-1 text-white/45 hover:text-white disabled:opacity-30"
