@@ -221,6 +221,7 @@ export const isActuallyPaused = signal(false)
 export const isActuallyStopped = signal(false)
 
 export const ctx = signal<DspContext | null>(null)
+export const ctxError = signal<string | null>(null)
 
 /**
  * Resume the shared AudioContext inside the current call stack.
@@ -250,8 +251,17 @@ function installAudioUnlockListeners() {
   })
 }
 
+function describeAudioInitError(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error)
+  if (typeof SharedArrayBuffer === 'undefined' || !globalThis.crossOriginIsolated) {
+    return 'Audio engine unavailable: this page is not cross-origin isolated, so SharedArrayBuffer cannot start. Safari/iOS requires COEP require-corp.'
+  }
+  return `Audio engine failed to start: ${message}`
+}
+
 const ctxReady = createDspContext().then(c => {
   ctx.value = c
+  ctxError.value = null
   installAudioUnlockListeners()
   c.dsp.state.audioContext.addEventListener('statechange', () => {
     const state = c.dsp.state.audioContext.state as AudioContextState | 'interrupted'
@@ -262,7 +272,9 @@ const ctxReady = createDspContext().then(c => {
   })
   return c
 }).catch(error => {
-  console.error('Failed to initialize audio engine', error)
+  const description = describeAudioInitError(error)
+  console.error(description, error)
+  ctxError.value = description
   throw error
 })
 

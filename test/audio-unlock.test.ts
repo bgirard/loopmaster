@@ -70,3 +70,27 @@ test('transport start unlocks before first await', async () => {
   assert.ok(order.indexOf('before-await') < order.indexOf('after-await'))
   assert.equal(audioContext.state, 'running')
 })
+
+test('audio init requires cross-origin isolation for SharedArrayBuffer', () => {
+  // Mirrors createDspContext guard used for Safari/iOS.
+  function assertCanCreateSharedAudio(opts: {
+    crossOriginIsolated: boolean
+    SharedArrayBuffer: unknown
+  }) {
+    if (typeof opts.SharedArrayBuffer === 'undefined' || !opts.crossOriginIsolated) {
+      throw new Error(
+        'SharedArrayBuffer unavailable (crossOriginIsolated='
+          + String(opts.crossOriginIsolated)
+          + '). Safari/iOS needs COOP same-origin + COEP require-corp.',
+      )
+    }
+  }
+
+  assert.throws(
+    () => assertCanCreateSharedAudio({ crossOriginIsolated: false, SharedArrayBuffer }),
+    /require-corp/,
+  )
+  assert.doesNotThrow(() =>
+    assertCanCreateSharedAudio({ crossOriginIsolated: true, SharedArrayBuffer })
+  )
+})

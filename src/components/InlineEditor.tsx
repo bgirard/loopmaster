@@ -11,6 +11,7 @@ import { createEditorOnHover, editorSettings } from '../lib/editor-common.ts'
 import { tokenizer } from '../lib/tokenizer.ts'
 import {
   ctx,
+  ctxError,
   getProgramContext,
   inlineTransport,
   playingContext,
@@ -161,7 +162,10 @@ export const InlineEditor = (
     <button
       class={cn('group flex px-3 py-2 active:hover:scale-95 outline-none focus:bg-white/5', {
         'absolute right-0': isMobile() && header,
+        'opacity-40 pointer-events-none': Boolean(ctxError.value) || !ctx.value,
       })}
+      title={ctxError.value ?? (!ctx.value ? 'Loading audio' : undefined)}
+      disabled={Boolean(ctxError.value) || !ctx.value}
       onPointerDown={async e => {
         // Unlock before preventDefault/async work — required for iOS Safari.
         unlockAudio()

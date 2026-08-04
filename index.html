@@ -25,11 +25,16 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="manifest" href="/manifest.json" />
 
+  <!--
+    COEP require-corp (Safari/iOS SharedArrayBuffer) needs CORP/CORS on every
+    cross-origin resource. Self-host Twind; load Google Fonts with CORS.
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Turret+Road:wght@200;300;400;500;700;800&display=block"
-    rel="stylesheet">
+    rel="stylesheet"
+    crossorigin="anonymous">
 
   <title>loopmaster</title>
 
@@ -49,7 +54,7 @@
     }
   </style>
 
-  <script src="https://cdn.twind.style"></script>
+  <script src="/vendor/twind.js"></script>
 
   <script>
     twind.install({
@@ -64,8 +69,6 @@
 <body>
   <div id="app"></div>
   <script type="module" src="/src/client.tsx"></script>
-  <img class="opacity-0 w-0 h-0"
-    src="https://mapmyvisitors.com/map.png?d=JlBAAn4D0P35j0cm2RHpiOCjlOPpdJGwaADNwmbeubo&ct=cdd4d9" />
 </body>
 
 </html>

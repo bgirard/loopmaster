@@ -15,7 +15,7 @@ Import this repository in [Vercel](https://vercel.com/new) with the GitHub integ
 
 - `npm ci` + Vite build (`dist` output)
 - SPA rewrites for client-side routes
-- COOP / COEP `credentialless` / CORP headers for SharedArrayBuffer / WASM without blocking CDN fonts and scripts
+- COOP / COEP `require-corp` / CORP headers for SharedArrayBuffer / WASM (Safari/iOS needs `require-corp`; `credentialless` is Chromium-only)
 
 With Git connected, every pull request gets a preview deployment and Vercel posts the URL on the PR. Pushes to `main` deploy production.
 

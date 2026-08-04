@@ -330,6 +330,13 @@ export type DspProgramContext = Awaited<ReturnType<typeof createDspProgramContex
 export type DspContext = Awaited<ReturnType<typeof createDspContext>>
 
 export async function createDspContext() {
+  if (typeof SharedArrayBuffer === 'undefined' || !globalThis.crossOriginIsolated) {
+    throw new Error(
+      'SharedArrayBuffer unavailable (crossOriginIsolated='
+        + String(globalThis.crossOriginIsolated)
+        + '). Safari/iOS needs COOP same-origin + COEP require-corp.',
+    )
+  }
   await new Promise<void>(queueMicrotask)
   const dspState = await createDspState({ latencyHint: settings.audioLatency })
   const historiesRefreshed = signal(0)
