@@ -338,6 +338,9 @@ export async function createProcessorState(
   let wasPlaying = false
   const idsNowPlaying = new Set<number>()
   const idsWasPlaying = new Set<number>()
+  let outputPeak = 0
+  let lastMixControlOpsLength = 0
+  let lastProgramsMixed = 0
 
   // let count = 0
 
@@ -492,9 +495,14 @@ export async function createProcessorState(
       wasPlaying = false
       return true
     }
+    // AudioWorklet output buffers are not guaranteed to be zeroed.
+    outputL.fill(0)
+    if (outputR !== outputL) outputR.fill(0)
     quantumRef.value = bufferLength
     idsNowPlaying.clear()
     let isPlaying = false
+    lastProgramsMixed = 0
+    lastMixControlOpsLength = 0
 
     // count++
     // if (count % 375 === 0) {
@@ -723,12 +731,24 @@ export async function createProcessorState(
         }
         idsNowPlaying.add(p.id)
         isPlaying = true
+        lastProgramsMixed++
+        lastMixControlOpsLength = Math.max(lastMixControlOpsLength, activeSlot.controlOpsLength)
       }
 
       if (idsNowPlaying.size > 1) {
         applyLimiter(outputL, limiterL)
         applyLimiter(outputR, limiterR)
       }
+
+      // Track output level for on-device diagnostics (silent-output detection).
+      let peak = 0
+      for (let i = 0; i < bufferLength; i++) {
+        const a = Math.abs(outputL[i])
+        const b = Math.abs(outputR[i])
+        if (a > peak) peak = a
+        if (b > peak) peak = b
+      }
+      outputPeak = peak > outputPeak ? peak : outputPeak * 0.95
 
       if (hadError) {
         hadError = false
@@ -899,6 +919,15 @@ export async function createProcessorState(
     },
     set sampleCount(v: number) {
       sampleCountRef.value = v
+    },
+    get outputPeak(): number {
+      return outputPeak
+    },
+    get programsMixed(): number {
+      return lastProgramsMixed
+    },
+    get mixControlOpsLength(): number {
+      return lastMixControlOpsLength
     },
     get playbackSampleClock(): number {
       return playbackSampleClockRef.value
@@ -1098,6 +1127,9 @@ export class DspProcessor extends AudioWorkletProcessor {
       transportSampleCount: s.transportSampleCount,
       transportRunning: s.transportRunning,
       transportActuallyPlaying: s.transportActuallyPlaying,
+      outputPeak: s.outputPeak,
+      programsMixed: s.programsMixed,
+      mixControlOpsLength: s.mixControlOpsLength,
       bpm: s.bpm,
       bpmOverride: s.bpmOverrideValue,
       programCount: s.programsById.size,

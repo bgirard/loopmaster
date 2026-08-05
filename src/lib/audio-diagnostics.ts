@@ -1,6 +1,7 @@
 import { signal } from '@preact/signals'
 import { SharedTransportIndex, SharedTransportRunningState } from 'engine/src/dsp/worklet-shared.ts'
 import type { DspContext } from '../dsp.ts'
+import { getIosHtmlAudioKeepAliveState } from './ios-html-audio-keepalive.ts'
 
 export type AudioDiagnosticsSnapshot = {
   generatedAt: string
@@ -26,6 +27,12 @@ export type AudioDiagnosticsSnapshot = {
   workletProgramCount: number | null
   workletHasCore: boolean | null
   transportMirrorMode: boolean | null
+  htmlAudioKeepAlive: string | null
+  outputPeak: number | null
+  programsMixed: number | null
+  mixControlOpsLength: number | null
+  controlOpsLength: number | null
+  workletError: string | null
   sabShareProbe: string | null
   lastPlayAttemptAt: string | null
   lastPlayAttemptSource: string | null
@@ -51,6 +58,10 @@ export const workletStats = signal<{
   transportSampleCount?: number
   transportRunning?: number
   transportActuallyPlaying?: number
+  outputPeak?: number
+  programsMixed?: number
+  mixControlOpsLength?: number
+  controlOpsLength?: number
 } | null>(null)
 
 let errorHooksInstalled = false
@@ -141,6 +152,10 @@ export async function refreshWorkletStats(ctx: DspContext | null): Promise<void>
       transportSampleCount: Number(s.transportSampleCount) || 0,
       transportRunning: Number(s.transportRunning),
       transportActuallyPlaying: Number(s.transportActuallyPlaying),
+      outputPeak: Number(s.outputPeak) || 0,
+      programsMixed: Number(s.programsMixed) || 0,
+      mixControlOpsLength: Number(s.mixControlOpsLength) || 0,
+      controlOpsLength: Number(s.controlOpsLength) || 0,
     }
   }
   catch (error) {
@@ -236,6 +251,12 @@ export function collectAudioDiagnostics(opts: {
     workletProgramCount: workletStats.value?.programCount ?? null,
     workletHasCore: workletStats.value?.hasCore ?? null,
     transportMirrorMode,
+    htmlAudioKeepAlive: getIosHtmlAudioKeepAliveState(),
+    outputPeak: workletStats.value?.outputPeak ?? null,
+    programsMixed: workletStats.value?.programsMixed ?? null,
+    mixControlOpsLength: workletStats.value?.mixControlOpsLength ?? null,
+    controlOpsLength: workletStats.value?.controlOpsLength ?? null,
+    workletError: opts.ctx?.dsp.state.workletError ?? null,
     sabShareProbe,
     lastPlayAttemptAt: lastPlayAttempt.value?.at ?? null,
     lastPlayAttemptSource: lastPlayAttempt.value?.source ?? null,
@@ -270,6 +291,12 @@ export function formatAudioDiagnostics(snapshot: AudioDiagnosticsSnapshot): stri
     `workletProgramCount: ${snapshot.workletProgramCount ?? '(none)'}`,
     `workletHasCore: ${snapshot.workletHasCore ?? '(none)'}`,
     `transportMirrorMode: ${snapshot.transportMirrorMode ?? '(none)'}`,
+    `htmlAudioKeepAlive: ${snapshot.htmlAudioKeepAlive ?? '(none)'}`,
+    `outputPeak: ${snapshot.outputPeak ?? '(none)'}`,
+    `programsMixed: ${snapshot.programsMixed ?? '(none)'}`,
+    `mixControlOpsLength: ${snapshot.mixControlOpsLength ?? '(none)'}`,
+    `controlOpsLength: ${snapshot.controlOpsLength ?? '(none)'}`,
+    `workletError: ${snapshot.workletError ?? '(none)'}`,
     `sabShareProbe: ${snapshot.sabShareProbe ?? '(none)'}`,
     `lastPlayAttemptAt: ${snapshot.lastPlayAttemptAt ?? '(none)'}`,
     `lastPlayAttemptSource: ${snapshot.lastPlayAttemptSource ?? '(none)'}`,

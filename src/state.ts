@@ -20,6 +20,7 @@ import {
   notePlayAttempt,
   refreshWorkletStats,
 } from './lib/audio-diagnostics.ts'
+import { ensureIosHtmlAudioKeepAlive } from './lib/ios-html-audio-keepalive.ts'
 import {
   arrangementSignature,
   cloneArrangement,
@@ -253,6 +254,7 @@ function kickstartIosAudioGraph(ac: AudioContext) {
   catch {
     // Non-fatal — resume() below is still the primary unlock.
   }
+  ensureIosHtmlAudioKeepAlive()
 }
 
 export function unlockAudio() {
@@ -267,6 +269,8 @@ export function unlockAudio() {
   catch {
     // audioSession is Safari-only and may throw if unavailable
   }
+
+  ensureIosHtmlAudioKeepAlive()
 
   const ac = ctx.value?.dsp.state.audioContext
   if (!ac) return
