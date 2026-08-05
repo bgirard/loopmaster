@@ -1,4 +1,5 @@
 import { signal } from '@preact/signals'
+import { SharedTransportIndex, SharedTransportRunningState } from 'engine/src/dsp/worklet-shared.ts'
 import type { DspContext } from '../dsp.ts'
 
 export type AudioDiagnosticsSnapshot = {
@@ -14,6 +15,17 @@ export type AudioDiagnosticsSnapshot = {
   ctxError: string | null
   audioContextState: string | null
   audioContextSampleRate: number | null
+  isPlaying: boolean | null
+  isPaused: boolean | null
+  isStopped: boolean | null
+  isActuallyPlaying: boolean | null
+  transportRunning: string | null
+  transportSampleCount: number | null
+  transportActuallyPlaying: string | null
+  workletSampleCount: number | null
+  workletProgramCount: number | null
+  workletHasCore: boolean | null
+  sabShareProbe: string | null
   lastPlayAttemptAt: string | null
   lastPlayAttemptSource: string | null
   lastPlayAttemptNote: string | null
@@ -30,7 +42,22 @@ export const lastPlayAttempt = signal<{
 export const audioDebugOpen = signal(false)
 export const audioDebugForceShow = signal(false)
 
+/** Latest worklet getStats snapshot (filled asynchronously by the debug panel). */
+export const workletStats = signal<{
+  sampleCount: number
+  programCount: number
+  hasCore: boolean
+} | null>(null)
+
 let errorHooksInstalled = false
+
+function runningStateName(v: number | null | undefined): string | null {
+  if (v == null || Number.isNaN(v)) return null
+  if (v === SharedTransportRunningState.Start) return 'Start'
+  if (v === SharedTransportRunningState.Pause) return 'Pause'
+  if (v === SharedTransportRunningState.Stop) return 'Stop'
+  return `Unknown(${v})`
+}
 
 export function installAudioErrorHooks() {
   if (errorHooksInstalled || typeof window === 'undefined') return
@@ -76,6 +103,15 @@ export function notePlayAttempt(
   else if (state) {
     note = `AudioContext state is "${state}"`
   }
+
+  const dsp = opts.ctx?.dsp
+  if (dsp?.transport) {
+    const running = Atomics.load(dsp.transport.transportU32, SharedTransportIndex.Running)
+    const actually = Atomics.load(dsp.transport.transportU32, SharedTransportIndex.ActuallyPlaying)
+    const samples = dsp.transport.transportF32[SharedTransportIndex.SampleCount]
+    note += `; running=${runningStateName(running)}; actually=${runningStateName(actually)}; samples=${samples}`
+  }
+
   lastPlayAttempt.value = {
     at: new Date().toISOString(),
     source,
@@ -84,6 +120,27 @@ export function notePlayAttempt(
   if (opts.ctxError || !opts.ctx || (opts.expectRunning && state && state !== 'running')) {
     audioDebugForceShow.value = true
     audioDebugOpen.value = true
+  }
+}
+
+export async function refreshWorkletStats(ctx: DspContext | null): Promise<void> {
+  if (!ctx) {
+    workletStats.value = null
+    return
+  }
+  try {
+    const s = await ctx.dsp.core.worklet.getStats()
+    workletStats.value = {
+      sampleCount: Number(s.sampleCount) || 0,
+      programCount: Number(s.programCount) || 0,
+      hasCore: Boolean(s.hasCore),
+    }
+  }
+  catch (error) {
+    workletStats.value = null
+    const text = error instanceof Error ? error.message : String(error)
+    const next = [...recentErrors.peek(), `worklet.getStats: ${text}`].slice(-12)
+    recentErrors.value = next
   }
 }
 
@@ -97,6 +154,50 @@ export function collectAudioDiagnostics(opts: {
   const audioSession = typeof navigator !== 'undefined'
     ? (navigator as Navigator & { audioSession?: { type: string } }).audioSession
     : undefined
+
+  let transportRunning: string | null = null
+  let transportSampleCount: number | null = null
+  let transportActuallyPlaying: string | null = null
+  let sabShareProbe: string | null = null
+  let isPlayingFlag: boolean | null = null
+  let isPausedFlag: boolean | null = null
+  let isStoppedFlag: boolean | null = null
+  let isActuallyPlayingFlag: boolean | null = null
+
+  const dsp = opts.ctx?.dsp
+  if (dsp?.transport) {
+    const running = Atomics.load(dsp.transport.transportU32, SharedTransportIndex.Running)
+    const actually = Atomics.load(dsp.transport.transportU32, SharedTransportIndex.ActuallyPlaying)
+    transportRunning = runningStateName(running)
+    transportActuallyPlaying = runningStateName(actually)
+    transportSampleCount = dsp.transport.transportF32[SharedTransportIndex.SampleCount] ?? 0
+    isPlayingFlag = running === SharedTransportRunningState.Start
+    isPausedFlag = running === SharedTransportRunningState.Pause
+    isStoppedFlag = running === SharedTransportRunningState.Stop
+    isActuallyPlayingFlag = actually === SharedTransportRunningState.Start
+
+    const ws = workletStats.value
+    if (ws && transportSampleCount != null) {
+      const mainSamples = transportSampleCount
+      const workletSamples = ws.sampleCount
+      if (running === SharedTransportRunningState.Start && workletSamples > 128 && mainSamples < 1) {
+        sabShareProbe = 'FAIL: worklet advances but main transport stays at 0 (Safari MessagePort SAB bug)'
+      }
+      else if (running === SharedTransportRunningState.Start && mainSamples > 128 && workletSamples < 1) {
+        sabShareProbe = 'FAIL: main advances but worklet sampleCount stays at 0'
+      }
+      else if (running === SharedTransportRunningState.Start && mainSamples < 1 && workletSamples < 1) {
+        sabShareProbe = 'WARN: transport Start but neither side advances (AudioWorklet process may not be running)'
+      }
+      else if (mainSamples > 0 && workletSamples > 0) {
+        sabShareProbe = 'ok: main and worklet sample clocks both advancing'
+      }
+      else {
+        sabShareProbe = `idle (main=${mainSamples}, worklet=${workletSamples})`
+      }
+    }
+  }
+
   return {
     generatedAt: new Date().toISOString(),
     href: typeof location !== 'undefined' ? location.href : '',
@@ -112,6 +213,17 @@ export function collectAudioDiagnostics(opts: {
     ctxError: opts.ctxError,
     audioContextState: ac ? String(ac.state) : null,
     audioContextSampleRate: ac?.sampleRate ?? null,
+    isPlaying: isPlayingFlag,
+    isPaused: isPausedFlag,
+    isStopped: isStoppedFlag,
+    isActuallyPlaying: isActuallyPlayingFlag,
+    transportRunning,
+    transportSampleCount,
+    transportActuallyPlaying,
+    workletSampleCount: workletStats.value?.sampleCount ?? null,
+    workletProgramCount: workletStats.value?.programCount ?? null,
+    workletHasCore: workletStats.value?.hasCore ?? null,
+    sabShareProbe,
     lastPlayAttemptAt: lastPlayAttempt.value?.at ?? null,
     lastPlayAttemptSource: lastPlayAttempt.value?.source ?? null,
     lastPlayAttemptNote: lastPlayAttempt.value?.note ?? null,
@@ -134,6 +246,17 @@ export function formatAudioDiagnostics(snapshot: AudioDiagnosticsSnapshot): stri
     `ctxError: ${snapshot.ctxError ?? '(none)'}`,
     `audioContextState: ${snapshot.audioContextState ?? '(none)'}`,
     `audioContextSampleRate: ${snapshot.audioContextSampleRate ?? '(none)'}`,
+    `isPlaying: ${snapshot.isPlaying ?? '(none)'}`,
+    `isPaused: ${snapshot.isPaused ?? '(none)'}`,
+    `isStopped: ${snapshot.isStopped ?? '(none)'}`,
+    `isActuallyPlaying: ${snapshot.isActuallyPlaying ?? '(none)'}`,
+    `transportRunning: ${snapshot.transportRunning ?? '(none)'}`,
+    `transportActuallyPlaying: ${snapshot.transportActuallyPlaying ?? '(none)'}`,
+    `transportSampleCount: ${snapshot.transportSampleCount ?? '(none)'}`,
+    `workletSampleCount: ${snapshot.workletSampleCount ?? '(none)'}`,
+    `workletProgramCount: ${snapshot.workletProgramCount ?? '(none)'}`,
+    `workletHasCore: ${snapshot.workletHasCore ?? '(none)'}`,
+    `sabShareProbe: ${snapshot.sabShareProbe ?? '(none)'}`,
     `lastPlayAttemptAt: ${snapshot.lastPlayAttemptAt ?? '(none)'}`,
     `lastPlayAttemptSource: ${snapshot.lastPlayAttemptSource ?? '(none)'}`,
     `lastPlayAttemptNote: ${snapshot.lastPlayAttemptNote ?? '(none)'}`,

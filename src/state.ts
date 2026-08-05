@@ -18,6 +18,7 @@ import {
   audioDebugOpen,
   installAudioErrorHooks,
   notePlayAttempt,
+  refreshWorkletStats,
 } from './lib/audio-diagnostics.ts'
 import {
   arrangementSignature,
@@ -236,6 +237,24 @@ installAudioErrorHooks()
  * iOS Safari requires resume() during a user gesture; any await before it
  * breaks the gesture token and playback stays silent.
  */
+let iosGraphKickstarted = false
+
+function kickstartIosAudioGraph(ac: AudioContext) {
+  if (iosGraphKickstarted) return
+  iosGraphKickstarted = true
+  try {
+    // A one-sample silent buffer helps Safari start pulling from AudioWorkletNode.
+    const buffer = ac.createBuffer(1, 1, ac.sampleRate)
+    const source = ac.createBufferSource()
+    source.buffer = buffer
+    source.connect(ac.destination)
+    source.start(0)
+  }
+  catch {
+    // Non-fatal — resume() below is still the primary unlock.
+  }
+}
+
 export function unlockAudio() {
   // iOS defaults Web Audio to ambient, which is silenced by the ring/mute switch.
   // "playback" makes music audible even when the hardware switch is muted.
@@ -252,6 +271,7 @@ export function unlockAudio() {
   const ac = ctx.value?.dsp.state.audioContext
   if (!ac) return
   const state = ac.state as AudioContextState | 'interrupted'
+  kickstartIosAudioGraph(ac)
   if (state === 'running') return
   // Intentionally not awaited — the synchronous call is what unlocks iOS.
   void ac.resume()
@@ -695,6 +715,16 @@ export const transport = {
       await dsp.start([currentProgramContext.program])
       await dsp.refreshUntilHistories(currentProgramContext.program, { maxTries: 60 })
       notePlayAttempt('transport.start.afterDspStart', { ctx: c, ctxError: ctxError.value })
+      // Capture worklet-side clock shortly after start (Safari SAB sharing probe).
+      void (async () => {
+        await new Promise(r => setTimeout(r, 400))
+        await refreshWorkletStats(c)
+        notePlayAttempt('transport.start.afterStats', { ctx: c, ctxError: ctxError.value })
+        if (!c.dsp.isActuallyPlaying) {
+          audioDebugForceShow.value = true
+          audioDebugOpen.value = true
+        }
+      })()
     }
   },
   pause: async () => {

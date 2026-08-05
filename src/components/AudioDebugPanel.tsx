@@ -7,6 +7,8 @@ import {
   installAudioErrorHooks,
   audioDebugForceShow,
   audioDebugOpen,
+  refreshWorkletStats,
+  workletStats,
 } from '../lib/audio-diagnostics.ts'
 import { ctx, ctxError } from '../state.ts'
 
@@ -14,6 +16,7 @@ export const AudioDebugPanel = () => {
   const copied = useSignal(false)
   const copyFailed = useSignal(false)
   const initTimedOut = useSignal(false)
+  const statsTick = useSignal(0)
 
   useEffect(() => {
     installAudioErrorHooks()
@@ -30,15 +33,34 @@ export const AudioDebugPanel = () => {
     }
   }, [ctxError.value, initTimedOut.value])
 
-  const report = useComputed(() =>
-    formatAudioDiagnostics(collectAudioDiagnostics({
+  useEffect(() => {
+    if (!audioDebugOpen.value && !audioDebugForceShow.value) return
+    let cancelled = false
+    const tick = async () => {
+      await refreshWorkletStats(ctx.value)
+      if (!cancelled) statsTick.value++
+    }
+    void tick()
+    const id = window.setInterval(() => {
+      void tick()
+    }, 500)
+    return () => {
+      cancelled = true
+      window.clearInterval(id)
+    }
+  }, [audioDebugOpen.value, audioDebugForceShow.value, ctx.value])
+
+  const report = useComputed(() => {
+    statsTick.value
+    workletStats.value
+    return formatAudioDiagnostics(collectAudioDiagnostics({
       ctx: ctx.value,
       ctxError: ctxError.value
         ?? (initTimedOut.value && !ctx.value
           ? 'Audio engine did not become ready within 4s'
           : null),
     }))
-  )
+  })
 
   const shouldShow = audioDebugForceShow.value || Boolean(ctxError.value) || initTimedOut.value
   if (!shouldShow) {
