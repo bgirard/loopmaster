@@ -9,6 +9,7 @@ export type AudioDiagnosticsSnapshot = {
   crossOriginIsolated: boolean
   sharedArrayBuffer: boolean
   crossOriginIsolatedNote: string
+  audioSessionType: string | null
   ctxReady: boolean
   ctxError: string | null
   audioContextState: string | null
@@ -93,6 +94,9 @@ export function collectAudioDiagnostics(opts: {
   const ac = opts.ctx?.dsp.state.audioContext ?? null
   const isolated = Boolean(globalThis.crossOriginIsolated)
   const hasSab = typeof SharedArrayBuffer === 'function'
+  const audioSession = typeof navigator !== 'undefined'
+    ? (navigator as Navigator & { audioSession?: { type: string } }).audioSession
+    : undefined
   return {
     generatedAt: new Date().toISOString(),
     href: typeof location !== 'undefined' ? location.href : '',
@@ -103,6 +107,7 @@ export function collectAudioDiagnostics(opts: {
     crossOriginIsolatedNote: isolated && hasSab
       ? 'COI + SharedArrayBuffer available'
       : 'Missing COI and/or SharedArrayBuffer — Safari needs COEP require-corp',
+    audioSessionType: audioSession?.type ?? null,
     ctxReady: Boolean(opts.ctx),
     ctxError: opts.ctxError,
     audioContextState: ac ? String(ac.state) : null,
@@ -124,6 +129,7 @@ export function formatAudioDiagnostics(snapshot: AudioDiagnosticsSnapshot): stri
     `crossOriginIsolated: ${snapshot.crossOriginIsolated}`,
     `sharedArrayBuffer: ${snapshot.sharedArrayBuffer}`,
     `note: ${snapshot.crossOriginIsolatedNote}`,
+    `audioSessionType: ${snapshot.audioSessionType ?? '(unsupported)'}`,
     `ctxReady: ${snapshot.ctxReady}`,
     `ctxError: ${snapshot.ctxError ?? '(none)'}`,
     `audioContextState: ${snapshot.audioContextState ?? '(none)'}`,

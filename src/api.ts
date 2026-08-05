@@ -52,10 +52,13 @@ export class API {
 
   fetchSession = async () => {
     const res = await this.fetch('/api/session')
-    const json = await res.json()
+    const json = await res.json().catch(() => null)
     if (res.status === 401) return null
     if (!res.ok) {
-      throw new Error('Failed to fetch session: ' + json.message)
+      const message = (json && typeof json === 'object' && typeof (json as { message?: string }).message === 'string')
+        ? (json as { message: string }).message
+        : `Failed to fetch session: ${res.status}`
+      throw new Error(message)
     }
     return json
   }
@@ -342,6 +345,10 @@ export const api = new API(async (input, init) => {
 queueMicrotask(() => {
   api.fetchSession().then(result => {
     session.value = result
+  }).catch(error => {
+    // Preview/static deploys may not have the Deno API; don't crash startup.
+    console.warn('Session fetch failed', error)
+    session.value = null
   })
   effect(() => {
     if (!session.value) return
@@ -386,6 +393,8 @@ queueMicrotask(() => {
           }
           projects.value = [...projects.value]
         })
+      }).catch(error => {
+        console.warn('Projects fetch failed', error)
       })
     })
   })

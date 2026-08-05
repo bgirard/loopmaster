@@ -337,6 +337,13 @@ export async function createDspContext() {
         + '). Safari/iOS needs COOP same-origin + COEP require-corp.',
     )
   }
+  try {
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession
+    if (session) session.type = 'playback'
+  }
+  catch {
+    // Safari-only API
+  }
   await new Promise<void>(queueMicrotask)
   const dspState = await createDspState({ latencyHint: settings.audioLatency })
   const historiesRefreshed = signal(0)

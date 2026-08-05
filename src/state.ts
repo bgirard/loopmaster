@@ -237,6 +237,18 @@ installAudioErrorHooks()
  * breaks the gesture token and playback stays silent.
  */
 export function unlockAudio() {
+  // iOS defaults Web Audio to ambient, which is silenced by the ring/mute switch.
+  // "playback" makes music audible even when the hardware switch is muted.
+  try {
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession
+    if (session && session.type !== 'playback') {
+      session.type = 'playback'
+    }
+  }
+  catch {
+    // audioSession is Safari-only and may throw if unavailable
+  }
+
   const ac = ctx.value?.dsp.state.audioContext
   if (!ac) return
   const state = ac.state as AudioContextState | 'interrupted'

@@ -11,6 +11,7 @@ test('formatAudioDiagnostics is copy/paste friendly', () => {
     crossOriginIsolated: false,
     sharedArrayBuffer: false,
     crossOriginIsolatedNote: 'Missing COI',
+    audioSessionType: 'ambient',
     ctxReady: false,
     ctxError: 'boom',
     audioContextState: null,
@@ -23,6 +24,7 @@ test('formatAudioDiagnostics is copy/paste friendly', () => {
   const text = formatAudioDiagnostics(snapshot)
   assert.match(text, /loopmaster audio diagnostics/)
   assert.match(text, /crossOriginIsolated: false/)
+  assert.match(text, /audioSessionType: ambient/)
   assert.match(text, /ctxError: boom/)
   assert.match(text, /InlineEditor\.play/)
   assert.match(text, /SharedArrayBuffer/)
