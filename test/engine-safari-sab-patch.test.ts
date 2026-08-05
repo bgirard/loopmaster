@@ -12,12 +12,20 @@ test('engine Safari SAB patch files exist', () => {
     'patches/engine/src/dsp/dsp.ts',
     'patches/engine/src/dsp/dsp-core.ts',
     'patches/engine/src/dsp/worklet.ts',
+    'patches/engine/src/dsp/fetch-samples.ts',
     'patches/engine/src/lib/wasm-setup.ts',
     'scripts/apply-engine-safari-sab-patch.mjs',
   ]
   for (const rel of files) {
     assert.ok(fs.existsSync(path.join(root, rel)), `missing ${rel}`)
   }
+})
+
+test('patched fetch-samples sends Float32Array not SAB over worklet port', () => {
+  const src = fs.readFileSync(path.join(root, 'patches/engine/src/dsp/fetch-samples.ts'), 'utf8')
+  assert.match(src, /setSampleDataDirect/)
+  assert.match(src, /Safari does not share SharedArrayBuffer/)
+  assert.doesNotMatch(src, /worklet\.setSampleData\(\{/)
 })
 
 test('patched dsp-state passes only transport+memory via processorOptions', () => {

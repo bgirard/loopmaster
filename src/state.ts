@@ -723,11 +723,12 @@ export const transport = {
     else {
       playingProjectId.value = currentProjectId.value
       playingContext.value = currentProgramContext
-      // Ensure bytecode is on the worklet before start (engine API rename left a
-      // window where submit could silently no-op).
+      // Ensure bytecode + samples are on the worklet before start.
+      // fullResync forces sample re-upload via Float32Array (Safari MessagePort
+      // drops SharedArrayBuffer sample payloads).
       const ccs = currentProgramContext.result.value
       if (ccs?.compile?.bytecode) {
-        await currentProgramContext.program.setControlCompileSnapshot(ccs)
+        await currentProgramContext.program.setControlCompileSnapshot(ccs, { fullResync: true })
       }
       await dsp.start([currentProgramContext.program])
       await dsp.refreshUntilHistories(currentProgramContext.program, { maxTries: 60 })

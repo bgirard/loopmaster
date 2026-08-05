@@ -237,6 +237,10 @@ function copyHistoryMetaToProgramShared(
   Atomics.add(p.stateU32, SharedProgramStateIndex.HistoryPackEpoch, 1)
 }
 
+let lastOutLeftPtr = 0
+let lastOutRightPtr = 0
+let lastVmPeak = 0
+
 function runProgram(
   runtime: WasmRuntime,
   nyquist: number,
@@ -269,15 +273,24 @@ function runProgram(
   if (copyHistory) copyHistoryMetaToProgramShared(runtime, p, slot.vm, info)
   const outputLeftPtr = info[8] ?? 0
   const outputRightPtr = info[9] ?? 0
+  lastOutLeftPtr = outputLeftPtr
+  lastOutRightPtr = outputRightPtr
   if (!outputLeftPtr || !outputRightPtr) {
+    lastVmPeak = 0
     return
   }
   const audioL = new Float32Array(runtime.buffer, outputLeftPtr, bufferLength)
   const audioR = new Float32Array(runtime.buffer, outputRightPtr, bufferLength)
+  let vmPeak = 0
   for (let i = 0; i < bufferLength; i++) {
+    const a = Math.abs(audioL[i])
+    const b = Math.abs(audioR[i])
+    if (a > vmPeak) vmPeak = a
+    if (b > vmPeak) vmPeak = b
     outputL[i] = outputL[i] + audioL[i] * gain
     outputR[i] = outputR[i] + audioR[i] * gain
   }
+  lastVmPeak = vmPeak > lastVmPeak ? vmPeak : lastVmPeak * 0.95
 }
 
 export type ProcessorState = Awaited<ReturnType<typeof createProcessorState>>
@@ -923,11 +936,29 @@ export async function createProcessorState(
     get outputPeak(): number {
       return outputPeak
     },
+    get lastVmPeak(): number {
+      return lastVmPeak
+    },
+    get lastOutLeftPtr(): number {
+      return lastOutLeftPtr
+    },
+    get lastOutRightPtr(): number {
+      return lastOutRightPtr
+    },
     get programsMixed(): number {
       return lastProgramsMixed
     },
     get mixControlOpsLength(): number {
       return lastMixControlOpsLength
+    },
+    get samplesHandleCount(): number {
+      return sampleManager.getSampleMemoryInfo().handleCount
+    },
+    get samplesTotalBytes(): number {
+      return sampleManager.getSampleMemoryInfo().totalChannelBytes
+    },
+    get samplesPending(): number {
+      return sampleManager.getRequiredSamples().length
     },
     get playbackSampleClock(): number {
       return playbackSampleClockRef.value
@@ -1128,8 +1159,14 @@ export class DspProcessor extends AudioWorkletProcessor {
       transportRunning: s.transportRunning,
       transportActuallyPlaying: s.transportActuallyPlaying,
       outputPeak: s.outputPeak,
+      lastVmPeak: s.lastVmPeak,
+      lastOutLeftPtr: s.lastOutLeftPtr,
+      lastOutRightPtr: s.lastOutRightPtr,
       programsMixed: s.programsMixed,
       mixControlOpsLength: s.mixControlOpsLength,
+      samplesHandleCount: s.samplesHandleCount,
+      samplesTotalBytes: s.samplesTotalBytes,
+      samplesPending: s.samplesPending,
       bpm: s.bpm,
       bpmOverride: s.bpmOverrideValue,
       programCount: s.programsById.size,
@@ -1346,7 +1383,9 @@ export class DspProcessor extends AudioWorkletProcessor {
   }
 
   async setSampleData(opts: { handle: number; channels: SharedArrayBuffer[]; sampleRate: number }): Promise<void> {
-    const channels = opts.channels.map(sab => new Float32Array(sab))
+    // Copy out of any SAB immediately — Safari MessagePort does not share SABs with
+    // AudioWorklet, and a non-shared view can look empty or become invalid.
+    const channels = opts.channels.map(sab => new Float32Array(new Float32Array(sab)))
     sampleManager.setSampleData(opts.handle, channels, opts.sampleRate)
   }
 
@@ -1360,7 +1399,9 @@ export class DspProcessor extends AudioWorkletProcessor {
   }
 
   async setSampleDataDirect(opts: { handle: number; channels: Float32Array[]; sampleRate: number }): Promise<void> {
-    sampleManager.setSampleData(opts.handle, opts.channels, opts.sampleRate)
+    // Always take an owned copy so RPC structured-clone quirks cannot alias odd buffers.
+    const channels = opts.channels.map(ch => new Float32Array(ch))
+    sampleManager.setSampleData(opts.handle, channels, opts.sampleRate)
   }
 
   async setSampleErrorDirect(opts: { handle: number; error: string }): Promise<void> {

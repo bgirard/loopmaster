@@ -17,6 +17,7 @@ const files = [
   'src/dsp/dsp.ts',
   'src/dsp/dsp-core.ts',
   'src/dsp/worklet.ts',
+  'src/dsp/fetch-samples.ts',
   'src/lib/wasm-setup.ts',
 ]
 

@@ -29,11 +29,17 @@ export type AudioDiagnosticsSnapshot = {
   transportMirrorMode: boolean | null
   htmlAudioKeepAlive: string | null
   outputPeak: number | null
+  lastVmPeak: number | null
+  lastOutLeftPtr: number | null
+  lastOutRightPtr: number | null
   programsMixed: number | null
   mixControlOpsLength: number | null
   controlOpsLength: number | null
   maxControlOpsLength: number | null
   programsStartCount: number | null
+  samplesHandleCount: number | null
+  samplesTotalBytes: number | null
+  samplesPending: number | null
   workletError: string | null
   sabShareProbe: string | null
   lastPlayAttemptAt: string | null
@@ -61,11 +67,17 @@ export const workletStats = signal<{
   transportRunning?: number
   transportActuallyPlaying?: number
   outputPeak?: number
+  lastVmPeak?: number
+  lastOutLeftPtr?: number
+  lastOutRightPtr?: number
   programsMixed?: number
   mixControlOpsLength?: number
   controlOpsLength?: number
   maxControlOpsLength?: number
   programsStartCount?: number
+  samplesHandleCount?: number
+  samplesTotalBytes?: number
+  samplesPending?: number
 } | null>(null)
 
 let errorHooksInstalled = false
@@ -157,11 +169,17 @@ export async function refreshWorkletStats(ctx: DspContext | null): Promise<void>
       transportRunning: Number(s.transportRunning),
       transportActuallyPlaying: Number(s.transportActuallyPlaying),
       outputPeak: Number(s.outputPeak) || 0,
+      lastVmPeak: Number(s.lastVmPeak) || 0,
+      lastOutLeftPtr: Number(s.lastOutLeftPtr) || 0,
+      lastOutRightPtr: Number(s.lastOutRightPtr) || 0,
       programsMixed: Number(s.programsMixed) || 0,
       mixControlOpsLength: Number(s.mixControlOpsLength) || 0,
       controlOpsLength: Number(s.controlOpsLength) || 0,
       maxControlOpsLength: Number(s.maxControlOpsLength) || 0,
       programsStartCount: Number(s.programsStartCount) || 0,
+      samplesHandleCount: Number(s.samplesHandleCount) || 0,
+      samplesTotalBytes: Number(s.samplesTotalBytes) || 0,
+      samplesPending: Number(s.samplesPending) || 0,
     }
   }
   catch (error) {
@@ -259,11 +277,17 @@ export function collectAudioDiagnostics(opts: {
     transportMirrorMode,
     htmlAudioKeepAlive: getIosHtmlAudioKeepAliveState(),
     outputPeak: workletStats.value?.outputPeak ?? null,
+    lastVmPeak: workletStats.value?.lastVmPeak ?? null,
+    lastOutLeftPtr: workletStats.value?.lastOutLeftPtr ?? null,
+    lastOutRightPtr: workletStats.value?.lastOutRightPtr ?? null,
     programsMixed: workletStats.value?.programsMixed ?? null,
     mixControlOpsLength: workletStats.value?.mixControlOpsLength ?? null,
     controlOpsLength: workletStats.value?.controlOpsLength ?? null,
     maxControlOpsLength: workletStats.value?.maxControlOpsLength ?? null,
     programsStartCount: workletStats.value?.programsStartCount ?? null,
+    samplesHandleCount: workletStats.value?.samplesHandleCount ?? null,
+    samplesTotalBytes: workletStats.value?.samplesTotalBytes ?? null,
+    samplesPending: workletStats.value?.samplesPending ?? null,
     workletError: opts.ctx?.dsp.state.workletError ?? null,
     sabShareProbe,
     lastPlayAttemptAt: lastPlayAttempt.value?.at ?? null,
@@ -301,11 +325,17 @@ export function formatAudioDiagnostics(snapshot: AudioDiagnosticsSnapshot): stri
     `transportMirrorMode: ${snapshot.transportMirrorMode ?? '(none)'}`,
     `htmlAudioKeepAlive: ${snapshot.htmlAudioKeepAlive ?? '(none)'}`,
     `outputPeak: ${snapshot.outputPeak ?? '(none)'}`,
+    `lastVmPeak: ${snapshot.lastVmPeak ?? '(none)'}`,
+    `lastOutLeftPtr: ${snapshot.lastOutLeftPtr ?? '(none)'}`,
+    `lastOutRightPtr: ${snapshot.lastOutRightPtr ?? '(none)'}`,
     `programsMixed: ${snapshot.programsMixed ?? '(none)'}`,
     `mixControlOpsLength: ${snapshot.mixControlOpsLength ?? '(none)'}`,
     `controlOpsLength: ${snapshot.controlOpsLength ?? '(none)'}`,
     `maxControlOpsLength: ${snapshot.maxControlOpsLength ?? '(none)'}`,
     `programsStartCount: ${snapshot.programsStartCount ?? '(none)'}`,
+    `samplesHandleCount: ${snapshot.samplesHandleCount ?? '(none)'}`,
+    `samplesTotalBytes: ${snapshot.samplesTotalBytes ?? '(none)'}`,
+    `samplesPending: ${snapshot.samplesPending ?? '(none)'}`,
     `workletError: ${snapshot.workletError ?? '(none)'}`,
     `sabShareProbe: ${snapshot.sabShareProbe ?? '(none)'}`,
     `lastPlayAttemptAt: ${snapshot.lastPlayAttemptAt ?? '(none)'}`,

@@ -12,6 +12,6 @@ test('dsp submit path uses setControlCompileSnapshot (not removed setCode)', () 
 
 test('transport start re-pushes compile snapshot before dsp.start', () => {
   const src = readFileSync(new URL('../src/state.ts', import.meta.url), 'utf8')
-  assert.match(src, /setControlCompileSnapshot\(ccs\)/)
+  assert.match(src, /setControlCompileSnapshot\(ccs,\s*\{\s*fullResync:\s*true\s*\}\)/)
   assert.match(src, /await dsp\.start\(/)
 })
