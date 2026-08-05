@@ -286,7 +286,7 @@ export function Landing() {
                 {!isMobile() && <p class="text-neutral-400">Press play and edit the code below to hear your changes</p>}
                 {ctxError.value && (
                   <p class="mt-2 text-sm text-red-300/90 max-w-xl mx-auto">
-                    {ctxError.value}
+                    Audio failed to start. Use the diagnostics panel at the bottom to copy details.
                   </p>
                 )}
               </div>

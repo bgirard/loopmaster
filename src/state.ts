@@ -14,6 +14,12 @@ import type { Arrangement } from '../deno/types.ts'
 import { api } from './api.ts'
 import { createDspContext, type DspContext, type DspProgramContext, type DspProgramContextOpts } from './dsp.ts'
 import {
+  audioDebugForceShow,
+  audioDebugOpen,
+  installAudioErrorHooks,
+  notePlayAttempt,
+} from './lib/audio-diagnostics.ts'
+import {
   arrangementSignature,
   cloneArrangement,
   compileArrangement,
@@ -223,6 +229,8 @@ export const isActuallyStopped = signal(false)
 export const ctx = signal<DspContext | null>(null)
 export const ctxError = signal<string | null>(null)
 
+installAudioErrorHooks()
+
 /**
  * Resume the shared AudioContext inside the current call stack.
  * iOS Safari requires resume() during a user gesture; any await before it
@@ -275,6 +283,8 @@ const ctxReady = createDspContext().then(c => {
   const description = describeAudioInitError(error)
   console.error(description, error)
   ctxError.value = description
+  audioDebugForceShow.value = true
+  audioDebugOpen.value = true
   throw error
 })
 
@@ -639,9 +649,15 @@ effect(() => {
 export const transport = {
   start: async () => {
     unlockAudio()
+    notePlayAttempt('transport.start', { ctx: ctx.value, ctxError: ctxError.value })
     const c = await getReadyDspContext()
     const dsp = c.dsp
     await dsp.state.audioContext.resume()
+    notePlayAttempt('transport.start.afterResume', {
+      ctx: c,
+      ctxError: ctxError.value,
+      expectRunning: true,
+    })
 
     const contexts = await ensureProgramContexts()
     if (!contexts) return
@@ -666,6 +682,7 @@ export const transport = {
       playingContext.value = currentProgramContext
       await dsp.start([currentProgramContext.program])
       await dsp.refreshUntilHistories(currentProgramContext.program, { maxTries: 60 })
+      notePlayAttempt('transport.start.afterDspStart', { ctx: c, ctxError: ctxError.value })
     }
   },
   pause: async () => {
@@ -805,9 +822,15 @@ export const inlineTransport = {
     inlineStartInFlight = true
     try {
       unlockAudio()
+      notePlayAttempt('inlineTransport.start', { ctx: ctx.value, ctxError: ctxError.value })
       const c = await getReadyDspContext()
       const dsp = c.dsp
       await dsp.state.audioContext.resume()
+      notePlayAttempt('inlineTransport.start.afterResume', {
+        ctx: c,
+        ctxError: ctxError.value,
+        expectRunning: true,
+      })
       if (playingContext.value) {
         await transport.stop()
       }
@@ -823,10 +846,15 @@ export const inlineTransport = {
       }
       if (!started) {
         await dsp.stop([inline.program])
+        notePlayAttempt('inlineTransport.start.failed', {
+          ctx: c,
+          ctxError: ctxError.value ?? 'inline start failed: histories/actuallyPlaying never became ready',
+        })
         return
       }
       playingInlineContext.value = inline
       deferDraw.value = true
+      notePlayAttempt('inlineTransport.start.ok', { ctx: c, ctxError: ctxError.value })
     }
     finally {
       inlineStartInFlight = false

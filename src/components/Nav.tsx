@@ -1,5 +1,6 @@
 import { MouseButton } from 'utils/mouse-buttons'
-import { editor, primaryColor, transport, unlockAudio } from '../state.ts'
+import { notePlayAttempt } from '../lib/audio-diagnostics.ts'
+import { ctx, ctxError, editor, primaryColor, transport, unlockAudio } from '../state.ts'
 import { PauseGradientIcon, PlayGradientIcon, StopGradientIcon } from './Icons.tsx'
 
 export type NavTransport = Pick<typeof transport, 'start' | 'pause' | 'stop' | 'restart'>
@@ -19,11 +20,12 @@ export const Nav = (
     <button
       class="px-3 h-[48px] pointer-events-auto hover:bg-white/5 active:hover:scale-95 outline-none focus:bg-white/5"
       aria-label="Play"
-      title={ready ? 'Play' : 'Loading audio'}
+      title={ready ? 'Play' : (ctxError.value ?? 'Loading audio')}
       disabled={!ready}
       onPointerDown={e => {
         // Unlock before preventDefault/async work — required for iOS Safari.
         unlockAudio()
+        notePlayAttempt('Nav.play', { ctx: ctx.value, ctxError: ctxError.value })
         e.preventDefault()
         if (!ready) return
         editor.value?.focus()

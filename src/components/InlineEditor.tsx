@@ -19,6 +19,7 @@ import {
   theme,
   unlockAudio,
 } from '../state.ts'
+import { notePlayAttempt } from '../lib/audio-diagnostics.ts'
 import { PlayGradientIcon, StopGradientIcon } from './Icons.tsx'
 
 export const InlineEditor = (
@@ -169,6 +170,7 @@ export const InlineEditor = (
       onPointerDown={async e => {
         // Unlock before preventDefault/async work — required for iOS Safari.
         unlockAudio()
+        notePlayAttempt('InlineEditor.play', { ctx: ctx.value, ctxError: ctxError.value })
         e.preventDefault()
         e.stopPropagation()
         if (!ctx.value) return
