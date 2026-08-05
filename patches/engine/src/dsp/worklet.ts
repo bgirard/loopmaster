@@ -28,11 +28,10 @@ export type DspProcessorOptions = {
   /**
    * Shared resources created on the main thread. Safari only shares these when
    * passed via processorOptions — MessagePort postMessage drops/unshares SAB.
+   * Keep this minimal (transport + memory only).
    */
   transportBuffer: SharedArrayBuffer
   memory: WebAssembly.Memory
-  programStatePool: SharedArrayBuffer[]
-  historyMetaPool: SharedArrayBuffer[]
 }
 
 export type ProgramRuntime = ReturnType<typeof createProgramRuntime>
@@ -984,8 +983,6 @@ export class DspProcessor extends AudioWorkletProcessor {
   private config: DspProcessorOptions['config']
   private transportBuffer: SharedArrayBuffer
   private sharedMemory: WebAssembly.Memory
-  private programStatePool: SharedArrayBuffer[]
-  private historyMetaPool: SharedArrayBuffer[]
 
   constructor(options: Omit<AudioWorkletNodeOptions, 'processorOptions'> & { processorOptions: DspProcessorOptions }) {
     super()
@@ -994,8 +991,6 @@ export class DspProcessor extends AudioWorkletProcessor {
     this.config = po.config
     this.transportBuffer = po.transportBuffer
     this.sharedMemory = po.memory
-    this.programStatePool = po.programStatePool
-    this.historyMetaPool = po.historyMetaPool
     this.dsp = rpc<Dsp>(this.port, this)
   }
 
@@ -1004,11 +999,17 @@ export class DspProcessor extends AudioWorkletProcessor {
       this.state.dispose()
       this.state = null
     }
+    if (!this.transportBuffer) {
+      throw new Error('AudioWorklet missing transportBuffer from processorOptions (Safari SAB share path)')
+    }
+    if (!this.sharedMemory) {
+      throw new Error('AudioWorklet missing memory from processorOptions (Safari SAB share path)')
+    }
     this.state = await createProcessorState(binary, {
       sourcemapUrl: this.sourcemapUrl,
       config: this.config,
-      // Prefer constructor processorOptions (Safari-safe). Fall back for older callers.
-      transportBuffer: this.transportBuffer ?? _opts?.transportBuffer!,
+      // Never fall back to MessagePort SAB — it is not shared on Safari.
+      transportBuffer: this.transportBuffer,
       memory: this.sharedMemory,
     })
   }
@@ -1017,6 +1018,27 @@ export class DspProcessor extends AudioWorkletProcessor {
     // Return the Memory that was shared via processorOptions so the main thread
     // never relies on MessagePort SAB sharing (broken on Safari/WebKit).
     return this.sharedMemory ?? this.state?.runtime.memory
+  }
+
+  /** Handshake used by main thread to detect whether processorOptions SAB is actually shared. */
+  async shareProbe(opts: { magic: number; memoryOffset: number }): Promise<{
+    transportMagic: number
+    memoryMagic: number
+  }> {
+    const transportMagic = this.transportBuffer
+      ? Atomics.load(new Int32Array(this.transportBuffer), SharedTransportIndex.HistorySyncRequested)
+      : -1
+    let memoryMagic = -1
+    try {
+      const buf = this.sharedMemory.buffer
+      const offset = Math.max(0, Math.min(opts.memoryOffset, buf.byteLength - 4))
+      memoryMagic = Atomics.load(new Int32Array(buf, offset, 1), 0)
+    }
+    catch {
+      memoryMagic = -2
+    }
+    void opts.magic
+    return { transportMagic, memoryMagic }
   }
 
   async memoryGrow(delta: number): Promise<number> {
@@ -1073,6 +1095,9 @@ export class DspProcessor extends AudioWorkletProcessor {
       memoryUsage: s.runtime.memoryUsage() / 1024 / 1024,
       hasCore: true,
       sampleCount: s.sampleCount,
+      transportSampleCount: s.transportSampleCount,
+      transportRunning: s.transportRunning,
+      transportActuallyPlaying: s.transportActuallyPlaying,
       bpm: s.bpm,
       bpmOverride: s.bpmOverrideValue,
       programCount: s.programsById.size,
@@ -1094,37 +1119,26 @@ export class DspProcessor extends AudioWorkletProcessor {
   async initProgramSlot(opts: {
     historyMetaBuffers?: [SharedArrayBuffer, SharedArrayBuffer]
     stateBuffer?: SharedArrayBuffer
-    /** Prefer pool indices — numbers survive MessagePort; SABs often do not on Safari. */
-    stateIndex?: number
-    historyMetaIndices?: [number, number]
   }): Promise<ProgramSharedInit | null> {
     const s = this.state
     if (!s) return null
     const vmId0 = await this.allocateProgramId()
     const vmId1 = await this.allocateProgramId()
 
-    let stateBuffer = opts.stateBuffer
-    if (stateBuffer == null && opts.stateIndex != null) {
-      stateBuffer = this.programStatePool[opts.stateIndex]
-    }
-    if (stateBuffer == null) {
+    // Always create program SABs on the worklet. Returning them over MessagePort
+    // won't share on Safari, but the worklet owns playback state via RPC anyway.
+    // Wasm Memory (shared via processorOptions) carries control ops / audio data.
+    const stateBuffer = opts.stateBuffer ?? (() => {
       track(`sab-state-${vmId0}`, 'SharedArrayBuffer', SHARED_PROGRAM_STATE_BYTE_LENGTH, {
         source: 'worklet:initProgramSlot',
       })
-      stateBuffer = new SharedArrayBuffer(SHARED_PROGRAM_STATE_BYTE_LENGTH)
-    }
+      return new SharedArrayBuffer(SHARED_PROGRAM_STATE_BYTE_LENGTH)
+    })()
     const sharedState = createSharedProgramStateViewsFromBuffer(stateBuffer)
 
     const controlOpsCapacity = CONTROL_OPS_CAPACITY
     const id = s.nextId++
-
-    let historyMetaBuffers = opts.historyMetaBuffers
-    if ((!historyMetaBuffers || historyMetaBuffers.length !== 2) && opts.historyMetaIndices) {
-      const [a, b] = opts.historyMetaIndices
-      const bufA = this.historyMetaPool[a]
-      const bufB = this.historyMetaPool[b]
-      if (bufA && bufB) historyMetaBuffers = [bufA, bufB]
-    }
+    const historyMetaBuffers = opts.historyMetaBuffers
 
     const vm0 = createAudioVm(s.runtime, vmId0, controlOpsCapacity)
     const vm1 = createAudioVm(s.runtime, vmId1, controlOpsCapacity)

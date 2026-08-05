@@ -20,26 +20,26 @@ test('engine Safari SAB patch files exist', () => {
   }
 })
 
-test('patched dsp-state passes shared pools via processorOptions', () => {
+test('patched dsp-state passes only transport+memory via processorOptions', () => {
   const src = fs.readFileSync(path.join(root, 'patches/engine/src/dsp/dsp-state.ts'), 'utf8')
-  assert.match(src, /transportBuffer:\s*pools\.transportBuffer/)
-  assert.match(src, /memory:\s*pools\.memory/)
-  assert.match(src, /programStatePool:\s*pools\.programStatePool/)
-  assert.match(src, /historyMetaPool:\s*pools\.historyMetaPool/)
-  assert.match(src, /Safari/)
+  assert.match(src, /transportBuffer:\s*shared\.transportBuffer/)
+  assert.match(src, /memory:\s*shared\.memory/)
+  assert.doesNotMatch(src, /programStatePool:\s*pools/)
+  assert.doesNotMatch(src, /historyMetaPool:\s*pools/)
+  assert.match(src, /Keep this set minimal|Do not add SAB pools/)
 })
 
-test('patched worklet prefers processorOptions memory and pool indices', () => {
+test('patched worklet requires processorOptions memory/transport and exposes shareProbe', () => {
   const src = fs.readFileSync(path.join(root, 'patches/engine/src/dsp/worklet.ts'), 'utf8')
   assert.match(src, /this\.sharedMemory\s*=\s*po\.memory/)
-  assert.match(src, /historyMetaIndices/)
-  assert.match(src, /stateIndex/)
-  assert.match(src, /memory:\s*opts\.memory/)
+  assert.match(src, /shareProbe/)
+  assert.match(src, /Never fall back to MessagePort SAB/)
+  assert.match(src, /transportSampleCount/)
 })
 
-test('patched createProgram uses pool indices instead of MessagePort SABs', () => {
+test('patched dsp mirrors transport and probes SAB sharing', () => {
   const src = fs.readFileSync(path.join(root, 'patches/engine/src/dsp/dsp.ts'), 'utf8')
-  assert.match(src, /allocProgramSharedBuffers/)
-  assert.match(src, /stateIndex:\s*allocated\.stateIndex/)
-  assert.match(src, /historyMetaIndices:\s*allocated\.historyMetaIndices/)
+  assert.match(src, /syncTransportFromWorklet/)
+  assert.match(src, /transportMirrorMode/)
+  assert.match(src, /shareProbe/)
 })

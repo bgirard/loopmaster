@@ -25,6 +25,7 @@ export type AudioDiagnosticsSnapshot = {
   workletSampleCount: number | null
   workletProgramCount: number | null
   workletHasCore: boolean | null
+  transportMirrorMode: boolean | null
   sabShareProbe: string | null
   lastPlayAttemptAt: string | null
   lastPlayAttemptSource: string | null
@@ -47,6 +48,9 @@ export const workletStats = signal<{
   sampleCount: number
   programCount: number
   hasCore: boolean
+  transportSampleCount?: number
+  transportRunning?: number
+  transportActuallyPlaying?: number
 } | null>(null)
 
 let errorHooksInstalled = false
@@ -134,6 +138,9 @@ export async function refreshWorkletStats(ctx: DspContext | null): Promise<void>
       sampleCount: Number(s.sampleCount) || 0,
       programCount: Number(s.programCount) || 0,
       hasCore: Boolean(s.hasCore),
+      transportSampleCount: Number(s.transportSampleCount) || 0,
+      transportRunning: Number(s.transportRunning),
+      transportActuallyPlaying: Number(s.transportActuallyPlaying),
     }
   }
   catch (error) {
@@ -159,6 +166,7 @@ export function collectAudioDiagnostics(opts: {
   let transportSampleCount: number | null = null
   let transportActuallyPlaying: string | null = null
   let sabShareProbe: string | null = null
+  let transportMirrorMode: boolean | null = null
   let isPlayingFlag: boolean | null = null
   let isPausedFlag: boolean | null = null
   let isStoppedFlag: boolean | null = null
@@ -166,6 +174,7 @@ export function collectAudioDiagnostics(opts: {
 
   const dsp = opts.ctx?.dsp
   if (dsp?.transport) {
+    transportMirrorMode = Boolean(dsp.state.transportMirrorMode)
     const running = Atomics.load(dsp.transport.transportU32, SharedTransportIndex.Running)
     const actually = Atomics.load(dsp.transport.transportU32, SharedTransportIndex.ActuallyPlaying)
     transportRunning = runningStateName(running)
@@ -180,7 +189,10 @@ export function collectAudioDiagnostics(opts: {
     if (ws && transportSampleCount != null) {
       const mainSamples = transportSampleCount
       const workletSamples = ws.sampleCount
-      if (running === SharedTransportRunningState.Start && workletSamples > 128 && mainSamples < 1) {
+      if (transportMirrorMode) {
+        sabShareProbe = `mirror-mode: syncing worklet clock to main (main=${mainSamples}, worklet=${workletSamples})`
+      }
+      else if (running === SharedTransportRunningState.Start && workletSamples > 128 && mainSamples < 1) {
         sabShareProbe = 'FAIL: worklet advances but main transport stays at 0 (Safari MessagePort SAB bug)'
       }
       else if (running === SharedTransportRunningState.Start && mainSamples > 128 && workletSamples < 1) {
@@ -223,6 +235,7 @@ export function collectAudioDiagnostics(opts: {
     workletSampleCount: workletStats.value?.sampleCount ?? null,
     workletProgramCount: workletStats.value?.programCount ?? null,
     workletHasCore: workletStats.value?.hasCore ?? null,
+    transportMirrorMode,
     sabShareProbe,
     lastPlayAttemptAt: lastPlayAttempt.value?.at ?? null,
     lastPlayAttemptSource: lastPlayAttempt.value?.source ?? null,
@@ -256,6 +269,7 @@ export function formatAudioDiagnostics(snapshot: AudioDiagnosticsSnapshot): stri
     `workletSampleCount: ${snapshot.workletSampleCount ?? '(none)'}`,
     `workletProgramCount: ${snapshot.workletProgramCount ?? '(none)'}`,
     `workletHasCore: ${snapshot.workletHasCore ?? '(none)'}`,
+    `transportMirrorMode: ${snapshot.transportMirrorMode ?? '(none)'}`,
     `sabShareProbe: ${snapshot.sabShareProbe ?? '(none)'}`,
     `lastPlayAttemptAt: ${snapshot.lastPlayAttemptAt ?? '(none)'}`,
     `lastPlayAttemptSource: ${snapshot.lastPlayAttemptSource ?? '(none)'}`,

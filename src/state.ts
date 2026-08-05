@@ -534,6 +534,11 @@ effect(() => {
   isActuallyPlaying.value = dsp.isActuallyPlaying
   isActuallyPaused.value = dsp.isActuallyPaused
   isActuallyStopped.value = dsp.isActuallyStopped
+  // Safari may not share the transport SAB with the AudioWorklet. Mirror the
+  // worklet clock onto the main-thread views so the scrubber can advance.
+  if (dsp.isPlaying || dsp.state.transportMirrorMode) {
+    void dsp.syncTransportFromWorklet()
+  }
 })
 
 let vmId = 0

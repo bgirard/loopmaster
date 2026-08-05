@@ -5,6 +5,7 @@ import { createDspLatency } from './dsp-latency.ts'
 import { createDspProgram, type DspProgram } from './dsp-program.ts'
 import type { DspState } from './dsp-state.ts'
 import { bindProgramShared } from './helpers.ts'
+import { createHistoryMetaSharedBuffer } from './history-meta-shared.ts'
 import {
   createSharedTransportViewsFromBuffer,
   DspProgramState,
@@ -14,6 +15,9 @@ import {
 } from './worklet-shared.ts'
 
 export type Dsp = Awaited<ReturnType<typeof createDsp>>
+
+const TRANSPORT_SHARE_MAGIC = 0x5a5a51
+const MEMORY_SHARE_MAGIC = 0x51a51a51
 
 export async function createDsp(state: DspState) {
   const programs: Set<DspProgram> = new Set()
@@ -36,6 +40,34 @@ export async function createDsp(state: DspState) {
   )
   state.memory = core.memory
 
+  // Detect whether processorOptions actually shared the transport/memory with the worklet.
+  Atomics.store(transport.transportU32, SharedTransportIndex.HistorySyncRequested, TRANSPORT_SHARE_MAGIC)
+  const memoryProbeOffset = Math.max(0, state.memory.buffer.byteLength - 4)
+  const memoryProbeView = new Int32Array(state.memory.buffer, memoryProbeOffset, 1)
+  Atomics.store(memoryProbeView, 0, MEMORY_SHARE_MAGIC)
+  try {
+    const probe = await core.worklet.shareProbe({
+      magic: TRANSPORT_SHARE_MAGIC,
+      memoryOffset: memoryProbeOffset,
+    })
+    const transportShared = probe.transportMagic === TRANSPORT_SHARE_MAGIC
+    const memoryShared = probe.memoryMagic === MEMORY_SHARE_MAGIC
+    state.transportMirrorMode = !transportShared
+    if (!transportShared || !memoryShared) {
+      console.warn('[dsp] Safari SAB share probe failed', { transportShared, memoryShared, probe })
+    }
+    if (!memoryShared) {
+      state.workletError =
+        'Wasm memory is not shared with the AudioWorklet (Safari). Audio will be silent until this is fixed.'
+    }
+  }
+  catch (error) {
+    state.transportMirrorMode = true
+    console.warn('[dsp] Safari SAB share probe error; enabling transport mirror', error)
+  }
+  Atomics.store(transport.transportU32, SharedTransportIndex.HistorySyncRequested, 0)
+  Atomics.store(memoryProbeView, 0, 0)
+
   const control = atomic(
     async function<T>(this: void, fn: () => Promise<T>): Promise<T> {
       return await fn()
@@ -47,6 +79,8 @@ export async function createDsp(state: DspState) {
       await state.audioContext.resume()
       const inits = await core.worklet.start(programs.map(p => p.id))
       await rebindAllPrograms(inits)
+      // Ensure main-side Running is Start even when SAB is not shared.
+      Atomics.store(transport.transportU32, SharedTransportIndex.Running, SharedTransportRunningState.Start)
     })
   }
 
@@ -54,6 +88,7 @@ export async function createDsp(state: DspState) {
     return control(async () => {
       const inits = await core.worklet.startSync(programs.map(p => p.id))
       await rebindAllPrograms(inits)
+      Atomics.store(transport.transportU32, SharedTransportIndex.Running, SharedTransportRunningState.Start)
     })
   }
 
@@ -61,6 +96,8 @@ export async function createDsp(state: DspState) {
     return control(async () => {
       const inits = await core.worklet.pause(programs.map(p => p.id))
       await rebindAllPrograms(inits)
+      Atomics.store(transport.transportU32, SharedTransportIndex.Running, SharedTransportRunningState.Pause)
+      Atomics.store(transport.transportU32, SharedTransportIndex.ActuallyPlaying, SharedTransportRunningState.Pause)
     })
   }
 
@@ -68,6 +105,8 @@ export async function createDsp(state: DspState) {
     return control(async () => {
       const inits = await core.worklet.stop(programs.map(p => p.id))
       await rebindAllPrograms(inits)
+      Atomics.store(transport.transportU32, SharedTransportIndex.Running, SharedTransportRunningState.Stop)
+      Atomics.store(transport.transportU32, SharedTransportIndex.ActuallyPlaying, SharedTransportRunningState.Stop)
     })
   }
 
@@ -124,24 +163,72 @@ export async function createDsp(state: DspState) {
 
   function createProgram(): Promise<DspProgram> {
     return control(async () => {
-      const allocated = state.allocProgramSharedBuffers()
-      const init = await core.worklet.initProgramSlot({
-        // Pass indices only — Safari MessagePort does not share SABs.
-        stateIndex: allocated.stateIndex,
-        historyMetaIndices: allocated.historyMetaIndices,
-      })
+      const historyMetaBuffers: [SharedArrayBuffer, SharedArrayBuffer] = [
+        createHistoryMetaSharedBuffer(),
+        createHistoryMetaSharedBuffer(),
+      ]
+      // historyMeta may not share on Safari MessagePort; worklet still runs audio via
+      // shared Wasm memory from processorOptions. Widgets may be degraded on iOS.
+      const init = await core.worklet.initProgramSlot({ historyMetaBuffers })
       if (!init) throw new Error('Failed to init program shared buffers')
       if (!state.buffer) throw new Error('No buffer')
-      // Reattach main-thread pool buffers (same SAB instances passed via processorOptions).
-      const shared = bindProgramShared(state.buffer, {
-        ...init,
-        stateBuffer: allocated.stateBuffer,
-        historyMetaBuffers: allocated.historyMetaBuffers,
-      })
+      const shared = bindProgramShared(state.buffer, init)
       const program: DspProgram = createDspProgram(state, shared, core.worklet, core.record)
       programs.add(program)
       return program
     })
+  }
+
+  /**
+   * When Safari fails to share the transport SAB, mirror the worklet clock onto
+   * the main-thread transport views so the scrubber / isActuallyPlaying update.
+   */
+  let syncInFlight = false
+  async function syncTransportFromWorklet(): Promise<boolean> {
+    if (syncInFlight) return false
+    syncInFlight = true
+    try {
+      const stats = await core.worklet.getStats()
+      const workletSamples = Number(stats.sampleCount) || 0
+      const mainSamplesBefore = transport.transportF32[SharedTransportIndex.SampleCount] ?? 0
+      const running = Number(stats.transportRunning)
+      const actually = Number(stats.transportActuallyPlaying)
+
+      if (
+        !state.transportMirrorMode
+        && running === SharedTransportRunningState.Start
+        && workletSamples > 128
+        && mainSamplesBefore < 1
+      ) {
+        state.transportMirrorMode = true
+      }
+
+      if (!state.transportMirrorMode) return false
+
+      if (Number.isFinite(workletSamples)) {
+        transport.transportF32[SharedTransportIndex.SampleCount] = workletSamples
+      }
+      if (Number.isFinite(running)) {
+        Atomics.store(transport.transportU32, SharedTransportIndex.Running, running)
+      }
+      if (Number.isFinite(actually)) {
+        Atomics.store(transport.transportU32, SharedTransportIndex.ActuallyPlaying, actually)
+      }
+      else if (running === SharedTransportRunningState.Start && workletSamples > 0) {
+        Atomics.store(
+          transport.transportU32,
+          SharedTransportIndex.ActuallyPlaying,
+          SharedTransportRunningState.Start,
+        )
+      }
+      return true
+    }
+    catch {
+      return false
+    }
+    finally {
+      syncInFlight = false
+    }
   }
 
   function playProgram(program: DspProgram) {
@@ -234,6 +321,8 @@ export async function createDsp(state: DspState) {
     refreshHistories,
     refresh,
     refreshUntilHistories,
+
+    syncTransportFromWorklet,
 
     setWorkletError,
 
