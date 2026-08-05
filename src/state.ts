@@ -254,7 +254,7 @@ function kickstartIosAudioGraph(ac: AudioContext) {
   catch {
     // Non-fatal — resume() below is still the primary unlock.
   }
-  ensureIosHtmlAudioKeepAlive()
+  ensureIosHtmlAudioKeepAlive(ac)
 }
 
 export function unlockAudio() {
@@ -270,9 +270,9 @@ export function unlockAudio() {
     // audioSession is Safari-only and may throw if unavailable
   }
 
-  ensureIosHtmlAudioKeepAlive()
-
   const ac = ctx.value?.dsp.state.audioContext
+  // Start HTML keep-alive even before ctx exists; reconnect into the graph once AC is ready.
+  ensureIosHtmlAudioKeepAlive(ac ?? null)
   if (!ac) return
   const state = ac.state as AudioContextState | 'interrupted'
   kickstartIosAudioGraph(ac)
@@ -307,6 +307,8 @@ const ctxReady = createDspContext().then(c => {
   ctx.value = c
   ctxError.value = null
   installAudioUnlockListeners()
+  // If HTML keep-alive was started before the engine existed, attach it to the graph now.
+  ensureIosHtmlAudioKeepAlive(c.dsp.state.audioContext)
   c.dsp.state.audioContext.addEventListener('statechange', () => {
     const state = c.dsp.state.audioContext.state as AudioContextState | 'interrupted'
     // iOS moves the context to "interrupted" during calls / backgrounding.

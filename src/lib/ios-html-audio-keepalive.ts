@@ -1,10 +1,12 @@
 let iosHtmlAudioKeepAlive: HTMLAudioElement | null = null
 let silentWavUrl: string | null = null
+let mediaSourceConnected = false
+let mediaSourceError: string | null = null
 
-function createSilentWavUrl(): string {
-  // 0.25s mono silent PCM WAV @ 22050Hz — long enough for iOS to treat as media.
+function createQuietToneWavUrl(): string {
+  // ~0.5s mono quiet sine @ 22050Hz — pure digital silence is sometimes ignored by iOS.
   const sampleRate = 22050
-  const numSamples = Math.floor(sampleRate / 4)
+  const numSamples = Math.floor(sampleRate / 2)
   const dataSize = numSamples * 2
   const buffer = new ArrayBuffer(44 + dataSize)
   const view = new DataView(buffer)
@@ -24,30 +26,54 @@ function createSilentWavUrl(): string {
   view.setUint16(34, 16, true)
   writeStr(36, 'data')
   view.setUint32(40, dataSize, true)
-  // samples already zero-filled
+
+  // ~-60 dBFS @ 440Hz — enough for iOS media pipeline, inaudible once gain-gated.
+  const amp = 32 // of 32767
+  for (let i = 0; i < numSamples; i++) {
+    const sample = Math.sin((2 * Math.PI * 440 * i) / sampleRate) * amp
+    view.setInt16(44 + i * 2, sample | 0, true)
+  }
   return URL.createObjectURL(new Blob([buffer], { type: 'audio/wav' }))
 }
 
 /**
  * iOS 18 Safari can leave AudioWorklet output silent even when AudioContext is
- * "running" until an HTMLMediaElement is also playing. Start a tiny looping
- * silent WAV during the user gesture to unlock the media pipeline.
+ * "running" until an HTMLMediaElement is also playing. Prefer routing that
+ * element into the AudioContext (MediaElementSource) — disconnected HTML audio
+ * alone often fails to open the hardware path.
  */
-export function ensureIosHtmlAudioKeepAlive() {
+export function ensureIosHtmlAudioKeepAlive(ac?: AudioContext | null) {
   if (typeof document === 'undefined') return
   try {
     if (!iosHtmlAudioKeepAlive) {
-      silentWavUrl = createSilentWavUrl()
+      silentWavUrl = createQuietToneWavUrl()
       const el = new Audio()
       el.loop = true
       el.preload = 'auto'
-      // volume 0 is ignored by some iOS versions; keep it barely audible.
-      el.volume = 0.001
+      el.volume = 1
       el.muted = false
       el.setAttribute('playsinline', 'true')
+      el.setAttribute('webkit-playsinline', 'true')
       el.src = silentWavUrl
       iosHtmlAudioKeepAlive = el
     }
+
+    if (ac && !mediaSourceConnected && iosHtmlAudioKeepAlive) {
+      try {
+        const source = ac.createMediaElementSource(iosHtmlAudioKeepAlive)
+        const gate = ac.createGain()
+        // Non-zero so the graph stays "hot"; still inaudible with the quiet WAV.
+        gate.gain.value = 0.0001
+        source.connect(gate)
+        gate.connect(ac.destination)
+        mediaSourceConnected = true
+        mediaSourceError = null
+      }
+      catch (error) {
+        mediaSourceError = error instanceof Error ? error.message : String(error)
+      }
+    }
+
     const playResult = iosHtmlAudioKeepAlive.play()
     if (playResult && typeof playResult.catch === 'function') {
       void playResult.catch(() => {
@@ -63,6 +89,11 @@ export function ensureIosHtmlAudioKeepAlive() {
 export function getIosHtmlAudioKeepAliveState(): string {
   const el = iosHtmlAudioKeepAlive
   if (!el) return 'not-created'
-  if (el.paused) return 'paused'
-  return `playing(t=${el.currentTime.toFixed(2)})`
+  const graph = mediaSourceConnected
+    ? 'graph-connected'
+    : mediaSourceError
+    ? `graph-error(${mediaSourceError})`
+    : 'graph-pending'
+  if (el.paused) return `paused;${graph}`
+  return `playing(t=${el.currentTime.toFixed(2)});${graph}`
 }
