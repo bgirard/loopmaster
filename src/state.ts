@@ -723,6 +723,12 @@ export const transport = {
     else {
       playingProjectId.value = currentProjectId.value
       playingContext.value = currentProgramContext
+      // Ensure bytecode is on the worklet before start (engine API rename left a
+      // window where submit could silently no-op).
+      const ccs = currentProgramContext.result.value
+      if (ccs?.compile?.bytecode) {
+        await currentProgramContext.program.setControlCompileSnapshot(ccs)
+      }
       await dsp.start([currentProgramContext.program])
       await dsp.refreshUntilHistories(currentProgramContext.program, { maxTries: 60 })
       notePlayAttempt('transport.start.afterDspStart', { ctx: c, ctxError: ctxError.value })

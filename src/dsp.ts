@@ -293,14 +293,18 @@ async function createDspProgramContextImpl(
         }
 
         if (!shouldSkipSyncPreview.value) {
-          dsp.core.preview.setCode(code, { projectId: opts.projectId ?? null })
+          // Engine renamed preview.setCode → setControlCompileSnapshot (pass CCS, not source).
+          dsp.core.preview.setControlCompileSnapshot(ccs)
           const previewResult = dsp.core.preview.runPreview(opts.vmId)
           batch(() => {
             histories.value = previewResult.histories
             userCallHistories.value = previewResult.userCallHistories
           })
         }
-        await program.setCode(code, {
+        // Engine renamed program.setCode → setControlCompileSnapshot. Calling the old
+        // name threw TypeError (caught below), so bytecode never reached the worklet
+        // (programsMixed=0 / outputPeak=0 / silent play).
+        await program.setControlCompileSnapshot(ccs, {
           fullResync: forceFullResync,
           projectId: opts.projectId ?? null,
         })

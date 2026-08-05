@@ -122,7 +122,8 @@ async function getPreviewRuntime(): Promise<PreviewRuntime> {
 
 async function ensurePreviewRecordSamples(code: string): Promise<{ bytecodeLength: number; registrations: number; errors: string[] }> {
   const { preview, core } = await getPreviewRuntime()
-  const result = preview.setCode(code)
+  const result = controlPipeline.compileSource(code)
+  preview.setControlCompileSnapshot(result)
   const errors = [
     ...result.errors,
     ...result.compile.errors.map(error => error.message),

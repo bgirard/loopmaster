@@ -32,6 +32,8 @@ export type AudioDiagnosticsSnapshot = {
   programsMixed: number | null
   mixControlOpsLength: number | null
   controlOpsLength: number | null
+  maxControlOpsLength: number | null
+  programsStartCount: number | null
   workletError: string | null
   sabShareProbe: string | null
   lastPlayAttemptAt: string | null
@@ -62,6 +64,8 @@ export const workletStats = signal<{
   programsMixed?: number
   mixControlOpsLength?: number
   controlOpsLength?: number
+  maxControlOpsLength?: number
+  programsStartCount?: number
 } | null>(null)
 
 let errorHooksInstalled = false
@@ -156,6 +160,8 @@ export async function refreshWorkletStats(ctx: DspContext | null): Promise<void>
       programsMixed: Number(s.programsMixed) || 0,
       mixControlOpsLength: Number(s.mixControlOpsLength) || 0,
       controlOpsLength: Number(s.controlOpsLength) || 0,
+      maxControlOpsLength: Number(s.maxControlOpsLength) || 0,
+      programsStartCount: Number(s.programsStartCount) || 0,
     }
   }
   catch (error) {
@@ -256,6 +262,8 @@ export function collectAudioDiagnostics(opts: {
     programsMixed: workletStats.value?.programsMixed ?? null,
     mixControlOpsLength: workletStats.value?.mixControlOpsLength ?? null,
     controlOpsLength: workletStats.value?.controlOpsLength ?? null,
+    maxControlOpsLength: workletStats.value?.maxControlOpsLength ?? null,
+    programsStartCount: workletStats.value?.programsStartCount ?? null,
     workletError: opts.ctx?.dsp.state.workletError ?? null,
     sabShareProbe,
     lastPlayAttemptAt: lastPlayAttempt.value?.at ?? null,
@@ -296,6 +304,8 @@ export function formatAudioDiagnostics(snapshot: AudioDiagnosticsSnapshot): stri
     `programsMixed: ${snapshot.programsMixed ?? '(none)'}`,
     `mixControlOpsLength: ${snapshot.mixControlOpsLength ?? '(none)'}`,
     `controlOpsLength: ${snapshot.controlOpsLength ?? '(none)'}`,
+    `maxControlOpsLength: ${snapshot.maxControlOpsLength ?? '(none)'}`,
+    `programsStartCount: ${snapshot.programsStartCount ?? '(none)'}`,
     `workletError: ${snapshot.workletError ?? '(none)'}`,
     `sabShareProbe: ${snapshot.sabShareProbe ?? '(none)'}`,
     `lastPlayAttemptAt: ${snapshot.lastPlayAttemptAt ?? '(none)'}`,

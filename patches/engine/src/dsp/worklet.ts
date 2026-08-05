@@ -1136,6 +1136,11 @@ export class DspProcessor extends AudioWorkletProcessor {
       programId: id,
       programState: p ? p.state : 0,
       controlOpsLength: p ? p.slots[p.activeSlot].controlOpsLength : 0,
+      maxControlOpsLength: Math.max(
+        0,
+        ...[...s.programsById.values()].map(prog => prog.slots[prog.activeSlot].controlOpsLength),
+      ),
+      programsStartCount: [...s.programsById.values()].filter(prog => prog.state === DspProgramState.Start).length,
       programSampleCount: p ? p.sampleCount : 0,
       vmDebug,
     }
