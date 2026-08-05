@@ -19,6 +19,7 @@ const files = [
   'src/dsp/worklet.ts',
   'src/dsp/fetch-samples.ts',
   'src/lib/wasm-setup.ts',
+  'src/lib/sample-manager.ts',
 ]
 
 if (!fs.existsSync(destRoot)) {

@@ -14,6 +14,7 @@ test('engine Safari SAB patch files exist', () => {
     'patches/engine/src/dsp/worklet.ts',
     'patches/engine/src/dsp/fetch-samples.ts',
     'patches/engine/src/lib/wasm-setup.ts',
+    'patches/engine/src/lib/sample-manager.ts',
     'scripts/apply-engine-safari-sab-patch.mjs',
   ]
   for (const rel of files) {
@@ -43,6 +44,15 @@ test('patched worklet requires processorOptions memory/transport and exposes sha
   assert.match(src, /shareProbe/)
   assert.match(src, /Never fall back to MessagePort SAB/)
   assert.match(src, /transportSampleCount/)
+})
+
+test('patched worklet copies bytecode bit-exact to survive AudioWorklet FTZ', () => {
+  const src = fs.readFileSync(path.join(root, 'patches/engine/src/dsp/worklet.ts'), 'utf8')
+  assert.match(src, /writeFloat32Bits/)
+  assert.match(src, /copyFloat32Bits/)
+  assert.match(src, /FTZ|denormal/)
+  // Must not use Float32Array.set for control ops (flushes opcode denormals on ARM Safari).
+  assert.doesNotMatch(src, /nextOps\.set\(ops/)
 })
 
 test('patched dsp mirrors transport and probes SAB sharing', () => {

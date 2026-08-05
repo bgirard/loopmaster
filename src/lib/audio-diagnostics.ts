@@ -40,6 +40,8 @@ export type AudioDiagnosticsSnapshot = {
   samplesHandleCount: number | null
   samplesTotalBytes: number | null
   samplesPending: number | null
+  samplesReadyCount: number | null
+  samplesDataPeak: number | null
   workletError: string | null
   sabShareProbe: string | null
   lastPlayAttemptAt: string | null
@@ -78,6 +80,8 @@ export const workletStats = signal<{
   samplesHandleCount?: number
   samplesTotalBytes?: number
   samplesPending?: number
+  samplesReadyCount?: number
+  samplesDataPeak?: number
 } | null>(null)
 
 let errorHooksInstalled = false
@@ -180,6 +184,8 @@ export async function refreshWorkletStats(ctx: DspContext | null): Promise<void>
       samplesHandleCount: Number(s.samplesHandleCount) || 0,
       samplesTotalBytes: Number(s.samplesTotalBytes) || 0,
       samplesPending: Number(s.samplesPending) || 0,
+      samplesReadyCount: Number(s.samplesReadyCount) || 0,
+      samplesDataPeak: Number(s.samplesDataPeak) || 0,
     }
   }
   catch (error) {
@@ -288,6 +294,8 @@ export function collectAudioDiagnostics(opts: {
     samplesHandleCount: workletStats.value?.samplesHandleCount ?? null,
     samplesTotalBytes: workletStats.value?.samplesTotalBytes ?? null,
     samplesPending: workletStats.value?.samplesPending ?? null,
+    samplesReadyCount: workletStats.value?.samplesReadyCount ?? null,
+    samplesDataPeak: workletStats.value?.samplesDataPeak ?? null,
     workletError: opts.ctx?.dsp.state.workletError ?? null,
     sabShareProbe,
     lastPlayAttemptAt: lastPlayAttempt.value?.at ?? null,
@@ -336,6 +344,8 @@ export function formatAudioDiagnostics(snapshot: AudioDiagnosticsSnapshot): stri
     `samplesHandleCount: ${snapshot.samplesHandleCount ?? '(none)'}`,
     `samplesTotalBytes: ${snapshot.samplesTotalBytes ?? '(none)'}`,
     `samplesPending: ${snapshot.samplesPending ?? '(none)'}`,
+    `samplesReadyCount: ${snapshot.samplesReadyCount ?? '(none)'}`,
+    `samplesDataPeak: ${snapshot.samplesDataPeak ?? '(none)'}`,
     `workletError: ${snapshot.workletError ?? '(none)'}`,
     `sabShareProbe: ${snapshot.sabShareProbe ?? '(none)'}`,
     `lastPlayAttemptAt: ${snapshot.lastPlayAttemptAt ?? '(none)'}`,

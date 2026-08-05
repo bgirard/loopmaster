@@ -138,6 +138,30 @@ function createProgramRuntime(opts: {
   }
 }
 
+/**
+ * Byte-exact Float32Array copy. AudioWorklet threads (esp. Safari/WebKit on ARM)
+ * run with FTZ/DAZ: element-wise Float32Array.set/new Float32Array(src) flushes
+ * denormal bit-patterns. Our bytecode stores opcodes as raw u32 ints in a
+ * Float32Array view — those ints are denormal floats — so a float copy turns
+ * every opcode into 0 and the VM mixes silence while samples still look loaded.
+ */
+function copyFloat32Bits(src: Float32Array, length = src.length): Float32Array {
+  const len = Math.max(0, Math.min(length, src.length))
+  const out = new Float32Array(len)
+  if (len > 0) {
+    new Uint8Array(out.buffer).set(new Uint8Array(src.buffer, src.byteOffset, len * 4))
+  }
+  return out
+}
+
+function writeFloat32Bits(destBuffer: ArrayBufferLike, destByteOffset: number, src: Float32Array, length: number): void {
+  const len = Math.max(0, Math.min(length, src.length))
+  if (len <= 0) return
+  new Uint8Array(destBuffer, destByteOffset, len * 4).set(
+    new Uint8Array(src.buffer, src.byteOffset, len * 4),
+  )
+}
+
 function scanSetBpm(ops: Float32Array, length: number): number {
   const u32 = new Uint32Array(ops.buffer, ops.byteOffset, ops.length)
   const f32 = ops
@@ -442,11 +466,12 @@ export async function createProcessorState(
     const max = target.vm.controlOpsCapacity >>> 0
     const len = Math.min(ops.length, max)
     const nextPtr = target.localControlOpsActive === 0 ? target.vm.localControlOpsPtr1 : target.vm.localControlOpsPtr0
-    const nextOps = new Float32Array(runtime.buffer, nextPtr, max)
-    if (len > 0) nextOps.set(ops.subarray(0, len))
+    // Must be byte-exact: Float32Array.set flushes denormal opcode ints under FTZ.
+    writeFloat32Bits(runtime.buffer, nextPtr, ops, len)
     target.controlOpsLength = len
     target.localControlOpsActive = target.localControlOpsActive === 0 ? 1 : 0
     if (!bpmOverrideValueRef.value && len > 0) {
+      const nextOps = new Float32Array(runtime.buffer, nextPtr, max)
       const nextBpm = scanSetBpm(nextOps, len)
       if (nextBpm && nextBpm !== bpmRef.value) {
         bpmRef.value = nextBpm
@@ -960,6 +985,12 @@ export async function createProcessorState(
     get samplesPending(): number {
       return sampleManager.getRequiredSamples().length
     },
+    get samplesReadyCount(): number {
+      return Math.max(0, sampleManager.getSampleMemoryInfo().handleCount - sampleManager.getRequiredSamples().length)
+    },
+    get samplesDataPeak(): number {
+      return sampleManager.getDataPeak()
+    },
     get playbackSampleClock(): number {
       return playbackSampleClockRef.value
     },
@@ -1167,6 +1198,8 @@ export class DspProcessor extends AudioWorkletProcessor {
       samplesHandleCount: s.samplesHandleCount,
       samplesTotalBytes: s.samplesTotalBytes,
       samplesPending: s.samplesPending,
+      samplesReadyCount: s.samplesReadyCount,
+      samplesDataPeak: s.samplesDataPeak,
       bpm: s.bpm,
       bpmOverride: s.bpmOverrideValue,
       programCount: s.programsById.size,
@@ -1289,7 +1322,7 @@ export class DspProcessor extends AudioWorkletProcessor {
     if (s.syncChanges && p.state === DspProgramState.Start && transportPlaying) {
       s.pendingSyncedControlOps.set(p.id, {
         mode: 'set',
-        ops: new Float32Array(opts.ops),
+        ops: copyFloat32Bits(opts.ops),
         targetBar: s.currentBar + 1,
       })
       return
@@ -1320,7 +1353,7 @@ export class DspProcessor extends AudioWorkletProcessor {
     if (s.syncChanges && p.state === DspProgramState.Start && transportPlaying) {
       s.pendingSyncedControlOps.set(p.id, {
         mode: 'swap',
-        ops: new Float32Array(opts.ops),
+        ops: copyFloat32Bits(opts.ops),
         targetBar: s.currentBar + 1,
         fadeSamples: opts.fadeSamples,
         resetState: opts.resetState,
@@ -1399,7 +1432,10 @@ export class DspProcessor extends AudioWorkletProcessor {
   }
 
   async setSampleDataDirect(opts: { handle: number; channels: Float32Array[]; sampleRate: number }): Promise<void> {
+    // Ensure registration exists — setSampleData is a no-op on missing handles.
+    sampleManager.ensureInlineHandle(opts.handle)
     // Always take an owned copy so RPC structured-clone quirks cannot alias odd buffers.
+    // Audio sample data is normal-magnitude floats; Float32 copy is safe under FTZ.
     const channels = opts.channels.map(ch => new Float32Array(ch))
     sampleManager.setSampleData(opts.handle, channels, opts.sampleRate)
   }

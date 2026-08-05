@@ -1,7 +1,7 @@
 let iosHtmlAudioKeepAlive: HTMLAudioElement | null = null
 let silentWavUrl: string | null = null
-let mediaSourceConnected = false
-let mediaSourceError: string | null = null
+let oscillatorKeepAlive: OscillatorNode | null = null
+let oscillatorError: string | null = null
 
 function createQuietToneWavUrl(): string {
   // ~0.5s mono quiet sine @ 22050Hz — pure digital silence is sometimes ignored by iOS.
@@ -27,8 +27,8 @@ function createQuietToneWavUrl(): string {
   writeStr(36, 'data')
   view.setUint32(40, dataSize, true)
 
-  // ~-60 dBFS @ 440Hz — enough for iOS media pipeline, inaudible once gain-gated.
-  const amp = 32 // of 32767
+  // ~-40 dBFS @ 440Hz — enough for iOS media session; keep native path (not MediaElementSource).
+  const amp = 320 // of 32767
   for (let i = 0; i < numSamples; i++) {
     const sample = Math.sin((2 * Math.PI * 440 * i) / sampleRate) * amp
     view.setInt16(44 + i * 2, sample | 0, true)
@@ -37,10 +37,11 @@ function createQuietToneWavUrl(): string {
 }
 
 /**
- * iOS 18 Safari can leave AudioWorklet output silent even when AudioContext is
- * "running" until an HTMLMediaElement is also playing. Prefer routing that
- * element into the AudioContext (MediaElementSource) — disconnected HTML audio
- * alone often fails to open the hardware path.
+ * iOS Safari can leave AudioWorklet output silent until another media/Web Audio
+ * source is active. Do NOT route HTML audio through MediaElementSource — on iOS
+ * that path often stalls (currentTime stuck at 0) and fails to open the session.
+ * Play a quiet HTML element on the native path, plus a near-silent OscillatorNode
+ * in the AudioContext graph.
  */
 export function ensureIosHtmlAudioKeepAlive(ac?: AudioContext | null) {
   if (typeof document === 'undefined') return
@@ -50,7 +51,8 @@ export function ensureIosHtmlAudioKeepAlive(ac?: AudioContext | null) {
       const el = new Audio()
       el.loop = true
       el.preload = 'auto'
-      el.volume = 1
+      // Quiet but non-zero — native path (not MediaElementSource).
+      el.volume = 0.02
       el.muted = false
       el.setAttribute('playsinline', 'true')
       el.setAttribute('webkit-playsinline', 'true')
@@ -58,19 +60,21 @@ export function ensureIosHtmlAudioKeepAlive(ac?: AudioContext | null) {
       iosHtmlAudioKeepAlive = el
     }
 
-    if (ac && !mediaSourceConnected && iosHtmlAudioKeepAlive) {
+    if (ac && !oscillatorKeepAlive) {
       try {
-        const source = ac.createMediaElementSource(iosHtmlAudioKeepAlive)
+        const osc = ac.createOscillator()
         const gate = ac.createGain()
-        // Non-zero so the graph stays "hot"; still inaudible with the quiet WAV.
-        gate.gain.value = 0.0001
-        source.connect(gate)
+        osc.frequency.value = 20
+        // Near-silent; keeps the AudioContext graph "hot" for worklet output.
+        gate.gain.value = 0.00001
+        osc.connect(gate)
         gate.connect(ac.destination)
-        mediaSourceConnected = true
-        mediaSourceError = null
+        osc.start()
+        oscillatorKeepAlive = osc
+        oscillatorError = null
       }
       catch (error) {
-        mediaSourceError = error instanceof Error ? error.message : String(error)
+        oscillatorError = error instanceof Error ? error.message : String(error)
       }
     }
 
@@ -89,11 +93,11 @@ export function ensureIosHtmlAudioKeepAlive(ac?: AudioContext | null) {
 export function getIosHtmlAudioKeepAliveState(): string {
   const el = iosHtmlAudioKeepAlive
   if (!el) return 'not-created'
-  const graph = mediaSourceConnected
-    ? 'graph-connected'
-    : mediaSourceError
-    ? `graph-error(${mediaSourceError})`
-    : 'graph-pending'
-  if (el.paused) return `paused;${graph}`
-  return `playing(t=${el.currentTime.toFixed(2)});${graph}`
+  const osc = oscillatorKeepAlive
+    ? 'osc-alive'
+    : oscillatorError
+    ? `osc-error(${oscillatorError})`
+    : 'osc-pending'
+  if (el.paused) return `paused;native;${osc}`
+  return `playing(t=${el.currentTime.toFixed(2)});native;${osc}`
 }
