@@ -25,6 +25,7 @@ import {
 import { AboutMain } from './AboutMain.tsx'
 import { AdminMain } from './AdminMain.tsx'
 import { ArtistMain } from './ArtistMain.tsx'
+import { AudioDebugPanel } from './AudioDebugPanel.tsx'
 import { BrowseMain } from './BrowseMain.tsx'
 import { DJMain } from './DJMain.tsx'
 import { Daw } from './Daw.tsx'
@@ -256,6 +257,7 @@ export const App = () => {
           )}
         </div>
       )}
+      <AudioDebugPanel />
     </>
   )
 }

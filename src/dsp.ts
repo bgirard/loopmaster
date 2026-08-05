@@ -293,14 +293,18 @@ async function createDspProgramContextImpl(
         }
 
         if (!shouldSkipSyncPreview.value) {
-          dsp.core.preview.setCode(code, { projectId: opts.projectId ?? null })
+          // Engine renamed preview.setCode → setControlCompileSnapshot (pass CCS, not source).
+          dsp.core.preview.setControlCompileSnapshot(ccs)
           const previewResult = dsp.core.preview.runPreview(opts.vmId)
           batch(() => {
             histories.value = previewResult.histories
             userCallHistories.value = previewResult.userCallHistories
           })
         }
-        await program.setCode(code, {
+        // Engine renamed program.setCode → setControlCompileSnapshot. Calling the old
+        // name threw TypeError (caught below), so bytecode never reached the worklet
+        // (programsMixed=0 / outputPeak=0 / silent play).
+        await program.setControlCompileSnapshot(ccs, {
           fullResync: forceFullResync,
           projectId: opts.projectId ?? null,
         })
@@ -330,6 +334,20 @@ export type DspProgramContext = Awaited<ReturnType<typeof createDspProgramContex
 export type DspContext = Awaited<ReturnType<typeof createDspContext>>
 
 export async function createDspContext() {
+  if (typeof SharedArrayBuffer === 'undefined' || !globalThis.crossOriginIsolated) {
+    throw new Error(
+      'SharedArrayBuffer unavailable (crossOriginIsolated='
+        + String(globalThis.crossOriginIsolated)
+        + '). Safari/iOS needs COOP same-origin + COEP require-corp.',
+    )
+  }
+  try {
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession
+    if (session) session.type = 'playback'
+  }
+  catch {
+    // Safari-only API
+  }
   await new Promise<void>(queueMicrotask)
   const dspState = await createDspState({ latencyHint: settings.audioLatency })
   const historiesRefreshed = signal(0)

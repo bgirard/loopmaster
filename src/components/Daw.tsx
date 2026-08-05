@@ -53,6 +53,7 @@ import {
   theme,
   transport,
   transportReady,
+  unlockAudio,
   updateProjectArrangement,
 } from '../state.ts'
 import { tokenize } from '../lib/tokenizer.ts'
@@ -215,6 +216,7 @@ export const Daw = () => {
       if (event.code === 'Space') {
         event.preventDefault()
         if (!transportReady.value) return
+        unlockAudio()
         if (isPlaying.value) {
           pausedPlaybackSecondsRef.current = getCurrentDawSeconds()
           void transport.pause()
@@ -347,6 +349,7 @@ export const Daw = () => {
 
   const playSelectedBlock = () => {
     if (!selectedBlock || !transportReady.value || !ctx.value) return
+    unlockAudio()
     if (selectedBlockLoopEnabled.value) applySelectedBlockLoop(selectedBlock)
     void (async () => {
       await seekToBlockWindowStart(selectedBlock)
@@ -1869,6 +1872,7 @@ const TemplateAudition = ({ id, code, auditionRequest }: { id: string; code: str
   useEffect(() => {
     if (auditionRequest <= 0 || auditionRequest === lastStartedRequest.current || !program.value) return
     lastStartedRequest.current = auditionRequest
+    unlockAudio()
     void inlineTransport.start(program.value)
   }, [auditionRequest, program.value])
 
@@ -1879,7 +1883,8 @@ const TemplateAudition = ({ id, code, auditionRequest }: { id: string; code: str
       <div class="flex items-center justify-between border-b border-white/10">
         <button
           class="px-2 py-1.5 text-white/70 hover:text-white"
-          onClick={async () => {
+          onPointerDown={async () => {
+            unlockAudio()
             if (!program.value) return
             if (isPlayingPreview) await inlineTransport.stop()
             else await inlineTransport.start(program.value)

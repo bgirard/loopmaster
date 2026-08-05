@@ -3,6 +3,7 @@ import type * as WasmExports from '../../node_modules/engine/as/build/index'
 import { AudioVmOp } from '../../node_modules/engine/src/dsp/audio-vm-bindings.ts'
 import { createDspPreview } from '../../node_modules/engine/src/dsp/dsp-preview.ts'
 import type { RecordCallback, SampleRegistration } from '../../node_modules/engine/src/live/compiler/types.ts'
+import { controlPipeline } from '../../node_modules/engine/src/live/pipeline.ts'
 import { processRecordRequest } from '../../node_modules/engine/src/lib/record-utils.ts'
 import { sampleManager } from '../../node_modules/engine/src/lib/sample-manager.ts'
 import { createWasmImports } from '../../node_modules/engine/src/lib/wasm-imports.ts'
@@ -151,7 +152,8 @@ function* renderToAudio(
   vmId = 999,
 ): Generator<number, { left: Float32Array; right: Float32Array }, void> {
   const { preview, runtime, core } = previewRuntime
-  const result = preview.setCode(code)
+  const result = controlPipeline.compileSource(code)
+  preview.setControlCompileSnapshot(result)
   if (result.errors.length > 0) throw new Error(`Compilation failed:\n${result.errors.join('\n')}`)
   if (!result.compile.bytecode) throw new Error('No bytecode generated')
   const bytecode = trimAudioBytecode(result.compile.bytecode)

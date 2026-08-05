@@ -14,6 +14,14 @@ import type { Arrangement } from '../deno/types.ts'
 import { api } from './api.ts'
 import { createDspContext, type DspContext, type DspProgramContext, type DspProgramContextOpts } from './dsp.ts'
 import {
+  audioDebugForceShow,
+  audioDebugOpen,
+  installAudioErrorHooks,
+  notePlayAttempt,
+  refreshWorkletStats,
+} from './lib/audio-diagnostics.ts'
+import { ensureIosHtmlAudioKeepAlive } from './lib/ios-html-audio-keepalive.ts'
+import {
   arrangementSignature,
   cloneArrangement,
   compileArrangement,
@@ -221,9 +229,101 @@ export const isActuallyPaused = signal(false)
 export const isActuallyStopped = signal(false)
 
 export const ctx = signal<DspContext | null>(null)
+export const ctxError = signal<string | null>(null)
+
+installAudioErrorHooks()
+
+/**
+ * Resume the shared AudioContext inside the current call stack.
+ * iOS Safari requires resume() during a user gesture; any await before it
+ * breaks the gesture token and playback stays silent.
+ */
+let iosGraphKickstarted = false
+
+function kickstartIosAudioGraph(ac: AudioContext) {
+  if (iosGraphKickstarted) return
+  iosGraphKickstarted = true
+  try {
+    // A one-sample silent buffer helps Safari start pulling from AudioWorkletNode.
+    const buffer = ac.createBuffer(1, 1, ac.sampleRate)
+    const source = ac.createBufferSource()
+    source.buffer = buffer
+    source.connect(ac.destination)
+    source.start(0)
+  }
+  catch {
+    // Non-fatal — resume() below is still the primary unlock.
+  }
+  ensureIosHtmlAudioKeepAlive(ac)
+}
+
+export function unlockAudio() {
+  // iOS defaults Web Audio to ambient, which is silenced by the ring/mute switch.
+  // "playback" makes music audible even when the hardware switch is muted.
+  try {
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession
+    if (session && session.type !== 'playback') {
+      session.type = 'playback'
+    }
+  }
+  catch {
+    // audioSession is Safari-only and may throw if unavailable
+  }
+
+  const ac = ctx.value?.dsp.state.audioContext
+  // Start HTML keep-alive even before ctx exists; reconnect into the graph once AC is ready.
+  ensureIosHtmlAudioKeepAlive(ac ?? null)
+  if (!ac) return
+  const state = ac.state as AudioContextState | 'interrupted'
+  kickstartIosAudioGraph(ac)
+  if (state === 'running') return
+  // Intentionally not awaited — the synchronous call is what unlocks iOS.
+  void ac.resume()
+}
+
+let audioUnlockInstalled = false
+function installAudioUnlockListeners() {
+  if (audioUnlockInstalled || typeof document === 'undefined') return
+  audioUnlockInstalled = true
+  const opts: AddEventListenerOptions = { capture: true, passive: true }
+  const unlock = () => unlockAudio()
+  document.addEventListener('pointerdown', unlock, opts)
+  document.addEventListener('touchstart', unlock, opts)
+  document.addEventListener('keydown', unlock, opts)
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') unlockAudio()
+  })
+}
+
+function describeAudioInitError(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error)
+  if (typeof SharedArrayBuffer === 'undefined' || !globalThis.crossOriginIsolated) {
+    return 'Audio engine unavailable: this page is not cross-origin isolated, so SharedArrayBuffer cannot start. Safari/iOS requires COEP require-corp.'
+  }
+  return `Audio engine failed to start: ${message}`
+}
+
 const ctxReady = createDspContext().then(c => {
   ctx.value = c
+  ctxError.value = null
+  installAudioUnlockListeners()
+  // If HTML keep-alive was started before the engine existed, attach it to the graph now.
+  ensureIosHtmlAudioKeepAlive(c.dsp.state.audioContext)
+  c.dsp.state.audioContext.addEventListener('statechange', () => {
+    const state = c.dsp.state.audioContext.state as AudioContextState | 'interrupted'
+    // iOS moves the context to "interrupted" during calls / backgrounding.
+    if (state === 'interrupted' && document.visibilityState === 'visible') {
+      unlockAudio()
+    }
+  })
   return c
+}).catch(error => {
+  const description = describeAudioInitError(error)
+  console.error(description, error)
+  ctxError.value = description
+  audioDebugForceShow.value = true
+  audioDebugOpen.value = true
+  throw error
 })
 
 async function getReadyDspContext() {
@@ -440,6 +540,11 @@ effect(() => {
   isActuallyPlaying.value = dsp.isActuallyPlaying
   isActuallyPaused.value = dsp.isActuallyPaused
   isActuallyStopped.value = dsp.isActuallyStopped
+  // Safari may not share the transport SAB with the AudioWorklet. Mirror the
+  // worklet clock onto the main-thread views so the scrubber can advance.
+  if (dsp.isPlaying || dsp.state.transportMirrorMode) {
+    void dsp.syncTransportFromWorklet()
+  }
 })
 
 let vmId = 0
@@ -586,9 +691,16 @@ effect(() => {
 
 export const transport = {
   start: async () => {
+    unlockAudio()
+    notePlayAttempt('transport.start', { ctx: ctx.value, ctxError: ctxError.value })
     const c = await getReadyDspContext()
     const dsp = c.dsp
     await dsp.state.audioContext.resume()
+    notePlayAttempt('transport.start.afterResume', {
+      ctx: c,
+      ctxError: ctxError.value,
+      expectRunning: true,
+    })
 
     const contexts = await ensureProgramContexts()
     if (!contexts) return
@@ -611,11 +723,30 @@ export const transport = {
     else {
       playingProjectId.value = currentProjectId.value
       playingContext.value = currentProgramContext
+      // Ensure bytecode + samples are on the worklet before start.
+      // fullResync forces sample re-upload via Float32Array (Safari MessagePort
+      // drops SharedArrayBuffer sample payloads).
+      const ccs = currentProgramContext.result.value
+      if (ccs?.compile?.bytecode) {
+        await currentProgramContext.program.setControlCompileSnapshot(ccs, { fullResync: true })
+      }
       await dsp.start([currentProgramContext.program])
       await dsp.refreshUntilHistories(currentProgramContext.program, { maxTries: 60 })
+      notePlayAttempt('transport.start.afterDspStart', { ctx: c, ctxError: ctxError.value })
+      // Capture worklet-side clock shortly after start (Safari SAB sharing probe).
+      void (async () => {
+        await new Promise(r => setTimeout(r, 400))
+        await refreshWorkletStats(c)
+        notePlayAttempt('transport.start.afterStats', { ctx: c, ctxError: ctxError.value })
+        if (!c.dsp.isActuallyPlaying) {
+          audioDebugForceShow.value = true
+          audioDebugOpen.value = true
+        }
+      })()
     }
   },
   pause: async () => {
+    unlockAudio()
     const c = await getReadyDspContext()
     const dsp = c.dsp
     const contexts = await ensureProgramContexts()
@@ -641,6 +772,7 @@ export const transport = {
     await dsp.stop([playingProgramContext.program])
   },
   restart: async () => {
+    unlockAudio()
     const c = await getReadyDspContext()
     const dsp = c.dsp
     await dsp.state.audioContext.resume()
@@ -749,9 +881,16 @@ export const inlineTransport = {
     if (inlineStartInFlight) return
     inlineStartInFlight = true
     try {
+      unlockAudio()
+      notePlayAttempt('inlineTransport.start', { ctx: ctx.value, ctxError: ctxError.value })
       const c = await getReadyDspContext()
       const dsp = c.dsp
       await dsp.state.audioContext.resume()
+      notePlayAttempt('inlineTransport.start.afterResume', {
+        ctx: c,
+        ctxError: ctxError.value,
+        expectRunning: true,
+      })
       if (playingContext.value) {
         await transport.stop()
       }
@@ -767,10 +906,15 @@ export const inlineTransport = {
       }
       if (!started) {
         await dsp.stop([inline.program])
+        notePlayAttempt('inlineTransport.start.failed', {
+          ctx: c,
+          ctxError: ctxError.value ?? 'inline start failed: histories/actuallyPlaying never became ready',
+        })
         return
       }
       playingInlineContext.value = inline
       deferDraw.value = true
+      notePlayAttempt('inlineTransport.start.ok', { ctx: c, ctxError: ctxError.value })
     }
     finally {
       inlineStartInFlight = false
@@ -786,6 +930,7 @@ export const inlineTransport = {
   },
   restart: async () => {
     if (!playingInlineContext.value) return
+    unlockAudio()
     const c = await getReadyDspContext()
     const dsp = c.dsp
     await dsp.state.audioContext.resume()
@@ -1174,6 +1319,7 @@ async function ensureDjProgramContexts() {
 
 const createDjTransport = (deck: DjDeck) => ({
   start: async () => {
+    unlockAudio()
     if (!ctx.value) return
     const dsp = ctx.value.dsp
     await dsp.state.audioContext.resume()
@@ -1205,6 +1351,7 @@ const createDjTransport = (deck: DjDeck) => ({
     deferDraw.value = true
   },
   pause: async () => {
+    unlockAudio()
     const contexts = await ensureDjProgramContexts()
     if (!contexts || !ctx.value) return
     const p = deck === 'a' ? contexts.a : contexts.b
@@ -1228,6 +1375,7 @@ const createDjTransport = (deck: DjDeck) => ({
     await ctx.value.dsp.stop([p.program])
   },
   restart: async () => {
+    unlockAudio()
     const contexts = await ensureDjProgramContexts()
     if (!contexts || !ctx.value) return
     await ctx.value.dsp.state.audioContext.resume()
@@ -1311,6 +1459,7 @@ export const djTransportB = createDjTransport('b')
 
 export const wallTransport = {
   start: async (id: string, doc: Doc) => {
+    unlockAudio()
     if (!ctx.value) return
     const dsp = ctx.value.dsp
     await dsp.state.audioContext.resume()
@@ -1335,6 +1484,7 @@ export const wallTransport = {
     await dsp.stop([programCtx.program])
   },
   toggle: async (id: string, doc: Doc) => {
+    unlockAudio()
     if (!ctx.value) return
     const programCtx = await getProgramContext(ctx.value, id, { doc })
     if (wallPlayingContexts.value.has(programCtx)) {

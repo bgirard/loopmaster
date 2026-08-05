@@ -5,7 +5,7 @@ import { MouseButton } from 'utils'
 import { cn } from '../lib/cn.ts'
 import { createId } from '../lib/create-id.ts'
 import { tokenizer } from '../lib/tokenizer.ts'
-import { wallTransport } from '../state.ts'
+import { wallTransport, unlockAudio } from '../state.ts'
 import { Editor } from './Editor.tsx'
 
 const alphabets = [
@@ -128,7 +128,8 @@ export const WallOfSounds = () => {
           return (
             <button
               key={i}
-              onMouseDown={e => {
+              onPointerDown={e => {
+                unlockAudio()
                 if (e.button !== MouseButton.Left) return
                 if (isSoundCell && cell) {
                   handleTogglePlay(cell.id)

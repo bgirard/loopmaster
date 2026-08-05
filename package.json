@@ -10,6 +10,7 @@
     "install:all": "bun run install:web && bun run install:api",
     "install:web": "bun install",
     "install:api": "deno install --no-npm",
+    "postinstall": "node ./scripts/apply-engine-safari-sab-patch.mjs",
     "build": "NODE_OPTIONS=\"--import ./loader.mjs\" vite build",
     "test": "node --import ./loader.mjs --test test/*.test.ts"
   },

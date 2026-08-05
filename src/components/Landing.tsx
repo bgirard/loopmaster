@@ -20,6 +20,7 @@ import { docs } from '../lib/docs.ts'
 import { Link } from '../router.tsx'
 import {
   backgroundColor,
+  ctxError,
   primaryColor,
   primaryGradientStyle,
   secondaryColor,
@@ -283,6 +284,11 @@ export function Landing() {
               <div class="mb-4 text-center">
                 <h2 class="text-2xl font-semibold text-white mb-2">Try it live</h2>
                 {!isMobile() && <p class="text-neutral-400">Press play and edit the code below to hear your changes</p>}
+                {ctxError.value && (
+                  <p class="mt-2 text-sm text-red-300/90 max-w-xl mx-auto">
+                    Audio failed to start. Use the diagnostics panel at the bottom to copy details.
+                  </p>
+                )}
               </div>
               <div class="flex justify-start">
                 <button class="p-2 flex items-center gap-2 text-neutral-400 hover:text-white hover:bg-white/5"

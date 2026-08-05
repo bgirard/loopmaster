@@ -9,7 +9,17 @@ import { useReactiveEffect } from '../hooks/useReactiveEffect.ts'
 import { cn } from '../lib/cn.ts'
 import { createEditorOnHover, editorSettings } from '../lib/editor-common.ts'
 import { tokenizer } from '../lib/tokenizer.ts'
-import { ctx, getProgramContext, inlineTransport, playingContext, playingInlineContext, theme } from '../state.ts'
+import {
+  ctx,
+  ctxError,
+  getProgramContext,
+  inlineTransport,
+  playingContext,
+  playingInlineContext,
+  theme,
+  unlockAudio,
+} from '../state.ts'
+import { notePlayAttempt } from '../lib/audio-diagnostics.ts'
 import { PlayGradientIcon, StopGradientIcon } from './Icons.tsx'
 
 export const InlineEditor = (
@@ -153,8 +163,14 @@ export const InlineEditor = (
     <button
       class={cn('group flex px-3 py-2 active:hover:scale-95 outline-none focus:bg-white/5', {
         'absolute right-0': isMobile() && header,
+        'opacity-40 pointer-events-none': Boolean(ctxError.value) || !ctx.value,
       })}
-      onMouseDown={async e => {
+      title={ctxError.value ?? (!ctx.value ? 'Loading audio' : undefined)}
+      disabled={Boolean(ctxError.value) || !ctx.value}
+      onPointerDown={async e => {
+        // Unlock before preventDefault/async work — required for iOS Safari.
+        unlockAudio()
+        notePlayAttempt('InlineEditor.play', { ctx: ctx.value, ctxError: ctxError.value })
         e.preventDefault()
         e.stopPropagation()
         if (!ctx.value) return
